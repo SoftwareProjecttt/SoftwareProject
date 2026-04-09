@@ -1,6 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -8,16 +9,24 @@
     <artifactId>appointment-scheduling-system</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <name>Appointment Scheduling System</name>
+
     <properties>
+        <!-- Java Version -->
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- Library Versions -->
         <junit.version>5.10.2</junit.version>
         <mockito.version>5.11.0</mockito.version>
         <jacoco.version>0.8.11</jacoco.version>
     </properties>
 
     <dependencies>
+
+        <!-- ========================= -->
+        <!-- ✅ JUnit 5 -->
+        <!-- ========================= -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
@@ -25,6 +34,9 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- ========================= -->
+        <!-- ✅ Mockito Core -->
+        <!-- ========================= -->
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
@@ -32,32 +44,62 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- ========================= -->
+        <!-- ✅ Mockito JUnit 5 Integration -->
+        <!-- ========================= -->
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-junit-jupiter</artifactId>
             <version>${mockito.version}</version>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
 
     <build>
         <plugins>
+
+            <!-- ========================= -->
+            <!-- ✅ Compiler Plugin -->
+            <!-- ========================= -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <release>17</release>
+                </configuration>
+            </plugin>
+
+            <!-- ========================= -->
+            <!-- ✅ Surefire Plugin (Run Tests) -->
+            <!-- ========================= -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.2.5</version>
+                <configuration>
+                    <useModulePath>false</useModulePath>
+                </configuration>
             </plugin>
 
+            <!-- ========================= -->
+            <!-- ✅ JaCoCo (Code Coverage) -->
+            <!-- ========================= -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>${jacoco.version}</version>
+
                 <executions>
+                    <!-- Attach agent -->
                     <execution>
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
                     </execution>
+
+                    <!-- Generate report -->
                     <execution>
                         <id>report</id>
                         <phase>test</phase>
@@ -66,7 +108,11 @@
                         </goals>
                     </execution>
                 </executions>
+
             </plugin>
+
         </plugins>
     </build>
+
 </project>
+

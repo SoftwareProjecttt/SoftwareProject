@@ -1,4 +1,4 @@
-package com.appointmentsystem.service;
+package com.appointmentsystem;
 
 import com.appointmentsystem.domain.Appointment;
 import com.appointmentsystem.domain.AppointmentStatus;

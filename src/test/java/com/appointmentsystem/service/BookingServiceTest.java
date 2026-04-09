@@ -1,5 +1,6 @@
 package com.appointmentsystem.service;
 
+import com.appointmentsystem.BookingService;
 import com.appointmentsystem.domain.Appointment;
 import com.appointmentsystem.domain.AppointmentStatus;
 import com.appointmentsystem.domain.TimeSlot;

@@ -1,12 +1,16 @@
 package com.appointmentsystem.service;
 
+import com.appointmentsystem.AuthService;
+import com.appointmentsystem.ReservationManagementService;
 import com.appointmentsystem.domain.*;
 import com.appointmentsystem.exception.AuthorizationException;
 import com.appointmentsystem.exception.BookingException;
 import com.appointmentsystem.observer.AppointmentEventType;
 import com.appointmentsystem.observer.AppointmentObserver;
+import com.appointmentsystem.persistence.AdminRepository;
 import com.appointmentsystem.persistence.AppointmentRepository;
 import com.appointmentsystem.persistence.TimeSlotRepository;
+import com.appointmentsystem.security.SessionManager;
 import com.appointmentsystem.strategy.BookingRuleStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,8 +27,12 @@ class ReservationManagementServiceTest {
 
     private AppointmentRepository appointmentRepository;
     private TimeSlotRepository timeSlotRepository;
-    private AuthService authService;
     private BookingRuleStrategy rule;
+
+    // ✅ real objects بدل mocks
+    private SessionManager sessionManager;
+    private AuthService authService;
+
     private ReservationManagementService service;
 
     private AppointmentObserver observer;
@@ -37,8 +45,13 @@ class ReservationManagementServiceTest {
     void setUp() {
         appointmentRepository = mock(AppointmentRepository.class);
         timeSlotRepository = mock(TimeSlotRepository.class);
-        authService = mock(AuthService.class);
         rule = mock(BookingRuleStrategy.class);
+
+        // ✅ real AuthService
+        sessionManager = new SessionManager();
+        AdminRepository adminRepository = mock(AdminRepository.class);
+
+        authService = new AuthService(adminRepository, sessionManager);
 
         service = new ReservationManagementService(
                 appointmentRepository,
@@ -150,7 +163,23 @@ class ReservationManagementServiceTest {
 
     @Test
     void cancelReservationByAdmin_success() {
-        when(authService.isAuthenticated()).thenReturn(true);
+        // ✅ نعمل login حقيقي
+        Administrator admin = new Administrator("admin", "1234");
+
+        AdminRepository adminRepository = mock(AdminRepository.class);
+        when(adminRepository.findByUsername("admin"))
+                .thenReturn(Optional.of(admin));
+
+        authService = new AuthService(adminRepository, sessionManager);
+        service = new ReservationManagementService(
+                appointmentRepository,
+                timeSlotRepository,
+                List.of(rule),
+                authService
+        );
+        service.registerObserver(observer);
+
+        authService.login("admin", "1234");
 
         service.cancelReservationByAdmin("A1");
 
@@ -160,15 +189,27 @@ class ReservationManagementServiceTest {
 
     @Test
     void cancelReservationByAdmin_notAuthenticated() {
-        when(authService.isAuthenticated()).thenReturn(false);
-
         assertThrows(AuthorizationException.class,
                 () -> service.cancelReservationByAdmin("A1"));
     }
 
     @Test
     void getAllReservationsByAdmin_success() {
-        when(authService.isAuthenticated()).thenReturn(true);
+        Administrator admin = new Administrator("admin", "1234");
+
+        AdminRepository adminRepository = mock(AdminRepository.class);
+        when(adminRepository.findByUsername("admin"))
+                .thenReturn(Optional.of(admin));
+
+        authService = new AuthService(adminRepository, sessionManager);
+        service = new ReservationManagementService(
+                appointmentRepository,
+                timeSlotRepository,
+                List.of(rule),
+                authService
+        );
+
+        authService.login("admin", "1234");
 
         when(appointmentRepository.findAll()).thenReturn(List.of(appointment));
 
@@ -179,8 +220,6 @@ class ReservationManagementServiceTest {
 
     @Test
     void getAllReservationsByAdmin_notAuthenticated() {
-        when(authService.isAuthenticated()).thenReturn(false);
-
         assertThrows(AuthorizationException.class,
                 () -> service.getAllReservationsByAdmin());
     }

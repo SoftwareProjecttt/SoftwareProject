@@ -1,0 +1,5222 @@
+
+
+===== PAGE 1 =====
+  
+ 
+ 
+ 
+Software  Engineering   
+(10636312)  2025/2026   Eng.Haya  Samaana   
+  
+References  ●  Book:  Software  Engineering:  A  Modern  Approach  by   Marco  Tulio  Valente  -  2024  ●  Book:  Software  Engineering   by  Ian  Sommerville-  2011  –  9
+ th
+ edition  ●  https://en.wikipedia.org ●  https://refactoring.guru/ 
+1  
+
+
+===== PAGE 2 =====
+  
+ 
+ 
+          Chapter  1:  Introduction       
+2  
+
+===== PAGE 3 =====
+  
+ 
+ 
+  Modern  systems  rely  heavily  on  software   Bugs  and  poor  design can  cause  financial  loss,  reputational  damage,  or human  loss   Learning  from  failures  improves  software  quality   
+Top  Software  Failures  
+ 
+3  
+
+
+===== PAGE 4 =====
+  
+ 
+ 
+ 
+ 
+Ariane5  Explosion  (1996)   Cause:  Trying  to  store  a  64-bit  number  into  a16-bit  space  ( integer  overflow  →  unhandled  
+exception).
+ Impact:  Crash  after  36.7  seconds,  The  European  Space  Agency  spent  10  years  and  $7billion  to  
+produce
+ 
+Ariane5.
+ Lesson:  Edge  case  handling  &  formal  verification  are  critical  •Watch  the  video:  http://www.youtube.com/watch?v=z-r9cYp3tTE  
+ 
+London  Ambulance  Service  (1992)
+ 
+●  Considered  the  largest  ambulance  service  in  the  world.  ●  Cause:  Overloaded  problem .   It   was  unable  to  keep  track  of  the  ambulances  and  their  
+statuses.
+ 
+Sending
+ 
+multiple
+ 
+units
+ 
+to
+ 
+some
+ 
+locations
+ 
+and
+ 
+no
+ 
+units
+ 
+to
+ 
+other
+ 
+locations.
+ 
+ 
+ ●  Impact:  Generates   many  exception  messages,  46  deaths .  
+4  
+
+
+===== PAGE 5 =====
+  
+ 
+ ●  Lesson  :  Proper  requirements  engineering  is  critical.   Large,  safety-critical  systems  
+must
+ 
+undergo
+ 
+incremental
+ 
+deployment
+ 
+and
+ 
+extensive
+ 
+testing
+.
+ 
+Stakeholder
+ 
+(user)
+ 
+involvement
+ 
+is
+ 
+essential.
+ 
+ 
+https://erichmusick.com/pdf/writings/technology/1992-london-ambulance-cad-failure.pdf 
+Financial  Software  –  Knight  Capital  
+●  Cause:  Trading  software  bug  deployed  live  ●  Impact:  $440  million  lost  in  45  minutes  ●  Lesson:  Version  control ,  testing ,  and  safe  deployment  are  crucial  
+https://www.henricodolfing.com/2019/06/project-failure-case-study-knight-capital.html 
+ 
+Therefore…   
+A  well-disciplined  approach  to  software  development  and  management  is  necessary.  This  is  
+called
+ 
+software
+ 
+engineering.
+  
+  5  
+
+
+===== PAGE 6 =====
+  
+ 
+ 
+ 6  
+
+
+===== PAGE 7 =====
+  
+ 
+ 
+What  is  Software  Engineering?  
+It  is  different  from  Programming  ⇒  It  is  a  systematic  process  for  supporting  software  design,  
+development
+ 
+and
+ 
+maintenance
+ 
+activities
+ 
+ All  software  engineers  can  program,  but  not  all  programmers  can  engineer  software.  
+Why  Software  Engineering?  
+1.  Reduces  complexity:  divides  big  problems  into  several  small  problems  2.  To  minimize  software  cost:  plan  everything   3.  To  decrease  time  4.  Handling  big  projects:  which  requires  lots  of  planning,  management,  resources,  testing  and  
+maintenance.
+ 
+ 5.  Reliable  software:  working  software  even  if  there  is  a  bug  in  its  given  time  span.  Any  bug  may  cause:  a.  Human  loss  (medical  system)  b.  Economical  or  financial   loss  (Banking  system)  6.  Productivity  :  follow  software  engineering  approach  and  standard  to  increase  productivity  7.  To  meet  the  needs  of  customers.  8.  To  reduce  risk   a.  Project  risk  (Staff  turnover)  b.  Product  risk  (i.e  CASE  tool  underperformance)  c.  Business  risks  (i.e  Competition,  Technology  change))  9.  To  reduce  project  management  overhead    
+7  
+
+
+===== PAGE 8 =====
+  
+ 
+ 
+Stakeholder?   Is  anyone  who  makes  a  contribution  to  the  solution  of  the  project.        ●  direct  user  ●  indirect  user   ●  Manager  ●  The  "gold  owner"  who  funds  the  project,  ●  developers   ●  Tester   
+Software  Development  Life  Cycle  (SDLC)?  
+ 
+ All  types  of  applications  follow  the  same  SDLC:  ●  Standalone  App:  runs  on  a  local  computer  (AutoCAD  software)  ●  Embedded  control  systems:  SW  controls  HW(Cruise  Control  System)[ common  type ]  ●  Mobile  App  /  Web  App  ●  Systems  for  modelling  and  simulation(MultiSim)  ●  Data  Collection  System:  collection  of  sensors(Weather  Station  System)   These  applications  may:   ○  Generic  products :  sold  to  any  customer,  specifications  are  owned  by  the  developer.  ○  Customized  products(Bespoke) :  sold  to  specific  customers  to  meet  their  own  needs,  
+specifications
+ 
+is
+ 
+owned
+ 
+by
+ 
+customer.
+  8  
+
+
+===== PAGE 9 =====
+  
+ 
+  
+ 
+  
+9  
+
+
+===== PAGE 10 =====
+  
+ 
+ 
+ 
+  10  
+
+
+===== PAGE 11 =====
+  
+ 
+ 
+ 
+ 
+11  
+
+
+===== PAGE 12 =====
+  
+ 
+ 
+  
+12  
+
+
+===== PAGE 13 =====
+  
+ 
+ 
+  
+ 
+13  
+
+
+===== PAGE 14 =====
+  
+ 
+ 
+           
+14  
+
+
+===== PAGE 15 =====
+  
+ 
+ 
+Any  application  has  mainly  two  parts:  ●  Front-End  (GUI  or  Look  and  Feel  or  presentation  layer)  ●  Back-End  (Business  logic,  Database  and  servers...  Where  data  is  calculated)             Full  stack  developer  (  Front-end  +  Back-end+  DB)  
+ 
+Any  Software  should  have:  ●  Computer  Program(Source  Code)   ●  Full  documentation  (User  Guide,  Developer  API  ())   
+   Check  Tutorial:  Generating  API  Documentation  in  Java  with  Javadoc.exe.  
+15  
+
+
+===== PAGE 16 =====
+  
+ 
+  What  are  the  key  challenges  facing  software  engineering?  ●  increasing  diversity  in  technology,  business  needs,  languages  ..  ●  demands  for  reducing  delivery  times  (rapid  development)  ●  demands  for  developing  high  quality  software(safety,  security,  scalability  ….)   What  are  the  best  software  engineering  techniques  and  methods?   There  is  No .  The  software  engineering  methods  and  tools  used  depend  on:  ●  the  type  of  application  being  developed  (Games  ,  mobile  app...)  ●  the  requirements  of  the  customer  (functional  and  nonfunctional  requirements)  ●  the  background  of  the  development  team.              
+16  
+
+===== PAGE 17 =====
+  
+ 
+ 
+Chapter  2:  Models/Processes  of  
+Software
+ 
+Development
+ 
+Life
+ 
+cycle
+ 
+(SDLC)?
+ 
+ 1.  Traditional  software  development  ✓ Waterfall   (1970)  ✓ V  model  ✓ Incremental  Model  ✓ Reusable  component  COTS    2.   Agile  software  development  (2001)  ✓ XP  –Extreme  Programming  ✓ SCRUM              and  many   
+17  
+
+
+===== PAGE 18 =====
+  
+ 
+ 
+ 
+ 
+18  
+
+
+===== PAGE 19 =====
+  
+ 
+ 
+  Description  When  to  use  Advantages  Disadvantages  
+Plan-driven  model:  plan  every  things  before  start  
+requirements   and  technology  are  well-understood(stable)   
+High  visibility  Low  flexibility  
+Full  documentation  (contract)  
+ 
+quality  is  more  important  than  cost  or  schedule  
+Easy  Integration  is  one  big  bang  at  the  end 
+Large  team  →  the  communication  achieved  via  documentation  
+New  version  of  an  existing  product  
+ Late  delivery  -  at  the  end  ⇒  late  feedback   
+ mostly  used  for  large  systems  developed  at  several  sites  
+ Requirements  change  
+19  
+
+
+===== PAGE 20 =====
+  
+ 
+   
+V  Model  
+ 
+ 
+Description  When  to  use  Advantages  Disadvantages  
+Plan-driven   
+Reliable  application   
+Same  as  Waterfall  Does  not  handle  dynamic  changes  in  requirements    
+Variant  of  Waterfall     Does  not  contain  risk  analysis  activities     
+20  
+
+
+===== PAGE 21 =====
+  
+ 
+ 
+Incremental  Model
+ 
+ Description  When  to  use  Advantages  Disadvantages  
+1.  Plan-driven  2.  Agile  
+requirements   and  technology  are  not  stable   
+More  rapid  delivery  with  highest  priority  requirements  first  
+Low  visibility  
+Interleaved  phases   easier  to  get  customer  feedback  .Early  increments  act  as  a  prototype  to  help  elicit  requirements  for  later  increments.  
+Degradation  of  system  structure   as  new  increments  are  added ⇒  So  we  need  refactoring  which  is  costly   
+  Reduce  cost  of  accommodating   new  changes  
+ 
+  Lower  risk  since  the  highest  priority  services   receive  the  most  testing  
+ 
+21  
+
+
+===== PAGE 22 =====
+  
+ 
+ 
+Reuse  Component  Model  COTS  (Commercial-off-the-shelf)  
+ Description  When  to  use  Advantages  Disadvantages  
+Plan-driven  Agile  
+Need  for  rapid  deployment    Limited  in-house  development  resources,  and  Budget   No  need  to  reinvent  the  wheel  (email,  accounting,  CRM,  HR  systems)   
+More  rapid  delivery  with  highest  priority  requirements  first  
+Incompatibility  with  system  requirements ⇒  needs  Adaptation  layer  (Middle  layer)   
+Lack  of  customization  beyond  what  the  vendor  allows   
+ 
+Build  system  from  existing  components  (  like  web  services,  Packages,  Frameworks)  
+   
+Used  in  Web  App            
+22  
+
+===== PAGE 23 =====
+  
+ 
+ 
+Prototyping   Is  an  initial  version  of  a  system  used  to  demonstrate  concepts.  Used  when:   the  product  requirements  are  not  well-understood   Used  to:  ●  Understanding  user  needs  and  eliciting  the  requirements  ●  Understanding  the  GUI  design  ●  Back  to  Back  Testing  :  testing  two  versions  of  a  component  with  same  inputs  and  comparing  
+the
+ 
+outputs
+ ●  Improved  system  usability.  ●  Improved  maintainability.  ●  Reduced  development  effort.  Throw-away  prototypes  ●  Does  Not  focus  on  Error  checking  and  recovery   ●  Does  Not  focus  on  documentation   ●  Focus  on  functional  rather  than  non-functional  requirements  such  as  reliability  and  security  ●  Does  not  meet  organizational  quality  standards  ●  The  prototype  structure  is  usually  degraded  through  rapid  change;   
+Is  it  Traditional  or  Agile?  
+●  Prototyping  itself  is  neutral ;  it  can  be  used  in  either  traditional  or  agile  contexts.  
+ ●  If  the  prototype  is  throwaway  and  done  once  →  more  traditional  
+ ●  If  the  prototype  is  evolutionary  and  part  of  iterative  delivery  →  more  Agile  
+ 
+ 
+ 
+ 
+ 
+ 
+23  
+
+===== PAGE 24 =====
+  
+ 
+ UI  UX  Prototyping  Design  Tools  
+ 
+https://www.softobotics.com/blogs/a-comprehensive-review-of-top-wireframing-and-prototyping-tools-for-ux-design/ 
+ 
+ 
+ 
+24  
+
+
+===== PAGE 25 =====
+  
+ 
+ 
+Agile  Manifesto  (2001)?  1.  Customer  involved  in  the  process(Prioritized  requirements,  rapid  feedback  and  acceptance  
+test)
+ 2.  No     Big     Design     Upfront   (Design     Evolves,  Decisions     made     Just     In     Time).  Clear     
+separation
+    
+between
+    
+Architecture
+ 
+and
+    
+Design.
+       Architecture  Big,  structural  decisions  about  the  system.  
+Hard
+ 
+to
+ 
+change
+ 
+later
+ 
+→
+ 
+because
+ 
+they
+ 
+affect
+ 
+the
+ 
+whole
+ 
+system.
+ 
+Examples:
+ 
+○  Choosing  the  framework  (e.g.,  Angular  vs  React  vs  Vue  for  frontend).  
+ ○  Choosing  database  type  (SQL  vs  NoSQL).  
+ ○  Choosing  deployment  style  (monolith  vs  microservices).  
+ ○  Deciding  layers  (MVC,  layered,  client-server).  
+ 
+   These  choices  lock  you  in  for  years;  changing  them  is  expensive.  
+       Design  
+         Lower-level  implementation  details  within  the  chosen  architecture.  
+Easier  to  change/refactor  as  the  project  evolves.  
+Examples:  
+○  Deciding  whether  a  class  should  be  abstract  or  concrete.  
+ ○  Choosing  method  names  or  visibility  (public  vs  private).  
+ ○  Deciding  how  to  implement  an  interface .  
+ ○  Refactoring  functions  for  clarity  or  testability.  
+ 3.  Less     focus     on    Documentation    (   doesn’t     mean     NO     documentation)  4.  Focus     on     Today’s     requirements      5.  More     prepared     for     change      6.  More     focus     on     Code  (Maintain  Simplicity  via  Refactoring,  Design  Pattern)   
+25  
+
+===== PAGE 26 =====
+  
+ 
+ 7.  Rapid  development  and  delivery   8.  Co-located  team  (small  size  team:  5–11  people  total )  9.  Small  to  medium  size  projects  (  2-  6  months )   
+ 10.  No  plan-driven,  Just  in  time  negotiation  between  team  members,  daily  meeting  11.  All  the  stakeholders  take  responsibility  for  all  of  the  code  12.  Collective  ownership :  all  the  developers  take  responsibility  for  all  code.    
+      Problem  of  Agile  method :    
+26  
+
+
+===== PAGE 27 =====
+  
+ 
+ Scaling  the  agile  method  to  large  systems  is  a  problem,  because  it  requires  a  large  team  which  
+needs
+ 
+appropriate
+ 
+communication
+ 
+and
+ 
+since
+ 
+agile
+ 
+is
+ 
+less
+ 
+focused
+ 
+on
+ 
+documentation,
+ 
+so
+ 
+we
+ 
+can’t
+ 
+achieve
+ 
+the
+ 
+required
+ 
+communication
+.
+  
+Extreme  Programming  XP  (Best  Practices)  
+ 
+ 
+  
+27  
+
+
+===== PAGE 28 =====
+  
+ 
+ 
+ 
+28  
+
+
+===== PAGE 29 =====
+  
+ 
+ 
+              
+29  
+
+
+===== PAGE 30 =====
+  
+ 
+ 
+Cost  distribution   ●  Most  systems  are  SW  controlled  since  SW  is  not  wearout  compared  with  HW.  ●  For  a  long  lifetime,  maintenance  costs  >>>  development  costs.  
+   
+ 
+30  
+
+
+===== PAGE 31 =====
+  
+ 
+ 
+Agile  Project  Management  (SCRUM)    Project  Management  -  Traditional   Project  Management-  Agile  
+Plan-Driven:  ●  What  to  deliver  ●  When  to  deliver  ●  Who  will  work  on  the  development  of  project  ●  Within  the  budget    
+SCRUM  
+ 
+  
+31  
+
+
+===== PAGE 32 =====
+  
+ 
+ 
+ 
+   
+32  
+
+
+===== PAGE 33 =====
+  
+ 
+ 
+The  role  of  ‘Product  owner’  (PO)
+:
+ ●  Write  user  stories   ●  Explain  user  stories  to  the  devs  ●  Define  the  acceptance  tests  for  the  user  stories  ●  Prioritize  the  user  stories   
+The  role  of  ‘Scrum  master’
+ 
+is   a  facilitator  
+ ●  Arranges  daily  meetings:  progress,  problems,  what  should  do  in  the  next  day  ●  Tracks  the  backlog  of  work  to  be  done  ●  Records  decisions  ●  Measures  progress   ●  Communicates  with  customers  and  management  outside  of  the  team.  ●  Protect  the  development  team  from  external  distractions  (e.g.  The  marketing  manager  sends  
+an
+ 
+urgent
+ 
+email
+ 
+asking
+ 
+the
+ 
+team
+ 
+to
+ 
+add
+ 
+a
+ 
+new
+ 
+discount
+ 
+banner
+ 
+immediately.)
+      
+    
+33  
+
+
+===== PAGE 34 =====
+  
+ 
+ 
+ 
+ 
+  
+34  
+
+
+===== PAGE 35 =====
+  
+ 
+ 
+   
+35  
+
+
+===== PAGE 36 =====
+  
+ 
+ 
+  
+  
+36  
+
+
+===== PAGE 37 =====
+  
+ 
+ 
+  
+  
+37  
+
+
+===== PAGE 38 =====
+  
+ 
+ 
+Example  on  Product  Backlog:  Q&A  Forum
+  
+   
+Sprint  Backlog  
+ 
+38  
+
+
+===== PAGE 39 =====
+  
+ 
+ 
+  
+  39  
+
+
+===== PAGE 40 =====
+  
+ 
+ 
+     
+Burn  down  chart   
+ 
+Ideal  Case:  our  velocity  would  be  constant  (i.e.  15  pts)  
+In  real  Case  
+ 
+40  
+
+
+===== PAGE 41 =====
+  
+ 
+ 
+  
+ 
+    
+41  
+
+
+===== PAGE 42 =====
+  
+ 
+ 
+Kanban  
+ 
+ 
+42  
+
+
+===== PAGE 43 =====
+  
+ 
+ 
+ 
+      43  
+
+
+===== PAGE 44 =====
+  
+ 
+ 
+  
+44  
+
+
+===== PAGE 45 =====
+  
+ 
+ 
+ 
+     
+45  
+
+
+===== PAGE 46 =====
+  
+ 
+ 
+Chapter  3:  Requirements  Engineering  Process
+:
+ 
+  
+  
+46  
+
+
+===== PAGE 47 =====
+  
+ 
+ 
+ 
+ 
+47  
+
+
+===== PAGE 48 =====
+  
+ 
+ 
+Requirements  Engineering  (RE)
+ 
+is
+ 
+the
+ 
+process
+ 
+of
+ 
+identifying,
+ 
+documenting,
+ 
+and
+ 
+managing
+ 
+the
+ 
+needs
+ 
+and
+ 
+constraints
+ 
+of
+ 
+a
+ 
+software
+ 
+system
+.
+ 
+Goal:  
+To
+ 
+ensure
+ 
+that
+ 
+the
+ 
+final
+ 
+system
+ 
+meets
+ 
+stakeholder
+ 
+expectations
+ 
+and
+ 
+works
+ 
+correctly
+ 
+within
+ 
+its
+ 
+environment.
+ 
+Types  of  Requirements
+ 
+Type  What  it  describes  Examples   
+Functional  System  behavior  /  services  
+Money  transfer,  email  receipt,  GPS  directions  
+“What  the  car  does”  →  starts,  accelerates  
+Non-Functional  System  qualities  /  constraints  
+Performance,  reliability,  security,  usability  
+“How  the  car  performs”  →  fuel  efficiency,  safety  rating,  noise  level  
+Domain  Domain-specific  rules  /  regulations  
+Compliance  to  standards,  financial  logging  
+“Rules  of  the  road”  →  speed  limits,  traffic  signals,  emission  standards.  
+ 
+Key  Activities  in  RE:  
+1.  Feasibility  Study:  Technically  and  Financially  (Budget,  resources,  HW,  etc..).  2.  Elicitation:  Gathering  requirements  from  stakeholders,  users,  regulations,  existing  systems,  
+and
+ 
+domain
+ 
+experts.
+ 
+Using
+ 
+Interviews
+ 
+(open
+ 
+and
+ 
+closed-
+ 
+predefined
+ 
+questions),
+ 
+questionnaire.
+ 3.  Analysis:  Refining,  prioritizing,  and  validating  requirements.  4.  Specification:  Documenting  requirements  in  a  clear,  structured  form  (UML,formal  notation,  
+tables).
+ 5.  Validation:  Checking  that  requirements  are  complete,  consistent,  and  feasible.  6.  Management:  Handling  changes  to  requirements  over  time.  
+ 
+    
+48  
+
+===== PAGE 49 =====
+  
+ 
+ 
+Key  Outputs  of  the  Requirements  Process   Output  Purpose  
+Requirements  Specification  Document  (SRS)  Document  
+Provides  a  complete  and  formal  reference  for  development   Functional  requirements  (what  the  system  should  do)   Non-functional  requirements  (performance,  security,  usability,  reliability)   Interfaces  (user,  system,  hardware)   Constraints  and  assumptions   
+Use  Cases  /  User  Stories  Capture  user  interactions  and  expected  functionality  
+Models  /  Diagrams  Visual  representation  to  clarify  requirements  
+Prioritized  Requirements  Helps  plan  development  iterations/sprints  
+Traceability  Matrix  Ensures  all  requirements  are  addressed  in  design  &  testing  
+Validation/Approval  Records  Confirms  stakeholder  alignment   
+Validation  of  Requirements?  
+●  Validity :  Ensure  the  functions  meet  the  customer's  needs.  ●  Verifiability :  The  requirements  should  be  testable .  ●  Consistency :  There  should  be  no  conflicts  in  the  requirements.  ●  Completeness :  All  functions  required  by  the  customer  must  be  included.  ●  Comprehensibility :  The  requirements  should  be  easy  to  understand.  ●  Realism :  The  requirements  should  be  implementable  within  the  available  budget  and  
+technology.
+ ●  Traceability :  The  origin  of  each  requirement  must  be  clearly  identified.  ●  Adaptability :  Requirements  should  be  able  to  change  with  minimal  impact  on  other  
+requirements.
+ 
+ 
+    49  
+
+===== PAGE 50 =====
+  
+ 
+ 
+Requirement  Validation  Techniques :
+ 
+Validation  Technique  
+Explanation  Example  
+Formal  /  Informal  Review  
+A  manual  analysis  of  requirements  by  stakeholders  to  identify  issues  or  confirm  alignment  with  expectations.  
+Formal  Review :  A  meeting  where  the  client,  developers,  and  testers  review  project  requirements  for  a  new  e-commerce  website.  Feedback  includes  changes  to  the  checkout  process.   Informal  Review :  A  discussion  during  development  where  a  designer  notices  the  color  scheme  doesn’t  align  with  brand  guidelines  and  suggests  changes.  
+Prototyping  Building  early  versions  of  a  system  or  product  to  visualize  and  test  requirements  before  full  implementation.  
+A  clickable  mock-up  of  a  mobile  app’s  user  interface  is  created  to  get  client  feedback  on  navigation  and  functionality  before  final  development.    A  prototype  of  an  online  banking  app  is  built  to  visualize  the  user  flow  of  transferring  money  and  receiving  payments.  Feedback  is  gathered  to  finalize  features  and  UI  elements.  
+Test  Cases  Writing  specific  test  scenarios  to  verify  that  each  requirement  can  be  validated  and  tested.  
+For  a  requirement  stating  "The  system  should  log  in  users  with  correct  credentials,"  a  test  case  is  created  to  verify  if  entering  the  correct  username  and  password  allows  access.    For  a  requirement  saying  "The  system  must  send  an  email  confirmation  after  each  order  is  placed,"  a  test  case  is  created  to  check  if  the  email  is  sent  after  completing  the  checkout  process.   Examples  of  non-testable requirements:  ●  The  user  interface  must  look  modern  and  attractive.  ●  The  application  must  be  fast.  ●  The  user  interface  must  be  very  responsive.   Examples  of  testable  requirements:  ●  The  system  in  normal  mode  of  operation,  shall  be  able  to  respond  in  6  seconds  or  less     
+50  
+
+===== PAGE 51 =====
+  
+ 
+ 
+1.  Functional  Requirements  (FRs)  
+Describe  what  the  system  should  do  —  the  functions,  tasks,  or  services  provided.  
+Examples:  
+●  A  banking  app  must  allow  users  to  transfer  money  between  accounts.  
+ ●  A  web  store  should  send  an  email  receipt  after  purchase.  
+ ●  A  GPS  system  must  provide  turn-by-turn  directions.  
+ 
+Functional  Requirements  (Natural  language)  Problems:  
+1.  Ambiguity:  interpreted  in  different  ways  by  developers  and  users.   
+ 2.  Lack  of  clarity  3.  Requirements  confusion:  Functional  and  non-functional  requirements  tend  to  be  mixed-up.  
+2.  Non-Functional  Requirements  (NFRs)  
+Definition:  Specify  how  the  system  should  behave ,  rather  than  what  it  does.  Often  called  quality  
+attributes
+.
+ 
+Examples:  
+●  Performance:  The  system  must  handle  10,000  users  simultaneously.  
+ ●  Reliability:  The  system  should  have  99.99%  uptime.  
+ ●  Security:  All  passwords  must  be  encrypted.  
+ ●  Usability:  Users  should  complete  registration  in  less  than  2  minutes.  
+ 
+51  
+
+
+===== PAGE 52 =====
+  
+ 
+ 
+Software  Quality  Attributes  (None  functional  
+Requirements)
+ 
+  
+Examples  
+●  Product  requirement  
+The
+ 
+MHC-PMS
+ 
+shall
+ 
+be
+ available to  all  clinics  during  normal  working  hours  (Mon–Fri,  
+0830–17.30).
+ 
+Downtime
+ 
+within
+ 
+normal
+ 
+working
+ 
+hours
+ 
+shall
+ 
+not
+ 
+exceed
+ 
+five
+ 
+seconds
+ 
+in
+ 
+any
+ 
+one
+ 
+day.
+ ●  Organizational  requirement  
+Users
+ 
+of
+ 
+the
+ 
+MHC-PMS
+ 
+system
+ 
+shall
+ authenticate  themselves  using  their  health  authority  
+identity
+ 
+card.
+ ●  External  requirement  
+The
+ 
+system
+ 
+shall
+ 
+implement
+ 
+patient
+ 
+privacy
+ 
+provisions
+ 
+as
+ 
+set
+ 
+out
+ 
+in
+ 
+HStan-03-2006-priv.
+ 
+standard.
+ 
+52  
+
+
+===== PAGE 53 =====
+  
+ 
+  
+  
+●    
+53  
+
+
+===== PAGE 54 =====
+  
+ 
+  1.  Performance:  (a)  response  time,  (b)  throughput  (number  of  operations  performed  per  second)  ○   every  page  of  the  application  should  be  visible  to  the  users  within  5  seconds.   2.  Scalability:  for  large  number  of  users  or  quantities  of  data  ○  Processing  throughput  of  batch  jobs  shall  increase  when  adding  CPU's  3.  Maintainability:  changes  to  functionalities,  repairs  4.  Reliability:  An  aircraft  engine  is  required  to  have  100%  reliability  5.  Efficiency:  minimal  use  of  resources  (memory,  processor,  disk,  network…)  6.  Availability  :   ○  A  hospital's  patient  record  system  is  required  to  have 99.99%  ○   Changes  of  frequent  changed  parameters  and  reference  data  shall  be  possible  online,  
+not
+ 
+requiring
+ 
+application
+ 
+restart.
+ ○  The  Application  shall  support  Online-Backup 7.  Privacy:  patient  information should  be  confidential   8.  Usability:  easy  to  use/  easy  to  learn   ○  a  vehicle  navigation  system  states  that  all  menus  are  easy  to  tap.  ○  >=99%  of  trained  gas  stations  managers  will  be  able  to  perform  end-of-month  reporting  
+without
+ 
+referring
+ 
+to
+ 
+the
+ 
+user
+ 
+manual
+ 
+or
+ 
+online
+ 
+help
+ 9.  Safety   and  security  :  The  ability  to  resist  unauthorized  attempts  at  usage  and  continue  
+providing
+ 
+service
+ 
+to
+ 
+users
+ 
+while
+ 
+under
+ 
+denial
+ 
+of
+ 
+service
+ 
+attack
+ ○  The  application  shall  identify  all  of  its  client  applications  before  allowing  them  to  use  its  
+capabilities.
+ 10.  Reliability  :  Measure  degree  to  which  the  system  performs  as  required  Includes  resistance  to  
+failure
+ 
+and
+ 
+ability
+ 
+to
+ 
+perform
+ 
+a
+ 
+required
+ 
+function
+ 
+under
+ 
+stated
+ 
+conditions
+ 
+for
+ 
+a
+ 
+specified
+ 
+period
+ 
+of
+ 
+time
+ ○  The  precision  of  calculations  shall  be  at  least  1/1000000  
+Quality  Attributes  Confliction:  
+●  Fewer  subsystems  improves  performance  but  hurts  modifiability.   ●  Redundant  data  helps  availability  but  lessens  security.    
+54  
+
+===== PAGE 55 =====
+  
+ 
+ 
+Metrics  of  NFR:  
+ 
+ 
+3.  Domain  Requirements  
+Definition:  Requirements  derived  from  the  specific  domain  or  environment  in  which  the  system  
+will
+ 
+operate.
+ 
+Examples:  
+●  In  healthcare:  A  system  must  comply  with  regulations  (patients  privacy).  
+ ●  In  aviation:  Flight  software  must  follow  safety  standards.  
+ ●  In  banking:  Transactions  must  be  logged  according  to  financial  audit  rules.  
+ 
+Characteristics:  
+●  Reflect  rules,  constraints,  and  standards  from  the  domain.  
+ ●  Usually  mandatory  and  influence  both  functional  and  non-functional  requirements.  
+55  
+
+
+===== PAGE 56 =====
+  
+ 
+ 
+Agile  Requirements  
+1.  Producing  a  requirements  document  is  a  waste  of  time  because  requirements  change  so  
+quickly.
+ 2.  The  document  is  always  out  of  date.  3.  XP  use  incremental  requirements  engineering  and  express  requirements  as  ‘user  stories’   
+  
+ 
+56  
+
+
+===== PAGE 57 =====
+  
+ 
+ 
+ 
+ 
+  
+57  
+
+
+===== PAGE 58 =====
+  
+ 
+ 
+  
+ 
+ 
+58  
+
+
+===== PAGE 59 =====
+  
+ 
+ 
+ 
+59  
+
+
+===== PAGE 60 =====
+  
+ 
+ 
+ 
+ 
+60  
+
+
+===== PAGE 61 =====
+  
+ 
+ 
+   
+    
+ 
+ 
+ 
+ 
+61  
+
+
+===== PAGE 62 =====
+  
+ 
+ 
+ 
+ 
+ 
+62  
+
+
+===== PAGE 63 =====
+  
+ 
+ 
+  
+   
+63  
+
+
+===== PAGE 64 =====
+  
+ 
+ 
+ 
+ 
+64  
+
+
+===== PAGE 65 =====
+  
+ 
+ 
+ 
+ 
+ 
+ 
+65  
+
+
+===== PAGE 66 =====
+  
+ 
+ 
+  
+ 
+            
+66  
+
+
+===== PAGE 67 =====
+  
+ 
+ 
+  
+ 
+  
+67  
+
+
+===== PAGE 68 =====
+  
+ 
+ 
+ 
+ 
+ 
+68  
+
+
+===== PAGE 69 =====
+  
+ 
+ 
+ 
+ 
+ 
+69  
+
+
+===== PAGE 70 =====
+  
+ 
+  
+    
+ 
+70  
+
+
+===== PAGE 71 =====
+  
+ 
+ 
+ 
+ 
+71  
+
+
+===== PAGE 72 =====
+  
+ 
+ 
+   
+ 
+ 
+72  
+
+
+===== PAGE 73 =====
+  
+ 
+ 
+                    
+73  
+
+
+===== PAGE 74 =====
+  
+ 
+ 
+ 
+ 
+  
+74  
+
+
+===== PAGE 75 =====
+  
+ 
+ 
+ 
+ Conversion  Rate  (%)=Number  of  Visitors  /  Number  of  Conversions ×100  
+So  if  5,000  users  visit  and  100  click  “Add  to  cart,”  the  conversion  rate  =  100/5000×100=2%  
+●  Design  A:  5,000  users  →  2%  conversion  rate  =  100  conversions.  
+ ●  Design  B:  5,000  users  →  3%  conversion  rate  =  150  conversions.  
+ 
+✅  Design  B  wins  because  it  converts  a  higher  percentage  of  visitors  (3%  vs.  2%).  
+ 
+75  
+
+
+===== PAGE 76 =====
+  
+ 
+ 
+Chapter  4:  
+Design
+ UML  OO  Design,  Design  Properties,  Design  Principle,  Design  Pattern,  
+Architecture
+ 
+Design
+ 
+ 
+   
+76  
+
+
+===== PAGE 77 =====
+  
+ 
+ 
+Advantages  of  architecture  design:  ●  Improve  communication  between  stakeholders   ●  Project  planning  ●  System  analysis:  Is  the  system  meets  non-functional  requirements   ●  Large-scale  reuse:  reusability  in  different  systems    
+How  does  architecture  affect  non-functional  requirements?  ●  Performance :  minimize  communications.  Use  large  rather  than  fine-grain components.  ●  Security :  Use  a  layered  architecture  with  critical  assets  in  the  inner  layers.  ●  Availability  Include  redundant  components  and  mechanisms  for  fault  tolerance.  ●  Maintainability :  Use  fine-grain,  replaceable  components.    
+UML  Design    
+      
+77  
+
+
+===== PAGE 78 =====
+  
+ 
+ 
+ 
+ 
+78  
+
+
+===== PAGE 79 =====
+  
+ 
+ 
+ 
+ 
+79  
+
+
+===== PAGE 80 =====
+  
+ 
+ 
+ 
+ 
+   
+80  
+
+
+===== PAGE 81 =====
+  
+ 
+ 
+  
+  
+81  
+
+
+===== PAGE 82 =====
+  
+ 
+ 
+❖  Class  Diagram  
+ 
+ 
+82  
+
+
+===== PAGE 83 =====
+  
+ 
+ 
+  
+83  
+
+
+===== PAGE 84 =====
+  
+ 
+ 
+ Examine  this  class  diagram  to  understand  its  
+structure
+ 
+and
+ 
+relationships?
+ 
+84  
+
+
+===== PAGE 85 =====
+  
+ 
+ 
+Aggregation  vs.  Composition
+  
+ 
+  
+85  
+
+
+===== PAGE 86 =====
+  
+ 
+ 
+❖  Package  Diagram  
+  
+❖  Use  Case  Diagram  ●  Used  to  choose  requirements   ●  Describe  the  functional  behavior     
+86  
+
+
+===== PAGE 87 =====
+  
+ 
+ 
+  
+87  
+
+
+===== PAGE 88 =====
+  
+ 
+ 
+ 
+ 
+88  
+
+
+===== PAGE 89 =====
+  
+ 
+ 
+ 
+ ❖  Sequence  Diagram:(Time  consuming  but  worth)  Behavioral  (dynamic)  diagrams  that  model:  ●  Some  of  the  system's  objects  ●  The  methods  these  objects  execute     Show  the  time  ordering  of  messages  and  interaction  between  components  of  the  
+system
+ ●       Objects  create  the  “object  lifeline”  ●        Active  objects  are  shown  in  a  time  period.   Consist  of  :  ●  lifeline  ●  Messages  ●  Guards  (condition).   Represented  by  [  ]         [amount>200]  ●  Alternatives:  alternative  scenarios  of  a  workflow.  Only  one  of  the  options  will  be  
+executed.
+ 
+ ●  Options:  optional  step  in  workflow.   ●  Loops.   89  
+
+
+===== PAGE 90 =====
+  
+ 
+  
+   
+ 
+90  
+
+
+===== PAGE 91 =====
+  
+ 
+   
+  
+91  
+
+
+===== PAGE 92 =====
+  
+ 
+ 
+   This  sequence  diagram  is  intended  to  represent  the  method  calls  required  to  calculate  the  
+total
+ 
+value
+ 
+of
+ 
+an
+ 
+Order,
+ 
+composed
+ 
+of
+ 
+multiple
+ 
+OrderLines,
+ 
+each
+ 
+linked
+ 
+to
+ 
+a
+ 
+Product
+ 
+and
+ 
+a
+ 
+quantity.
+ 
+Analyze
+ 
+why
+ 
+the
+ 
+diagram
+ 
+fails
+ 
+to
+ 
+represent
+ 
+this
+ 
+process
+ 
+accurately?
+         92  
+
+
+===== PAGE 93 =====
+  
+ 
+ 
+1.  The  loop  over  multiple  OrderLines  is  missing  
+●  An  Order  typically  contains  multiple  OrderLine  objects .  
+ ●  The  total  price  should  be  computed  by  iterating  through  all  OrderLines  and  summing  their  
+contributions
+ 
+(quantity  ×  product  price ±  discounts).  
+ 
+ 
+2.  Mix-up  between  object  responsibilities  
+●  getQuantity and  getProduct are  correctly  called  on  OrderLine.  
+ ●  But  calculateBasePrice is  shown  as  a  self-call  on  Order,  which  doesn’t  make  sense.  
+That
+ 
+calculation
+ 
+belongs
+ 
+to
+ 
+either
+ OrderLine or  Product.  
+ ●  Similarly,  calculateDiscounts is  also  shown  as  a  method  of  Order,  but  logically  
+discounts
+ 
+are
+ 
+tied
+ 
+to
+ 
+the
+ Customer or  the  Product .  
+ 
+93  
+
+
+===== PAGE 94 =====
+  
+ 
+ 
+3.  No  aggregation  of  results  into  total  order  price  
+●  The  diagram  does  not  show  how  partial  line  totals  are  accumulated  into  a  final  order  total.  
+ ●  There  should  be  a  message  like  addLineTotal() or  a  loop  with sum  +=  lineValue.  
+ ●  Without  this,  the  diagram  represents  only  one  line’s  price  calculation,  not  the  whole  order’s  
+total
+.
+ 
+4.  Customer’s  role  is  under-specified  
+●  The  only  message  to aCustomer is  getDiscountInfo.  
+ ●  But  it’s  unclear  how  this  is  applied  back  into  the  line  calculation  or  if  different  customers  get  
+different
+ 
+discounts.
+ 
+ ●  The  connection  between  customer  discounts  and  final  order  price  is  incomplete.  
+ 
+94  
+
+===== PAGE 95 =====
+  
+ 
+ 
+             95  
+
+
+===== PAGE 96 =====
+  
+ 
+ 
+Examples  Consider  an  automated  e-shopping  system  with  the  following  problem  statement:  Product  Viewing  and  Selection:  -      A  customer,  browsing  the  web  site  of  an  e-shop,  is  able  to  get  information  (name,  
+description,
+ 
+units
+ 
+in
+ 
+stock,
+ 
+and
+ 
+price
+ 
+per
+ 
+unit)
+ 
+about
+ 
+the
+ 
+products
+ 
+offered
+ 
+for
+ 
+sale.
+ -      When  the  customer  decides  to  buy  a  product,  he  adds  it  as  an  item  to  his  shopping  cart.  
+This
+ 
+item
+ 
+also
+ 
+indicates
+ 
+the
+ 
+quantity
+ 
+of
+ 
+the
+ 
+product
+ 
+to
+ 
+be
+ 
+bought.
+ 
+The
+ 
+product
+ 
+stock
+ 
+is
+ 
+decreased
+ 
+accordingly.
+ -      The  customer  is  also  able  to  click  on  a  link  where  he  can  view  the  items  in  his  shopping  
+cart.
+ 
+In
+ 
+this
+ 
+case,
+ 
+the
+ 
+total
+ 
+price
+ 
+accumulated
+ 
+so
+ 
+far
+ 
+is
+ 
+computed
+ 
+and
+ 
+displayed.
+ -      The  customer  can  also  remove  items  from  his  shopping  cart,  and  the  product  stock  is  
+then
+ 
+increased
+ 
+by
+ 
+the
+ 
+item’s
+ 
+quantity.
+ -      After  the  customer  finishes  filling  the  shopping  cart,  he  places  an  order  where  the  order  
+number,
+ 
+date,
+ 
+and
+ 
+total
+ 
+price
+ 
+appear.
+   Payment:  -      Information  on  the  customer  includes  his  name,  shipping  address,  e-mail  address,  and  
+password.
+ -      The  payment  is  done  using  a  credit  card,  whose  information  includes  issuer,  cardholder  
+name,
+ 
+card
+ 
+number,
+ 
+and
+ 
+expiration
+ 
+date.
+ -      If  the  credit  card  does  not  have  sufficient  funds,  the  credit  card  is  rejected.  -      In  case  of  successful  payment,  the  customer  can  track  his  order  on-line  by  browsing  his  
+order
+ 
+status.
+ Draw  a  UML  use  case  diagram  describing  the  above  problem  statement.  Write  the  proper  types  for  
+the
+ 
+relations
+ 
+(«include»,
+ 
+«extend»)
+ 
+where
+ 
+necessary.
+ 
+96  
+
+===== PAGE 97 =====
+  
+ 
+ 
+              
+97  
+
+
+===== PAGE 98 =====
+  
+ 
+ Draw  a  UML  class  diagram  describing  the  above  problem  statement.  Label  your  associations  and  
+add
+ 
+the
+ 
+right
+ 
+multiplicities.
+ 
+                    
+98  
+
+
+===== PAGE 99 =====
+  
+ 
+ Build  a  UML  sequence  diagram  corresponding  to  the  class  diagram.  Model  the  following  scenario:  
+an
+ 
+item
+ 
+is
+ 
+added
+ 
+to
+ 
+the
+ 
+shopping
+ 
+cart,
+ 
+the
+ 
+product
+ 
+stock
+ 
+is
+ 
+decreased,
+ 
+the
+ 
+order
+ 
+is
+ 
+placed,
+ 
+the
+ 
+credit
+ 
+card
+ 
+charge
+ 
+is
+ 
+authorized,
+ 
+and
+ 
+the
+ 
+order
+ 
+information
+ 
+is
+ 
+displayed.
+ 
+      
+  
+99  
+
+
+===== PAGE 100 =====
+  
+ 
+ 
+Design  Properties  
+   
+  
+100  
+
+
+===== PAGE 101 =====
+  
+ 
+ 
+   
+Why  is  conceptual  integrity   important?  
+ 
+Conceptual
+ 
+integrity
+ 
+makes
+ 
+a
+ 
+system
+ 
+easier
+ 
+to
+ use  and  understand   
+101  
+
+
+===== PAGE 102 =====
+  
+ 
+ 
+ 
+102  
+
+
+===== PAGE 103 =====
+  
+ 
+ 
+    
+ 
+103  
+
+
+===== PAGE 104 =====
+  
+ 
+ 
+ 
+ 
+104  
+
+
+===== PAGE 105 =====
+  
+ 
+  
+ 
+ 
+105  
+
+
+===== PAGE 106 =====
+  
+ 
+ 
+  
+    
+106  
+
+
+===== PAGE 107 =====
+  
+ 
+ 
+ 
+ 
+ 
+107  
+
+
+===== PAGE 108 =====
+  
+ 
+ 
+  
+ 
+108  
+
+
+===== PAGE 109 =====
+  
+ 
+ 
+ 
+ 
+109  
+
+
+===== PAGE 110 =====
+  
+ 
+ 
+  
+ 
+110  
+
+
+===== PAGE 111 =====
+  
+ 
+ 
+                       
+111  
+
+
+===== PAGE 112 =====
+  
+ 
+ 
+Design  principles   
+ 
+ 
+112  
+
+
+===== PAGE 113 =====
+  
+ 
+ 
+  
+  
+ 
+113  
+
+
+===== PAGE 114 =====
+  
+ 
+ 
+ 
+ 
+114  
+
+
+===== PAGE 115 =====
+  
+ 
+ 
+ 
+ 
+ 
+115  
+
+
+===== PAGE 116 =====
+  
+ 
+ 
+ 
+ 
+116  
+
+
+===== PAGE 117 =====
+  
+ 
+ 
+ 
+ 
+117  
+
+
+===== PAGE 118 =====
+  
+ 
+ 
+ 
+118  
+
+
+===== PAGE 119 =====
+  
+ 
+ 
+ 
+119  
+
+
+===== PAGE 120 =====
+  
+ 
+ 
+   
+ 
+120  
+
+
+===== PAGE 121 =====
+  
+ 
+ 
+  
+  
+ 
+121  
+
+
+===== PAGE 122 =====
+  
+ 
+ 
+ 
+ 
+122  
+
+
+===== PAGE 123 =====
+  
+ 
+ 
+    
+123  
+
+
+===== PAGE 124 =====
+  
+ 
+ 
+  
+ 
+124  
+
+
+===== PAGE 125 =====
+  
+ 
+ 
+ 
+ 
+125  
+
+
+===== PAGE 126 =====
+  
+ 
+ 
+   
+Design  Patterns  
+  Common  solutions  to  recurring  design  problems  faced  by  developers  Design  patterns  simplify  future  code  changes  
+126  
+
+
+===== PAGE 127 =====
+  
+ 
+ 
+  
+         
+127  
+
+
+===== PAGE 128 =====
+  
+ 
+ 
+❖  Singleton  Pattern  
+ 
+ 
+128  
+
+
+===== PAGE 129 =====
+  
+ 
+ 
+  
+ 
+129  
+
+
+===== PAGE 130 =====
+  
+ 
+ 
+  
+ 
+130  
+
+
+===== PAGE 131 =====
+  
+ 
+ 
+❖  Strategy  Pattern   
+ 
+ 
+   
+131  
+
+
+===== PAGE 132 =====
+  
+ 
+ 
+  
+  
+132  
+
+
+===== PAGE 133 =====
+  
+ 
+ 
+❖  Observer  Pattern   
+ 
+  
+133  
+
+
+===== PAGE 134 =====
+  
+ 
+ 
+ 
+ 
+134  
+
+
+===== PAGE 135 =====
+  
+ 
+ 
+ 
+ 
+135  
+
+
+===== PAGE 136 =====
+  
+ 
+ 
+ 
+ 
+ 
+136  
+
+
+===== PAGE 137 =====
+  
+ 
+ 
+Architectural  patterns  =  predefined  architectures  
+  
+  Architecture  Style :  Good  design  practice,  which  has  been  tried  and  tested  in  different  
+environments.
+    137  
+
+
+===== PAGE 138 =====
+  
+ 
+  Architecture  Styles:  ●  Layered  architecture  ●  MVC  (Model  View  Controller)  ●  Microservices  ●  Message-Oriented  Architecture  ●  Publish/Subscribe  Architecture  ●  The  pipe  and  filter  pattern  ●  Peer-to-peer  architecture   
+❖  Layered  architecture  1.  The  system  into  a  set  of  layers  provides  a  set  of  services.  2.   if  one  layer  is  changed,  it  may  only  affect  the  layer  immediately  above  it.  a.   This  allows  for  the  parts  of  the  application  to  be  changed  in  a  localized  way,  in  
+isolation,
+ 
+without
+ 
+affecting
+ 
+other
+ 
+parts
+ 
+of
+ 
+the
+ 
+application.
+ 3.  Support  Incremental  development  4.  Widely  used  in  networks  and  distributed  systems   
+ You  can  add  Service  layer  between  PL  and  BL  layers  if  your  application  deals  with  other  services  on  Cloud  
+138  
+
+
+===== PAGE 139 =====
+  
+ 
+ 
+Used  when:  1.  building  new  facilities  on  top  of  existing  systems;  2.  when  the  development  is  spread  across  several  teams  with  each  team  responsibility  for  a  
+layer
+ 
+of
+ 
+functionality;
+ 3.  when  there  is  a  requirement  for  multi-level  security.  4.  Mostly  used  in  web  applications  such  as  java  EE  applications     
+Java  EE   
+Advantages :  1.  Allows  replacement  of  entire  layers  (Maintainable)  2.  Redundant  facilities  (e.g.,  authentication)  can  be  provided  in  each  layer  to  increase  the  
+dependability
+ 
+of
+ 
+the
+ 
+system.
+ 3.  Layer  replacement  (e.g.,  TCP  to  UDP)  4.  Layers  make  your  application  testable,  reusable  and  scalable  
+Disadvantages  Performance  can  be  a  problem  because  of  multiple  levels  of  interpretation  of  a  service  request  as  it  
+is
+ 
+processed
+ 
+at
+ 
+each
+ 
+layer.
+ 
+Variations
+:
+ 
+139  
+
+
+===== PAGE 140 =====
+  
+ 
+ 
+1.  Client-Server  Two-Tier  Architecture  2.  Client-Server  Three-Tier  Architecture   
+  
+Two  Tier    
+      
+140  
+
+
+===== PAGE 141 =====
+  
+ 
+ 
+Two  Tier:  Thin  Client  ●  presentation  layer(  client  )  and  all  other  layers  (data  management,  application  
+processing
+ 
+and
+ 
+database)
+ 
+are
+ 
+implemented
+ 
+on
+ 
+a
+ 
+server.
+ ●  Used  in  legacy  systems  (old  systems)  when  separating  application  processing  and  
+data
+ 
+management
+ 
+is
+ 
+impractical
+ ●  The  legacy  system  acts  as  a  server  with  a  graphical  interface  implemented  on  a  client.  Used  in  Data-intensive  applications  (browsing  and  querying)  with  non  intensive  
+application
+ 
+processing,
+ 
+application
+ 
+processing
+ 
+itself
+ 
+is
+ 
+light
+                 Examples:  ●  Basic  e-commerce  product  catalog  (browsing  products,  light  filtering,  but  orders  
+processed
+ 
+elsewhere).
+ ●  Medical  record  lookup  system  (read-only  patient  history  for  doctors).  
+              Advantages  1.   Easy  to  manage  2.    New  versions  of  the  application  have  to  be  installed  on  the  server.  
+              Disadvantage  1.  Low  performance:  heavy  processing  load  on  both  the  server  and  the  network   2.  Bad  for  scalability   
+Two  Tier:  Fat  Client  ●  Where  some  or  all  of  the  application  processing  is  carried  out  on  the  client.  Data  
+management
+ 
+and
+ 
+database
+ 
+functions
+ 
+are
+ 
+implemented
+ 
+on
+ 
+the
+ 
+server.
+ ●  Most  suitable  for  new  C/S  systems   ●  Used  when  intensive  processing  of  data  (e.g.,  data  visualization)  is  required.  ●  Used  in  Mobile  applications  where  internet  connectivity  cannot  be  guaranteed.  
+Disadvantage:  1.  More  complex  than  a  thin  client  model  especially  for  management.  2.  New  versions  of  the  application  have  to  be  installed  on  all  clients.        
+141  
+
+===== PAGE 142 =====
+  
+ 
+  
+Multi-Tiers  (3-Tiers)
+ 
+ ●  Presentation  layer,  data  management,  application  processing,  and  database,  are  
+separate
+ 
+processes
+ 
+that
+ 
+execute
+ 
+on
+ 
+different
+ 
+processors.
+ ●  used  when  there  is  a  high  volume  of  transactions  to  be  processed  by  the  server.  ●  Used  in  Large-scale  applications  with  hundreds  or  thousands  of  clients.  ●  Used  in  Applications  where  both  the  data  and  the  application  are  volatile.  ●  Used  in  Applications  where  data  from  multiple  sources  are  integrated.  ●  This  avoids  problems  with  scalability  and   low  performance  in  thin-client  two-tier  
+models,
+ 
+and
+ 
+problems
+ 
+of
+ 
+system
+ 
+management
+ 
+in
+ 
+a
+ 
+fat-client.
+ ●        Example:  Internet  banking  system  
+   
+142  
+
+
+===== PAGE 143 =====
+  
+ 
+ 
+❖  Model  View  Controller-  MVC  (1980)   ●  Use  the  principle  of  “separation  of  concerns”  to  divide  the  application  into  three  areas:    View :  classes  for  implementing  GUIs,  including  windows,  buttons,  menus,  scroll  bars,  etc.  Controller :  classes  that  handle  events  produced  by  input  devices  such  as  mouse  and  
+keyboard
+ Model :  classes  containing  application  logic  and  data   ●  Used  in  complex  web-based  application   
+ 
+  
+143  
+
+
+===== PAGE 144 =====
+  
+ 
+ 
+Advantages  ●  Allows  the  data  to  change  independently  of  its  representation  and  vice  versa.  ●  Different  views   of  the  same  data    
+ ●  Easy  to  maintain  and  test  ●  More  secure  ●  Parallel  development  (multiple  programmer)  
+Disadvantages  ●    Not  suitable  for  small  applications ⇒  Causes  applications  to  slow  down.  ●    Cost  of  frequent  updates:views  could  be  flooded  with  frequent  updates  in  the  model.  Views   
+like
+ 
+graphical
+ 
+displays
+ 
+may
+ 
+take
+ 
+some
+ 
+time
+ 
+to
+ 
+render.
+ 
+(annoy
+ 
+the
+ 
+user).
+   
+MVC  Today:   ●  MVC  Web  ●  Single  Page  Application   (SPA)          
+144  
+
+
+===== PAGE 145 =====
+  
+ 
+ 
+❖  MVC  Today:  MVC  Web  ●  MVC  Web  ○  Adapted  for  Web   ○  Popular  frameworks  include  Ruby  on  Rails,  Django,  Spring,  
+PHP
+ 
+Laravel,
+ 
+etc.
+  
+  
+145  
+
+
+===== PAGE 146 =====
+  
+ 
+ 
+ 
+  
+146  
+
+
+===== PAGE 147 =====
+  
+ 
+ 
+ 
+ 
+147  
+
+
+===== PAGE 148 =====
+  
+ 
+ 
+ 
+148  
+
+
+===== PAGE 149 =====
+  
+ 
+ 
+ 
+ 
+149  
+
+
+===== PAGE 150 =====
+  
+ 
+ 
+ 
+ 
+150  
+
+
+===== PAGE 151 =====
+  
+ 
+ 
+ 
+  
+151  
+
+
+===== PAGE 152 =====
+  
+ 
+ 
+❖  MVC  Today:  Single  Page  Applications  
+  
+152  
+
+
+===== PAGE 153 =====
+  
+ 
+ 
+ 
+   
+153  
+
+
+===== PAGE 154 =====
+  
+ 
+ 
+Feature  Traditional  MVC  Web  SPA  
+Page  Loading  On  every  interaction  or  request  Once  
+Where  UI  is  Managed  
+Server  (Server-side)  Browser  (Client-side)  
+User  Interaction  Full  page  reload  Dynamic,  without  full  reload  
+Server  Communication  
+Always  for  each  interaction  Only  when  needed  
+Examples  Traditional  Rails,  Traditional  Django  Gmail,  Figma  
+  
+MVC  Example:  Which  flavor  of  MVC?   
+  
+154  
+
+
+===== PAGE 155 =====
+  
+ 
+ 
+  
+155  
+
+
+===== PAGE 156 =====
+  
+ 
+ 
+ 
+ 
+                       
+156  
+
+
+===== PAGE 157 =====
+  
+ 
+ 
+❖  Microservices  
+   
+ 
+157  
+
+
+===== PAGE 158 =====
+  
+ 
+ 
+ 
+   
+158  
+
+
+===== PAGE 159 =====
+  
+ 
+ 
+     
+ 
+159  
+
+
+===== PAGE 160 =====
+  
+ 
+ 
+ 
+ 
+ 
+160  
+
+
+===== PAGE 161 =====
+  
+ 
+ 
+ 
+   
+161  
+
+
+===== PAGE 162 =====
+  
+ 
+ 
+     
+   
+ 
+162  
+
+
+===== PAGE 163 =====
+  
+ 
+ 
+❖  Message-Oriented  Architecture   
+ 
+ 
+163  
+
+
+===== PAGE 164 =====
+  
+ 
+ 
+ 
+     
+164  
+
+
+===== PAGE 165 =====
+  
+ 
+ 
+❖  Publish/Subscribe  Architecture  
+ 
+  
+165  
+
+
+===== PAGE 166 =====
+  
+ 
+ 
+ 
+ 
+  
+❖  Pipe  and  filter  architecture  
+ 
+166  
+
+
+===== PAGE 167 =====
+  
+ 
+ 
+    Compilers  (lexical  analysis  +  parsing  +  semantic  analysis  +  code  generation)  
+   
+ 
+167  
+
+
+===== PAGE 168 =====
+  
+ 
+ 
+Advantages:  1.  Easy  to  understand  and  supports  transformation  reuse.  2.  Workflow  style  matches  the  structure  of  many  business  processes  .  3.  Evolution  by  adding  transformations  is  straightforward.  4.  Can  be  implemented  as  either  a  sequential  or  concurrent  system.  
+Disadvantage :  1.  The  format  for  data  transfer  has  to  be  agreed  between  communicating  transformations.  2.  Increases  system  overhead  (Because  Each  transformation  must  parse  its  input  and  unparse  
+its
+ 
+output
+ 
+to
+ 
+the
+ 
+agreed
+ 
+form
+ 
+)
+ 3.  It  is  impossible  to  reuse  functional  transformations  that  use  incompatible  data  structures.  
+ 
+❖  Peer-to-peer  (p2p)  architecture  
+ 1.  Used  when  clients  exchange  locally  stored  information  and  the  role  of  the  server  is  to  
+introduce
+ 
+clients
+ 
+to
+ 
+each
+ 
+other
+ 2.  Is  decentralised  systems  where  computations  may  be  carried  out  by  any  node  in  the  network.  3.  The  overall  system  is  designed  to  take  advantage  of  the  computational  power  and  storage  
+of
+ 
+a
+ 
+large
+ 
+number
+ 
+of
+ 
+networked
+ 
+computers.
+ 4.  Every  node  is  both  client  and  server  5.  Consumer  and  provider  of  resources  6.  Example:  file  sharing  using  BitTorrent,  Blockchain,  Skype      
+ 
+168  
+
+
+===== PAGE 169 =====
+  
+ 
+  
+To
+ 
+improve
+ 
+code quality,  developers  need  many  
+techniques
+ 
+including:
+ 
+ 
+1.  Dynamic  Testing  (executing  the  program  to  find  defects)  
+ ○  Tools:  JUnit  (Java),  PyTest  (Python),  Selenium  (UI  testing),  Postman  (API  testing).  
+ 2.  Test-Driven  Development  (TDD)  –  writing  tests  before  code  to  guide  design  ○  Tools:  JUnit  (Java),  NUnit  (.NET),  PyTest  (Python),  RSpec  (Ruby)  
+ 
+3.  Static  Code  Analysis  (examining  code  without  execution  to  detect  bugs,  security  flaws,  or  
+style
+ 
+issues)
+ 
+ ○  Tools:  SonarQube  (Sonar  Cloud),  PMD  (cross-language  static  analyser:  Java,  
+JavaScript,
+ 
+Kotlin,
+ 
+Swift,
+ 
+HTML,
+ 
+XML),  ESLint  (JavaScript),  Pylint  (Python).  
+ 4.  Code  Refactoring  (restructuring  code  without  changing  external  behavior)  
+ ○  Tools:  IntelliJ  IDEA,  Eclipse,  Visual  Studio  Code  (all  support  automated  refactoring  like  
+Extract
+ 
+Method,
+ 
+Rename).
+ 
+ 5.  Code  Review  (peer  review  of  source  code  for  defects,  readability,  maintainability)  
+ ○  Tools:  GitHub  Pull  Requests  
+ 6.  SOLID  Design  Principles  (guidelines  for  maintainable,  flexible  OOP  design)  
+ ○  Tools:  Not  tool-specific ,  but  enforced  via:  
+ ■  Design  pattern  catalogs  (e.g.,  Refactoring.Guru)  
+ ■  Architecture  linting  tools  like  ArchUnit  (Java)  or  SonarQube  rule  sets  
+ 
+ 
+169  
+
+===== PAGE 170 =====
+  
+ 
+ 
+Chapter  5:  Testing  and  Refactoring  
+   Software  Testing  ●  Verify  if  a  program  produces  an  expected  result  when  executed  with  some  test  cases  ●  Tests  can  be:  ○  Manual  ○  Automated   
+ 
+170  
+
+
+===== PAGE 171 =====
+  
+ 
+ 
+Testing  Principles   1.  Testing  shows  presence  but  not  absence  of  defects(if  no  defects  are  found,  it  is  not  a  proof  of  
+correctness)
+ 2.  Exhaustive  testing  is  impossible(all  combinations  of  input  values  )  3.  Early  testing(least  effort  and  costs)  4.  Defect  clustering(more  defects  nearby) 5.  Repeating  tests  under  the  same  conditions  is  ineffective  6.  Testing  is  done  differently  in  different  contexts  (The  engine  controller  of  a  car  requires  tests  
+differently
+ 
+than
+ 
+those
+ 
+of
+ 
+an
+ 
+eCommerce
+ 
+application)
+ 
+7.
+ 
+   
+Test
+ 
+environment
+ 
+(test
+ 
+bed)
+ 
+vs.
+ 
+production
+ 
+environment(environment
+ 
+should
+ 
+be
+ 
+similar
+ 
+in
+ 
+both)
+ 
+ V&V (Validation  and  Verification)   Validation :  building  the  product  that  meets  the  needs  of  the  customer.“Are  we  building  the  right  
+product?”
+ Verification  :  if  the  system  conforms  to  its  detailed  specification  .“Are  we  building  the  product  right?”  Example:  User  request  an  elevator  and  the  elevator  comes(Validation)                  The  time(response  time)  that  the  elevator  needs  to  achieve  the  goal  (Verification)  
+171  
+
+
+===== PAGE 172 =====
+  
+ 
+ 
+Inspection  vs.  Testing  
+Inspection  Testing  
+Static  verification  technique  (does  not  need  execution  of  a  system  )  
+dynamic  verification(check  system  behaviour  at  run  time)  
+cannot  check  non-functional  requirements  check  non-functional  requirements  
+Advantages/Disadvantages  Advantages/Disadvantages  
+Since  process  is  static  so  no   interactions  between  errors(advantages)  
+errors  can  mask  (hide)  other  errors(disadvantages)  
+Inspection  of  Incomplete  system   Testing  complete  system   
+Focus :  
+●  Compliance  with  requirements  ●  Coding  standards  ●  Readability,  maintainability  ●  Possible  design  flaws  
+Focus :  
+●  Performance  ●  Usability  ●  Reliability   
+ 
+    
+172  
+
+
+===== PAGE 173 =====
+  
+ 
+ 
+ 
+   
+173  
+
+
+===== PAGE 174 =====
+  
+ 
+ 
+Types  of  Software  Testing  
+1.  White  Box  Testing  
+●  Definition:  Tests  the  internal  structure,  logic,  or  code  implementation.  
+ ●  Focus:  Code  coverage,  branches,  paths,  and  functions.  
+ ●  Requires:  Knowledge  of  the  source  code.  
+ 
+a.  Unit  Testing (our  main  subject  of  this  course)  
+●  Definition:  Tests  individual  functions  or  classes .  
+ ●  Framework:  JUnit  in  Java  (commonly  used).  
+ ●  When:  During  development.  
+ 
+https://survey.stackoverflow.co/2019#development-practices 
+174  
+
+
+===== PAGE 175 =====
+  
+ 
+  
+175  
+
+
+===== PAGE 176 =====
+  
+ 
+ 
+ 
+ 
+        
+176  
+
+
+===== PAGE 177 =====
+  
+ 
+ 
+FIRST Principles  (good  characteristics  of  unit  tests)   
+How  It  Fits  into  the  FIRST  Acronym  
+Principle  Meaning  Example  in  JUnit  
+F  –  Fast  Tests  run  quickly  so  they  can  be  run  often.  
+Unit  tests  take  milliseconds.  
+I  –  Independent  Tests  do  not  depend  on  each  other.  execution  order  does  not  matter  
+Each  test  sets  up  its  own  stack.  
+R  –  Repeatable  The  same  test  always  produces  the  same  result.  dDeterministic,  non-flaky  
+Works  the  same  on  any  machine/time.  
+S  –  Self-Checking  The  test  itself  automatically  determines  whether  it  passed  or  failed  without  any  manual  inspection.  In  JUnit,  this  is  done  with  assertions  (assertEquals,  assertThrows,  etc.).   
+assertThrows(EmptyStackException.class,  ()  ->  stack.pop());  
+T  –  Timely  Write  tests  at  the  right  time  (before/alongside  code).  
+TDD  style  (write  test  first).  
+177  
+
+===== PAGE 178 =====
+  
+ 
+ 
+     
+178  
+
+
+===== PAGE 179 =====
+  
+ 
+ 
+ 
+ 
+ 
+179  
+
+
+===== PAGE 180 =====
+  
+ 
+ 
+What  is  JUnit?  Version  5   
+ 
+●  JUnit  is  a  popular  testing  framework  for  Java.  
+ ●  It  allows  developers  to  write  repeatable  unit  tests  to  check  correctness  of  individual  
+components
+ 
+(classes,
+ 
+methods).
+ 
+ ●  Supports  annotations  like  @Test ,  @BeforeEach ,  @AfterEach ,  @BeforeAll ,  
+@AfterAll,
+ 
+@Disabled
+ 
+(was
+ 
+@Ignore
+ 
+in
+ 
+JUnit
+ 
+4)
+.
+ 
+ Why  JUnit?  
+●  Ensures  code  correctness  early.  
+ ●  Supports  automated  testing  →  quick  feedback.  
+ ●  Integrates  with  build  tools  (Maven,  Gradle)  and  CI/CD  pipelines.  
+ ●  Encourages  Test-Driven  Development  (TDD) .  
+ 
+ 
+180  
+
+
+===== PAGE 181 =====
+  
+ 
+ 
+        Key  Points  from  the  Example  
+●  @Test marks  a  method  as  a  test  case.  
+ ●  assertEquals(expected,  actual,  message) →  checks  correctness.  
+ ●  assertThrows() →  ensures  exceptions  are  handled  properly.  
+ 
+         Common  JUnit  Assertions  
+●  assertEquals(expected,  actual) →  check  equality  
+ ●  assertTrue(condition)  /  assertFalse(condition) 
+ ●  assertNull(object)  /  assertNotNull(object)  
+ ●  assertThrows(Exception.class,  ()  ->  {  ...  }) 
+          Lifecycle  Annotations  
+●  @BeforeAll →  runs  once  before  all  tests  (@  Setup  method  executed  only  once  
+before
+ 
+all
+ 
+@Test
+ 
+methods)
+ 
+ ●  @AfterAll →  runs  once  after  all  tests  (@  tearDown  method  executed  only  once  
+after
+ 
+all
+ 
+@Test
+ 
+methods)
+ 
+ ●  @BeforeEach →  runs  before  each  test  (@  Setup  method  executed  before  any  @Test  
+method)
+ 
+ ●  @AfterEach →  runs  after  each  test  (  @  tearDown  method  executed  after  any  @Test  
+method)
+ 
+ 
+181  
+
+===== PAGE 182 =====
+  
+ 
+ 
+ 
+ 
+JUNIT  Testing  Problems:  
+JUnit  is  designed  to  call  methods  and  compare  the  results  they  return  against  expected  results  This  ignores:  ●  Programs  that  do  work  in  response  to  GUI  commands  ●  Methods  that  are  used  primarily  to  produce  output  to  the  screen  or  to  a  file  
+ 
+ 
+ 
+ 
+ 
+182  
+
+
+===== PAGE 183 =====
+  
+ 
+ 
+Example  @Test  with  Exception  
+Production  code: 
+public  class  Calculator  {  
+    public  int  divide(int  a,  int  b)  {  
+        if  (b  ==  0)  {  
+            throw  new  IllegalArgumentException("Division  by  zero  is  not  allowed!");  
+        }  
+        return  a  /  b;  
+    }  
+}  
+ 
+Test  Code  
+import  org.junit.jupiter.api.Test;  
+import  static  org.junit.jupiter.api.Assertions.*;  
+class  CalculatorTest  {  
+    @Test  
+    void  testDivisionByZero()  {  
+        Calculator  calc  =  new  Calculator();  
+        //  Check  that  IllegalArgumentException  is  thrown  
+        Exception  exception  =  assertThrows(IllegalArgumentException.class,  ()  ->  {  
+            calc.divide(10,  0);   });  
+        //  Verify  the  exception  message  
+        assertEquals("Division  by  zero  is  not  allowed!",  exception.getMessage());  }} 
+183  
+
+===== PAGE 184 =====
+  
+ 
+ 
+Example
+ 
+@Disabled  (was  @Ignore  in  JUnit  4)  
+Used  to  skip  a  test  temporarily  (maybe  the  feature  isn’t  ready  yet  or  it’s  failing  and  you  don’t  want  to  
+block
+ 
+the
+ 
+pipeline).
+ 
+ 
+import  org.junit.jupiter.api.Disabled;  
+import  org.junit.jupiter.api.Test;  
+import  static  org.junit.jupiter.api.Assertions.assertEquals;  
+class  CalculatorTest  {  
+    @Test  
+    void  testAddition()  {  
+        assertEquals(5,  2  +  3);  
+    }  
+    @Disabled("Feature  not  implemented  yet")  
+    @Test  
+    void  testSubtraction()  {  
+        assertEquals(1,  3  -  2);  
+    }  
+} 
+ 
+ 
+ 
+ 
+ 
+184  
+
+===== PAGE 185 =====
+  
+ 
+ 
+Example: @Timeout  
+Ensures  a  test  fails  automatically  if  it  takes  longer  than  the  specified  time.  
+import  org.junit.jupiter.api.Test;  
+import  org.junit.jupiter.api.Timeout;  
+import  java.util.concurrent.TimeUnit;  
+import  static  org.junit.jupiter.api.Assertions.assertTrue;  
+class  PerformanceTest  {  
+    @Test  
+    @Timeout(value  =  1,  unit  =  TimeUnit.SECONDS)  
+    void  testFastMethod()  {  
+        //  This  will  pass  (finishes  in  <1  sec)  
+        assertTrue(2  +  2  ==  4);  
+    }  
+ 
+    @Test  
+    @Timeout(value  =  1,  unit  =  TimeUnit.SECONDS)  
+    void  testSlowMethod()  throws  InterruptedException  {  
+        //  This  will  fail  (sleeps  for  2  sec  >  1  sec  limit)  
+        Thread.sleep(2000);  
+        assertTrue(true);  
+    }  
+}  
+185  
+
+===== PAGE 186 =====
+  
+ 
+ 
+Hamcrest  is  a matcher  library  for  writing  more  expressive  and  readable  
+assertions
+ 
+in
+ 
+Java
+ 
+tests.
+ 
+ Why  Hamcrest?  
+●  JUnit’s  assertEquals  is  good  but  sometimes  not  very  readable.  
+ ●  Hamcrest  allows  fluent,  natural  language  style  assertions  and  improves  the  readability.  
+Key  Matchers  in  Hamcrest  
+●  Numbers  →  greaterThan() ,  lessThan() ,  closeTo()  
+ ●  Strings  →  containsString() ,  startsWith() ,  endsWith() ,  equalToIgnoringCase()  
+ ●  Collections  →  hasItem() ,  contains() ,  everyItem() ,  empty() 
+ 
+●  
+Objects
+ 
+→ is() ,  not() ,  nullValue() ,  sameInstance()
+ 
+Example:  
+import  org.junit.jupiter.api.Test;  
+import  static  org.hamcrest.MatcherAssert.assertThat;  
+import  static  org.hamcrest.Matchers.*;  
+class  HamcrestExampleTest  {  
+    @Test  
+void  testNumbers()  {  
+        int  result  =  5  +  3;  
+        //  Hamcrest  style  
+        assertThat(result,  is(8));  
+        assertThat(result, not(10));  
+        assertThat(result, greaterThan(5));  
+        assertThat(result,  lessThanOrEqualTo(8));   }} 
+186  
+
+===== PAGE 187 =====
+  
+ 
+ Example: 
+@Test  
+void  testStrings()  {  
+    String  message  =  "Hello  World";  
+    assertThat(message,  containsString("Hello"));  
+    assertThat(message,  startsWith("He"));  
+    assertThat(message, endsWith("World"));  
+    assertThat(message, equalToIgnoringCase("hello  world"));  
+}  
+Example:  
+@Test  
+void  testCollections()  {  
+    java.util.List<String>  fruits  =  java.util.Arrays.asList("Apple",  "Banana",  "Orange");  
+    assertThat(fruits, hasSize(3));  
+    assertThat(fruits,  hasItem("Banana"));  
+    assertThat(fruits,  contains("Apple",  "Banana",  "Orange"));  
+    assertThat(fruits, everyItem(not(emptyOrNullString())));  
+}  
+ 
+ 
+ 
+ 
+ 
+187  
+
+===== PAGE 188 =====
+  
+ 
+ 
+Example  :  Mixing  JUnit  and  Hamcrest  
+import  org.junit.jupiter.api.Test;  
+import  static  org.junit.jupiter.api.Assertions.*;       //  JUnit  assertions  
+import  static  org.hamcrest.MatcherAssert.assertThat;  //  Hamcrest  
+import  static  org.hamcrest.Matchers.*;                //  Hamcrest  matchers  
+ 
+class  MixedTest  {  
+ 
+    @Test  
+    void  testMath()  {  
+        int  result  =  2  +  3;  
+        //  JUnit  assertion  
+        assertEquals(5,  result);  
+        //  Hamcrest  assertions  
+        assertThat(result,  is(5));  
+        assertThat(result,  greaterThan(3));  
+        assertThat(result,  not(equalTo(10)));  
+    }  
+}  
+ 
+ 
+ 
+ 
+188  
+
+===== PAGE 189 =====
+  
+ 
+ 
+How  many  tests  do  I  have  to  write?   Coverage  
+Test  coverage  =  (number  of  statements  executed  by  the  tests)  /  (total  number  of  statements)  
+ 
+189  
+
+
+===== PAGE 190 =====
+  
+ 
+ 
+ 
+ 
+What  is  the  ideal  test  coverage?  
+●  Varies  from  project  to  project,  but  doesn't  need  to  be  100%  ●  At  least  60%,  according  to  industry  authors   ●  100  %  coverage  ≠  zero  bugs  (You  can  execute  every  line  but  not  assert  the  right  
+behaviour)
+ 
+ 
+Some  Common  metrics:  
+●  Line  coverage  –  How  many  lines  executed  at  least  once.  ●  Branch  coverage  –  How  many  branches  of  if / switch statements  taken.  ●  Path  coverage-   How  many  unique  execution  paths  covered  
+  100%  branch  coverage  =>  100%  statement  coverage    100%  statement  coverage  does  not  imply  100%  branch  coverage   
+190  
+
+
+===== PAGE 191 =====
+  
+ 
+   Example:    if(a){     if(b){       bool  statement1  =  true;     }  }   Test  case  when  a  =  true,  b  =  true ⇒  give  100%  statement  coverage,  but  not  branch  coverage  
+ Compute  all  coverage  metrics  when
+ 
+a=true,  b=true?     
+ 
+191  
+Metric  Total  Elements  Covered  Elements  Coverage  %  
+Statement  coverage  
+3  statements  3  executed  3/3=  100  %  
+Branch  coverage  
+4  branches  (a  true/false  +  b  true/false)  
+2  taken  (a  true,  b  true)  2/4=  50  %  
+Path  coverage  3  paths  total  1  path  taken  1/3  =  33  %  
+
+
+===== PAGE 192 =====
+  
+ 
+ 
+ 
+ 
+https://docs.google.com/presentation/d/1god5fDDd1aP6PwhPodOnAZSPpD80lqYDrHhuhyD7Tvg/edit?slide=id.g3f5c82004_99_135#slide=id.g3f5c82004_99_135 
+192  
+
+
+===== PAGE 193 =====
+  
+ 
+  
+Testability  is  important>>>  Some  code  are  Hard-to-Test   
+ 
+193  
+
+
+===== PAGE 194 =====
+  
+ 
+ 
+ 
+194  
+
+
+===== PAGE 195 =====
+  
+ 
+ 
+ 
+Example:  
+  
+Problems:  
+●  EmailSender  is  created  inside  the  method.   ●  It  might  send  a  real  email  every  time  you  test.   ●  You  cannot  replace  it  with  a  fake/mocked  sender  easily.  
+ 
+   
+195  
+
+
+===== PAGE 196 =====
+  
+ 
+ 
+ 
+ 
+Benefits:  
+●  No  real  emails  sent.   ●  You  can  assert  exactly  what  happens.   ●  The  test  runs  fast  and  deterministically.  
+ 
+ 
+ 
+  
+  
+            
+196  
+
+
+===== PAGE 197 =====
+  
+ 
+ 
+      b.  White  Box:  Component  /  Module  Testing  
+●  Definition:  Tests  a  group  of  related  components  or  modules  together.  ●  Focus:  Testing  interfaces  between  modules.  ●  Interface  Types:  Parameter,  Shared  memory,  Procedural  interfaces  (APIs),  Message  
+passing
+  
+➔  Parameter  interfaces:  Passing  data  via  method  arguments.  
+ 
+ class  AuthService  {  
+    public  boolean  login(String  user,  String  password)  {  ...  }  }   The  test  passes  data  to  the  method  under  test  (like  login)  using parameterized  tests.    Code  under  test:   package  com.example;   public  class  AuthService  {      public  boolean  login(String  user,  String  password)  {            if  (user  ==  null  ||  password  ==  null)  return  false;          return  user.equals("admin")  &&  password.equals("1234");      }  }   Test  code:   package  com.example;  import  static  org.junit.jupiter.api.Assertions.assertEquals;  import  org.junit.jupiter.params.ParameterizedTest;  import  org.junit.jupiter.params.provider.CsvSource;   class  AuthServiceTest  {       private  final  AuthService  authService  =  new  AuthService();   
+197  
+
+===== PAGE 198 =====
+  
+ 
+       @ParameterizedTest      @CsvSource({          "admin,1234,true",         //  correct  credentials          "admin,wrong,false",       //  wrong  password          "user,1234,false",         //  wrong  user          "  ,1234,false",            //  null/empty  user          "admin,,false"             //  null/empty  password      })      void  testLoginWithDifferentCredentials(String  username,  String  password,  boolean  expected)  {          boolean  actual  =  authService.login(username,  password);          assertEquals(expected,  actual,  "Login  result  should  match  expected  outcome");      }  }   
+What’s  happening:  
+●  @ParameterizedTest lets  you  run  the  same  test  with  multiple  sets  of  parameters. 
+ ●  @CsvSource  defines  the  sets  of  arguments  to  pass  to  the  method  under  test.  
+ ●  Each  row ( "admin,1234,true" )  becomes  one  test  execution  with  arguments  injected.  true  is  the  expected  result  
+ 
+This  is  the  standard  way  to  test  parameter  interfaces  (data  passed  via  arguments)  in  Java  using  
+JUnit
+ 
+5.
+ 
+              198  
+
+===== PAGE 199 =====
+  
+ 
+ ➔  Shared  memory  interfaces:  Shared  data  structures.   package  com.example;   public  class  SharedData  {      //  Shared  static  counter      public  static  int  counter  =  0;       //  Increment  the  counter      public  static  void  increment()  {          counter++;      }       //  Reset  the  counter  (useful  for  tests)      public  static  void  reset()  {          counter  =  0;      }  }   This  is  a  common  scenario  when  multiple  test  cases  interact  with  a  shared  resource    package  com.example;  import  static  org.junit.jupiter.api.Assertions.assertEquals;  import  org.junit.jupiter.api.BeforeEach;  import  org.junit.jupiter.api.Test;   class  SharedDataTest  {       @BeforeEach      void  resetBeforeEachTest()  {          SharedData.reset(); //  Ensure  each  test  starts  clean      }       @Test      void  testCounterStartsAtZero()  {          assertEquals(0,  SharedData.counter);      }       @Test      void  testIncrementOnce()  {          SharedData.increment();          assertEquals(1,  SharedData.counter);      }  
+199  
+
+===== PAGE 200 =====
+  
+ 
+      @Test      void  testIncrementMultipleTimes()  {          SharedData.increment();          SharedData.increment();          SharedData.increment();          assertEquals(3,  SharedData.counter);      }  }    ➔  Procedural  interfaces  (APIs):  One  module  exposes  procedures  for  others.  Client  code  can  
+call
+ 
+procedures
+ without  knowing  the  internal  implementation  of  the  API.   Example    
+       
+200  
+
+
+===== PAGE 201 =====
+  
+ 
+ 
+The  API  module  package  com.example.api;   //  This  module  exposes  procedures  for  others  public  class  PaymentAPI  {       //  Simulated  procedure  to  process  a  payment      public  String  processPayment(double  amount)  {          if  (amount  <=  0)  {              return  "Invalid  amount";          }          //  In  a  real  system  this  would  call  an  external  service          return  "Payment  of  $"  +  amount  +  "  processed  successfully";      }       //  Another  exposed  procedure      public  String  refundPayment(double  amount)  {          if  (amount  <=  0)  {              return  "Invalid  refund  amount";          }          return  "Refund  of  $"  +  amount  +  "  issued  successfully";      }  }   
+This  PaymentAPI  exposes  procedures  that  other  modules  can  directly  call:   processPayment() and  refundPayment() . 
+ 
+They
+ hide  the  internal  details  of  how  the  payment  is  actually  processed.  
+A  module  that  uses  the  API  
+package  com.example.service;  
+import  com.example.api.PaymentAPI;  
+public  class  OrderService  {  
+    private  final  PaymentAPI  paymentAPI;  
+    public  OrderService(PaymentAPI  paymentAPI)  {  
+        this.paymentAPI  =  paymentAPI;  
+    }  
+201  
+
+===== PAGE 202 =====
+  
+ 
+ 
+    public  String  checkout(double  totalAmount)  {  
+        //  Calls  the  exposed  API  procedure  
+        return  paymentAPI.processPayment(totalAmount);  
+    }} 
+This  is  a  client  module  that  depends  on  the  procedural  API.  
+Unit  test  for  the  API  
+package  com.example.api;  
+import  static  org.junit.jupiter.api.Assertions.assertEquals;  
+import  org.junit.jupiter.api.Test;  
+class  PaymentAPITest  {  
+    @Test  
+    void  testProcessPaymentValidAmount()  {  
+        PaymentAPI  api  =  new  PaymentAPI();  
+        String  result  =  api.processPayment(50.0);  
+        assertEquals("Payment  of  $50.0  processed  successfully",  result);  }  
+ 
+    @Test  
+    void  testProcessPaymentInvalidAmount()  {  
+        PaymentAPI  api  =  new  PaymentAPI();  
+        String  result  =  api.processPayment(0);  
+        assertEquals("Invalid  amount",  result);  
+    }  
+ 
+202  
+
+===== PAGE 203 =====
+  
+ 
+ 
+    @Test  
+    void  testRefundPayment()  {  
+        PaymentAPI  api  =  new  PaymentAPI();  
+        String  result  =  api.refundPayment(20.0);  
+        assertEquals("Refund  of  $20.0  issued  successfully",  result);  
+    }  
+}  
+Unit  test  for  the  module  using  the  API  
+package  com.example.service;  
+import  static  org.junit.jupiter.api.Assertions.assertEquals;  
+import  org.junit.jupiter.api.Test;  
+import  com.example.api.PaymentAPI;  
+class  OrderServiceTest  {  
+    @Test  
+    void  testCheckout()  {  
+        PaymentAPI  api  =  new  PaymentAPI();  
+        OrderService  orderService  =  new  OrderService(api);  
+        String  response  =  orderService.checkout(100.0);  
+        assertEquals("Payment  of  $100.0  processed  successfully",  
+response);
+ 
+    }  
+}  
+   
+203  
+
+===== PAGE 204 =====
+  
+ 
+  ➔  Message  passing  interfaces:   Modules  talk  to  each  other  by  sending  messages/events ,  not  by  directly  calling  methods.  This  decouples  the  sender  from  the  receiver.   Scenario :  This  will  show  clearly  how  one  module  publishes  an  event  (“PizzaOrdered”)  and  another  subscribes  to  it  (“Kitchen”  or  “Delivery”  listens  and  acts).  
+   
+ 
+       204  
+
+
+===== PAGE 205 =====
+  
+ 
+ 
+A  simple  MessageBus  interface   package  com.example.messaging;   import  java.util.*;  import  java.util.function.Consumer;   public  class  MessageBus  {      private  final  Map<String,  List<Consumer<Object>>>  subscribers  =  new  
+HashMap<>();
+      public  void  subscribe(String  eventName,  Consumer<Object>  handler)  {          subscribers.computeIfAbsent(eventName,  k  ->  new  
+ArrayList<>()).add(handler);
+     }       public  void  send(String  eventName,  Object  data)  {          List<Consumer<Object>>  handlers  =  subscribers.get(eventName);          if  (handlers  !=  null)  {              for  (Consumer<Object>  h  :  handlers)  {                  h.accept(data);              }          }      }  }     subscribers.computeIfAbsent(eventName,  k  ->  new  ArrayList<>())  means:   “If  eventName  already  has  a  list,  return  it.”   “Otherwise,  create  a  new  ArrayList<Consumer<Object>>,  put  it  in  the  map  under  this  key,  and  
+return
+ 
+it.”
+   
+This  is  a  minimal  event  bus.  send() broadcasts  messages,  subscribe() registers  listeners.  
+ 
+ 
+205  
+
+===== PAGE 206 =====
+  
+ 
+ 
+Example  modules  using  the  bus  (PizzaOrderService) package  com.example.pizza;   import  com.example.messaging.MessageBus;   public  class  PizzaOrderService  {      private  final  MessageBus  bus;       public  PizzaOrderService(MessageBus  bus)  {          this.bus  =  bus;      }       public  void  orderPizza(String  type,  String  customer)  {          String  orderInfo  =  "Customer:  "  +  customer  +  ",  Pizza:  "  +  type;          //  publish  an  event  when  an  order  is  placed          bus.send("PizzaOrdered",  orderInfo);      }  }    
+Example  modules  using  the  bus  (KitchenService)  
+package  com.example.pizza;   import  com.example.messaging.MessageBus;   public  class  KitchenService  {      public  KitchenService(MessageBus  bus)  {          //  subscribe  to  pizza  orders          bus.subscribe("PizzaOrdered",  data  ->  {              System.out.println("Kitchen  preparing  pizza  for:  "  +  data);          });      }  }  
+ 
+ 
+ 
+206  
+
+===== PAGE 207 =====
+  
+ 
+ 
+Testing  code:  
+package  com.example.pizza;  
+import  com.example.messaging.MessageBus;  
+import  org.junit.jupiter.api.Test;  
+import  static  org.junit.jupiter.api.Assertions.assertEquals;  
+class  PizzaOrderServiceTest  {  
+    @Test  
+    void  testPizzaOrderedEventDeliveredToSubscriber()  {  
+        MessageBus  bus  =  new  MessageBus();  
+        PizzaOrderService  orderService  =  new  PizzaOrderService(bus);  
+        //  capture  what  the  subscriber  receives  
+        final  StringBuilder  received  =  new  StringBuilder();  
+        //  act:  place  an  order  
+        orderService.orderPizza("Margherita",  "Ali");  
+        //  subscribe  test  listener  
+        bus.subscribe("PizzaOrdered",  data  ->  {  
+            received.append(data.toString());  
+        });  
+        //  assert:  subscriber  got  the  correct  message  
+        assertEquals(  "Customer:  Ali,  Pizza:  Margherita",  
+received.toString()
+ 
+);
+ 
+    }}  
+ 
+207  
+
+===== PAGE 208 =====
+  
+ 
+ 
+Possible  Interface  Errors  
+ 
+1.  Interface  misuse:  Wrong  parameter  order  or  type.  
+   Problem :  The  caller  gives  the  wrong  type  or  wrong  parameter  order.  
+//  API  exposes  this:  
+public  class  PaymentAPI  {  
+    public  String  transfer(String  fromAccount,  String  toAccount,  
+double
+ 
+amount)
+ 
+{
+ 
+        return  "Transferred  "  +  amount  +  "  from  "  +  fromAccount  
++
+ 
+"
+ 
+to
+ 
+"
+ 
++
+ 
+toAccount;
+ 
+    }  
+}  
+ 
+❌  Bug :  Developer  swaps  parameter  order  in  call:  
+String  result  =  api.transfer("DEST",  "SRC",  100.0);  //  wrong  order 
+✅  Test  to  catch  it:  
+@Test  
+void  testTransferFromSourceToDest()  {  
+    PaymentAPI  api  =  new  PaymentAPI();  
+    String  result  =  api.transfer("SRC","DEST",100.0);  
+    assertTrue(result.contains("from  SRC  to  DEST"));  
+}  
+ 
+If  somebody  later  calls  transfer  with  the  wrong  order,  the  test  will  fail  because  it  asserts  the  
+correct
+ 
+direction.
+ 
+208  
+
+===== PAGE 209 =====
+  
+ 
+ 2.  Interface  misunderstanding:  Assumptions  about  behavior  are  wrong.  
+Problem :  Caller  assumes  some  behavior  that  the  interface  does  not  guarantee.  
+Example:  Cache  is  documented  as  “may  return  stale  data,”  but  the  developer  assumes  it’s  always  
+fresh.
+ 
+public  class  Cache  {  
+    public  String  get(String  key)  {  
+        //  returns  cached  value  (might  be  stale/old)  
+        //That  means:  sometimes  you’ll  get  the  old  value  if  
+        //  it’s  still  in  the  cache;  sometimes  you’ll  get  the  
+        //  new  one  if  the  cache  has  refreshed.  
+        return  ...;  
+    }} 
+❌  Bug :  Developer  writes  code  assuming  get()  always  returns  the  newest  version.  
+If  a  caller  writes  code  assuming  it’s  always  fresh,  they’ve  misunderstood  the  interface.  The  interface  
+never
+ 
+promised
+ 
+that.
+ 
+✅  Test  to  catch  it:  
+@Test  
+void  testCacheMayReturnStale()  {  
+    Cache  cache  =  new  Cache();  
+    cache.put("k","v1");  
+    cache.put("k","v2");  //  update  immediately  
+    String  value  =  cache.get("k");  
+    //  The  contract  says  value  *may*  be  stale/old,  so  test  must  
+not
+ 
+assume
+ 
+v2
+ 
+always
+ 
+    assertTrue(value.equals("v1")  ||  value.equals("v2"));}  
+209  
+
+===== PAGE 210 =====
+  
+ 
+ 3.  Timing  errors:  Components  operate  at  different  speeds,  leading  to  stale/old  data.  
+Example  
+Two  components:  
+●  Sensor  updates  some  shared  state  (latest  temperature).  
+ ●  The  controller  reads  it  and  reacts.  
+ 
+They  run  at  different  speeds .  
+ 
+If
+ 
+the
+ 
+controller
+ 
+reads
+ 
+too
+ 
+soon
+ 
+(immediately),
+ 
+it
+ 
+might
+ 
+see
+ 
+old
+ 
+data
+.
+ 
+Code  example  
+//  Shared  state  
+class  Temperature  {  
+    public  volatile  int  value  =  0;  //  current  reading  
+}  
+//  Producer:  updates  temperature  
+class  Sensor  implements  Runnable  {  
+    private  final  Temperature  temp;  
+    public  Sensor(Temperature  temp)  {  this.temp  =  temp;  }  
+    @Override  
+    public  void  run()  {  
+        //  simulate  new  reading  arriving  later  
+        try  {  Thread.sleep(100);  }  catch  (InterruptedException  
+ignored)
+ 
+{}
+ 
+        temp.value  =  25;  //  new  temperature  
+    }}  
+210  
+
+===== PAGE 211 =====
+  
+ 
+ 
+//  Consumer:  reads  temperature  immediately  
+class  Controller  {  
+    private  final  Temperature  temp;  
+    public  Controller(Temperature  temp)  {  this.temp  =  temp;  }  
+    public  int  readTemp()  {  
+        return  temp.value;  
+    }  
+} 
+●  Sensor  updates  after  100  ms.  
+ ●  The  controller  reads  immediately.  
+ 
+Temperature  temp  =  new  Temperature();  
+Sensor  sensor  =  new  Sensor(temp);  
+Controller  controller  =  new  Controller(temp);  
+//  start  sensor  in  another  thread  
+new  Thread(sensor).start();  
+//  immediately  read  
+int  reading  =  controller.readTemp();  //  may  still  be  0,  not  25  
+System.out.println("Reading:  "  +  reading);  
+You  expected  25,  but  got  0  because  the  sensor  hadn’t  updated  yet.  
+ 
+ 
+ 
+ 
+211  
+
+===== PAGE 212 =====
+  
+ 
+ Test  Code:  
+import  static  org.junit.jupiter.api.Assertions.*;  
+import  org.junit.jupiter.api.Test;  
+public  class  TimingTest  {  
+    @Test  
+    void  testSensorUpdateMayBeStale()  throws  InterruptedException  {  
+        Temperature  temp  =  new  Temperature();  
+        Sensor  sensor  =  new  Sensor(temp);  
+        Controller  controller  =  new  Controller(temp);  
+        new  Thread(sensor).start();  
+        int  reading  =  controller.readTemp();  //  might  be  stale  
+        //  According  to  the  contract,  at  this  point  the  value  could  still  be  0.  
+        assertTrue(reading  ==  0  ||  reading  ==  25);  
+        //  Wait  for  the  sensor  to  update,  then  it  must  be  25.  
+        Thread.sleep(150);  
+        assertEquals(25,  controller.readTemp());  
+    }  
+}  
+ 
+ 
+ 
+ 
+ 
+212  
+
+===== PAGE 213 =====
+  
+ 
+ 
+c.  White  box:  Integration  test  
+ 
+ 
+ 
+ 
+213  
+
+
+===== PAGE 214 =====
+  
+ 
+ Example  of  an  Integration  Test:  Q&A  Forum  with  a  frontend  (React)  and  a  backend  (Express.js)  
+ 
+ 
+214  
+
+
+===== PAGE 215 =====
+  
+ 
+ 
+ 
+ 
+215  
+
+
+===== PAGE 216 =====
+  
+ 
+ 
+ 
+ 
+2.  Black  Box  Testing  
+●  Definition:  Tests  external  behavior  of  the  system  without  looking  at  code.  
+ ●  Focus:  Requirements,  interface  correctness,  and  functional  behavior.  
+ 
+a.
+ 
+Black
+ 
+Box:
+ 
+End-to-End
+ 
+(E2E)
+ 
+Tests
+ 
+(System
+ 
+Test,
+ 
+frontend
+ 
+tests,
+ 
+web
+ 
+UI
+ 
+test
+s
+ 
+)
+ 
+●  Run:  During  development.  
+ ●  Goal:  Check  compatibility  and  correct  data  transfer  across  components.  
+ ●  Focus:  Discover  system-level  bugs.  ●  Test  the  entire  system  via  its  external  interface  ●  The  test  simulates  a  person  interacting  with  the  system  (filling  in  data,  clicking  on  
+buttons,
+ 
+etc.)
+ 
+ 
+ 
+ 
+216  
+
+
+===== PAGE 217 =====
+  
+ 
+ 
+ 
+ 
+ 
+217  
+
+
+===== PAGE 218 =====
+ 
+ 
+ 
+ 
+ 
+ 
+https://todomvc.com/ 
+218 
+
+
+===== PAGE 219 =====
+  
+ 
+ 
+ 
+ 
+219  
+
+
+===== PAGE 220 =====
+  
+ 
+ 
+ 
+ 
+ 
+cy.visit() is  a  Cypress  command  to  open  a  URL  in  the  browser.  
+ 
+220  
+
+
+===== PAGE 221 =====
+ 
+ 
+ 
+ 
+Here, the argument is an empty string, which usually means it will visit the base URL configured in 
+cypress.config.js (or cypress.json). 
+This essentially opens the web app and checks that the page loads without errors. 
+ 
+221 
+it(); = function to define individual test case
+
+===== PAGE 222 =====
+  
+ 
+ 
+ 
+ 
+222  
+
+
+===== PAGE 223 =====
+  
+ 
+ 
+ 
+223  
+
+
+===== PAGE 224 =====
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+224  
+
+
+===== PAGE 225 =====
+  
+ 
+ 
+b.
+ 
+Black  Box:  
+Release
+ 
+Test
+ 
+●  Run:  At  release  time.  
+ ●  Goal:  Ensure  the  system  meets  requirements  and  is  suitable  for  end  users  (validation).  
+ 
+c.
+ 
+Black  Box:  
+Performance
+ 
+Test
+ 
+●  Run:  At  release  time.  
+ ●  Goal:  Test  performance  and  reliability  under  expected  load.  
+ 
+d.
+ 
+Black  Box:
+Regression
+ 
+Test
+ 
+●  Definition:  Ensure  new  changes  don’t  break  existing  functionality .  
+ ●  Example:  Re-run  previous  unit  and  system  tests  after  a  bug  fix.  
+ 
+e.
+ 
+Black
+ 
+Box:
+ 
+User
+ 
+Test
+ 
+●  Definition:  Testing  the  system  in  the  actual  user  environment .  
+ 
+●
+ 
+ User  Testing  Types  
+Type  Description  Where  
+Alpha  Testing  Users  work  with  the  dev  team  to  test  software  
+Developer  site  
+Beta  Testing  Software  released  to  external  users  for  feedback  
+Real  user  environment  
+Acceptance  Testing  
+Customers  test  to  decide  if  the  system  is  ready  for  deployment  
+Customer  environment      
+225  
+
+===== PAGE 226 =====
+  
+ 
+  
+Mocks   
+What  is  Mocking? 
+●  Mocking  is  creating  fake  versions  of  dependencies  to  test  code  in  isolation.  
+ ●  Helps  focus  on  the  logic  of  the  class  under  test  without  invoking  external  systems 
+(DB,
+ 
+API,
+ 
+etc.).
+ 
+ ●  Example:  Testing  a  service  that  calls  a  database  without  actually  hitting  the  DB.  
+Why  is  Mocking  Important? 
+●  Tests  run  faster  because  external  systems  aren’t  called.  
+ ●  Enables  testing  of  edge  cases  that  are  hard  to  reproduce  with  real  dependencies.  
+ ●  Ensures  tests  are  reliable  and  deterministic.  
+ 
+ 
+ 
+226  
+
+
+===== PAGE 227 =====
+  
+ 
+   
+  
+   
+ 
+227  
+
+
+===== PAGE 228 =====
+  
+ 
+ 
+ 
+Mock  Frameworks:  
+  Example:  Mockito  ●  Facilitates  the  implementation  of  mocks  via  a  domain-specific  language  ●  Eliminates  the  need  for  manual  mock  implementation   
+228  
+
+
+===== PAGE 229 =====
+  
+ 
+ 
+  
+229  
+
+
+===== PAGE 230 =====
+  
+ 
+ 
+                    
+230  
+
+
+===== PAGE 231 =====
+  
+ 
+  
+Example  With/Without  Mock  public  class  UserService  {      private  Database  database;       public  UserService(Database  database)  {          this.database  =  database;      }       public  boolean  isUserActive(String  userId)  {          User  user  =  database.getUser(userId);          return  user  !=  null  &&  user.isActive();      }  }   
+●  Problem:  To  test  isUserActive,  you  must  have  a  real  database.  
+ ●  Tests  may  fail  if  the  DB  is  down  or  data  changes.  
+Test  without  Mock  
+class  UserServiceTest  {      @Test      void  testIsUserActive_withActiveUser()  {          //  Arrange:  real  in-memory  database          InMemoryDatabase  db  =  new  InMemoryDatabase();          db.addUser(new  User("u1",  true));          UserService  service  =  new  UserService(db);          //  Act          boolean  active  =  service.isUserActive("u1");          //  Assert          assertTrue(active);      }}         
+231  
+
+===== PAGE 232 =====
+  
+ 
+ 
+Test  With  Mock import  static  org.mockito.Mockito.*;  import  org.junit.jupiter.api.Test;  import  static  org.junit.jupiter.api.Assertions.*;  class  UserServiceTest  {      @Test      void  testIsUserActive()  {          //  Create  a  mock  of  Database          Database  mockDb  =  mock(Database.class);          //  Define  behavior:  when  getUser  is  called,  return  a  user          User  mockUser  =  new  User("1",  true);          when(mockDb.getUser("1")).thenReturn(mockUser);           //  Inject  mock  into  service          UserService  userService  =  new  UserService(mockDb);          //  Test  the  service          assertTrue(userService.isUserActive("1"));      }  }  
+ 
+Mocking  for  Edge  Cases  //  Test  for  inactive  user  when(mockDb.getUser("2")).thenReturn(new  User("2",  false));  assertFalse(userService.isUserActive("2"));  //  Test  for  non-existent  user  when(mockDb.getUser("3")).thenReturn(null);  assertFalse(userService.isUserActive("3"));  
+ 
+●  No  real  DB  needed  
+ ●  Can  simulate  any  scenario  
+ 
+ 
+ 
+232  
+
+===== PAGE 233 =====
+  
+ 
+ 
+Example  with/  without  Mocking  
+public  class  NotificationService  {      private  EmailSender  emailSender;      public  NotificationService(EmailSender  emailSender)  {       this.emailSender  =  emailSender;       }      public  boolean  sendWelcomeEmail(String  to)  {       return  emailSender.sendEmail(to,  "Welcome!",  "Hello,  welcome  to  our  
+service!");
+     }}
+ 
+●  Problem:  To  test  sendWelcomeEmail,  a  real  email  would  be  sent.  ●  Tests  become  slow,  unreliable,  and  dependent  on  external  systems .  
+ 
+Test  without  Mock  
+import  org.junit.jupiter.api.Test;  import  static  org.junit.jupiter.api.Assertions.assertTrue;  class  NotificationServiceIntegrationTest  {      @Test      void  testSendWelcomeEmailRealEmailSender()  {          //  This  uses  the  real  EmailSender  (no  mocks)          EmailSender  realSender  =  new  EmailSender();          //  Inject  the  real  sender  into  NotificationService          NotificationService  service  =  new  NotificationService(realSender);          //  This  will  actually  send  an  email  (or  attempt  to)          boolean  result  =  service.sendWelcomeEmail("user@example.com");          //  Assert  the  result          assertTrue(result);           }   }
+         
+233  
+
+===== PAGE 234 =====
+  
+ 
+ 
+Test  with  Mock:  
+import  static  org.mockito.Mockito.*;  import  org.junit.jupiter.api.Test;  import  static  org.junit.jupiter.api.Assertions.*;   class  NotificationServiceTest  {       @Test      void  testSendWelcomeEmail()  {          //  Create  a  mock  of  EmailSender          EmailSender  mockEmailSender  =  mock(EmailSender.class);           //  Define  behavior:  sending  an  email  always  returns  true          when(mockEmailSender.sendEmail(anyString(),  anyString(),  
+anyString())).thenReturn(true);
+          //  Inject  mock  into  service          NotificationService  service  =  new  
+NotificationService(mockEmailSender);
+          //  Test  sending  email          assertTrue(service.sendWelcomeEmail("user@example.com"));           //  Verify  that  sendEmail  was  called  once          verify(mockEmailSender,  times(1)).sendEmail("user@example.com",  
+"Welcome!",
+ 
+"Hello,
+ 
+welcome
+ 
+to
+ 
+our
+ 
+service!");
+     }  }             
+234  
+
+===== PAGE 235 =====
+  
+ 
+ 
+Test-Driven  Development  (TDD)  
+(Red-Green-Yellow)
+  ●  One  of  the  programming  practices  proposed  by  XP  ●  The  idea  is  to  write  test  code  before  class/source  code   Benefits  1.  Increase  code  readability  2.  Prevents  developers  from  forgetting  to  write  tests  3.  Code  coverage  is  high:  Every  code  segment  has  at  least  one  test  (can  reach  up  to  90%)  4.  Decouple  test  case  from  source  code  5.  Regression  testing:  Testing  the  system  to  check  that  changes  have  not  ‘broken’  previously  
+working
+ 
+code.
+ 
+regression
+ 
+testing
+ 
+is
+ 
+expensive
+ 
+in
+ 
+manual
+ 
+testing
+  
+but
+ 
+simple
+ 
+with
+ 
+automated
+ 
+testing
+ 6.  Simplified  debugging:  When  a  test  fails,  it  should  be  obvious  where  the  problem  lies.  7.  System  documentation:  The  tests  themselves  are  a  form  of  documentation  that  describe  what  
+the
+ 
+code
+ 
+should
+ 
+be
+ 
+doing.
+  
+★  Make  sure  to  enter  valid  inputs.   
+  
+235  
+
+
+===== PAGE 236 =====
+  
+ 
+ 
+  
+Example  of  TDD:  Shopping  Cart   
+ 
+236  
+
+
+===== PAGE 237 =====
+  
+ 
+ 
+ 
+ 
+237  
+
+
+===== PAGE 238 =====
+  
+ 
+ 
+ 
+  
+238  
+
+
+===== PAGE 239 =====
+  
+ 
+ 
+ Example:  Generating  Prime  Factors  Problem   All  numbers  can  be  written  as  product  of  primes   This  problem  shows  how:  ●  ‘if’  statements  become  ‘while’  statements  as  the  number  of  test  cases  increase.  ●  algorithms  become  simpler  as  they  become  more  general.  Requirements:   
+ •Write  a  class  named  “PrimeFactors”  that  has  one  static  method:  generate.  –The  generate  method  takes  an  integer  argument  and  returns  a  List<Integer>.   That  list  contains  the  
+prime
+ 
+factors
+ 
+in
+ 
+numerical
+ 
+sequence.
+  Create  a  project  named  PrimeFactors  Create  a  package  named  primeFactors  Create  a  unit  test  named  PrimeFactorsTest  
+            
+239  
+
+
+===== PAGE 240 =====
+  
+ 
+ 
+Test  case  1   
+  
+ 
+ 
+  
+   
+    
+       
+240  
+
+
+===== PAGE 241 =====
+  
+ 
+   Test  Case  2  
+ //  You  need  to  update  list()  function  and  rerun  test  
+  //  You  need  to  update  PrimeFactors  class  and  rerun  test   //  Refactor  Code  
+ 
+     
+   
+  
+241  
+
+
+===== PAGE 242 =====
+  
+ 
+ 
+Test  Case  3  
+ 
+ //  update  generate  method  in  PrimeFactors  class  And  rerun  test   
+ 
+  Test  Case  4  
+ 
+ //  update  generate  method  in  PrimeFactors  class  And  rerun  test   
+ 
+ Test  Case  5  
+  
+ 
+ 
+242  
+
+
+===== PAGE 243 =====
+  
+ 
+ 
+Test  Case  6  
+ 
+ //  update  generate  method  in  PrimeFactors  class  And  rerun  test     Test  Case  7  
+ 
+ //  update  generate  method  in  PrimeFactors  class  And  rerun  test   
+ The  algorithm  is  3  lines  of  code!         
+            
+243  
+
+
+===== PAGE 244 =====
+  
+ 
+ 
+Refactoring   Is  Code  transformations  that  improve  maintainability  without  affecting  external  behavior.   
+  
+               
+ 
+244  
+
+
+===== PAGE 245 =====
+  
+ 
+ 
+Catalog  of  Refactorings  ○  Extract  Method  ○  Inline  method  refactor  ■  Used  when  a  method  body  is  more  obvious  than  the  method  itself  ○  Move  method  ○  Remove duplicate  code.  ○  Renaming  variable,  parameter,  method,  class,  exception  to  make  them  easier  to  
+understand
+ ○  Extract  Class  ○  Push  down/up  method  
+Extract  Method  
+Used  when  you  have  a  code  fragment  that  can  be  grouped  together.  
+ 
+245  
+
+
+===== PAGE 246 =====
+  
+ 
+ 
+ 
+Benefits  of  this  refactoring:  
+ Enable  reuse  of  the  extracted  method   Decompose  large  methods  into  smaller,  focused  ones   Eliminate  code  duplication   Improve  testing  by  isolating  functionality   Support  method  overriding  in  subclasses  
+ 
+ 
+ 
+ 
+246  
+
+
+===== PAGE 247 =====
+  
+ 
+ 
+Inline  (opposite  of  extraction)  
+ 
+ 
+Move  Method  
+Used  when  a  method  in  a  class  seems  to  use  more  features  of  another  class  than  its  own,  you  move  
+the
+ 
+method
+ 
+to
+ 
+the
+ 
+class
+ 
+it
+ 
+relies
+ 
+on
+ 
+most.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+247  
+
+
+===== PAGE 248 =====
+  
+ 
+ 
+Non  Refactored  Refactored  
+  
+calculateInterest() uses  mostly  Account ’s  data  ( balance ).  
+ 
+Benefits  of  this  refactoring:  
+●  Increases  Cohesion:  Methods  reside  in  the  class  that  has  most  of  the  relevant  data.  ●  Supports  SRP  (Single  Responsibility  Principle) :Classes  become  more  focused  on  a  single  
+responsibility.
+ ●  Reduces  Coupling:  Avoids  one  class  depending  heavily  on  another  just  to  compute  
+something.
+ ●  Improves  Maintainability:  Changes  to  the  method  now  affect  the  class  that  actually  owns  the  
+relevant
+ 
+data.
+ ●  Improves  Readability:  Developers  can  find  related  data  and  behavior  together  in  the  same  
+class.
+ ●  Supports  Reusability:  Other  parts  of  the  system  can  reuse  the  method  more  easily  if  it  lives  
+in
+ 
+the
+ 
+logical
+ 
+class.
+ 
+ 
+248  
+
+
+===== PAGE 249 =====
+  
+ 
+ 
+ 
+Remove  Assignments  to  Parameters  
+○  Some  value  is  assigned  to  a  parameter  inside  the  method  body.   ○  Use  a  local  variable  instead  of  a  parameter.  
+ 
+    Push  Down  Field/method  
+If  a  field  is  used  only  in  a  few  subclasses.  Move  the  field  to  these  subclasses.  
+ 
+Benefits  of  this  refactoring:  
+●  Reduces  Unnecessary  Code  in  Superclass  –  prevents  unrelated  methods  from  
+polluting
+ 
+other
+ 
+subclasses.
+ ●  Improves  Clarity  –  each  class  contains  only  relevant  behavior.  ●  Supports  SRP  (Single  Responsibility  Principle)  –  keeps  each  class  focused  on  its  
+role.
+ 
+249  
+
+
+===== PAGE 250 =====
+  
+ 
+ ●  Easier  Maintenance  and  Understanding  –  developers  immediately  see  what  is  
+specific
+ 
+to
+ 
+each
+ 
+subclass.
+ 
+   
+Benefits  of  this  refactoring:   ●  Reduces  Code  Duplication  –  avoids  repeating  the  same  code  in  multiple  subclasses.  ●  Improves  Maintainability  –  changing  the  method  once  in  the  superclass  updates  it  for  all  
+subclasses.
+ ●  Clarifies  Hierarchy  –  makes  shared  behaviors  explicit  at  the  superclass  level.  ●  Supports  Polymorphism  –  superclass  can  define  behaviors  that  work  across  all  subclasses                  
+250  
+
+
+===== PAGE 251 =====
+  
+ 
+  
+Extract  Class  Single  class  does  too  much  (violating  the  Single  Responsibility  Principle),  you  can  move  some  of  its  
+responsibilities
+ 
+to
+ 
+a
+ 
+new
+ 
+class.
+   
+  
+Benefits  of  this  refactoring:  ●  Single  Responsibility  Principle  (SRP):  Each  class  focuses  on  one  specific  task ,  making  
+the
+ 
+system
+ 
+cleaner.
+ ●  Improves  Readability:  Smaller,  focused  classes  are  easier  to  read  and  understand.  ●  Better  Maintainability:  Changes  to  one  concern  don’t  affect  unrelated  behaviors.  ●  Enhanced  Testability:  Smaller  classes  are  easier  to  test  in  isolation.  ●  Reusability:  Extracted  classes  can  often  be  reused  in  other  parts  of  the  system.  ●  Reduced  Coupling:  Separation  of  concerns  reduces  dependencies  between  unrelated  parts  
+of
+ 
+the
+ 
+code.
+          
+251  
+
+
+===== PAGE 252 =====
+  
+ 
+ 
+IDE-Supported  Refactoring  (Eclipse,  IntelliJ  IDEA,  
+VSCode,
+ 
+etc.)
+ 
+ 
+  
+252  
+
+
+===== PAGE 253 =====
+  
+ 
+ 
+ 
+ 
+Meta’s  Systematic  Code  and  Asset  Removal  Framework  (SCARF)  
+253  
+
+
+===== PAGE 254 =====
+  
+ 
+ 
+ 
+ 
+Code  (Bad)  Smell  
+ Indicators  of  low-quality  code   Code  that  is  hard  to  maintain,  understand,  modify  or  test   Therefore,  it  is  a  candidate  for  refactoring  
+ Catalog  of  Code  Smells  ●  Duplicated  Code  ●  Long  Methods  ●  Large  Classes  ●  Feature  Envy  ●  Long  Parameter  List  ●  Global  Variables  ●  Primitive  Obsession  ●  Mutable  Objects  ●  Data  Classes  
+●
+ 
+Comments
+ 
+254  
+
+
+===== PAGE 255 =====
+  
+ 
+ 
+❖  Code  Smell:  Duplicated  Code  ●  Makes  maintenance  more  difficult  ●  Therefore,  it  is  a  candidate  for  refactoring  
+ 
+ Duplicated  Code  ⇒  Clones  
+255  
+
+
+===== PAGE 256 =====
+  
+ 
+ 
+ 
+  
+256  
+
+
+===== PAGE 257 =====
+  
+ 
+ 
+ 
+ 
+257  
+
+
+===== PAGE 258 =====
+  
+ 
+ 
+ https://testing.googleblog.com/2024/05/dont-dry-your-code-prematurely.html 
+ 
+258  
+
+
+===== PAGE 259 =====
+  
+ 
+  
+While  functions  may  look  the  same,  they  may  also  serve  
+different
+ 
+requirements
+ 
+that
+ 
+evolve
+ 
+differently
+ 
+over
+ 
+time.
+ 
+  
+  ❖  Code  Smell:  Feature  Envy  
+ 
+259  
+
+
+===== PAGE 260 =====
+  
+ 
+ 
+Why  is  it  a  Problem?  ●  Breaks  encapsulation  →  one  class  is  too  dependent  on  another’s  data.  ●  Leads  to  tight  coupling.  ●  Makes  code  harder  to  maintain  and  extend.  
+ Code  smell  
+ 
+ 
+260  
+
+
+===== PAGE 261 =====
+  
+ 
+ 
+Resolved  Code  smell  (Refactor)  
+        
+261  
+
+
+===== PAGE 262 =====
+  
+ 
+ 
+❖  Code  Smell:  Global  Variables  
+  ❖  Code  Smell:  Primitive  Obsession   
+ 
+262  
+
+
+===== PAGE 263 =====
+  
+ 
+ 
+ 
+ 
+Problems:  
+●  String  is  used  for  email,  name,  etc.   ●  Email  validation  logic  sprinkled  in  multiple  places.   ●  If  email  rules  change,  you  must  update  everywhere.  
+ 
+263  
+
+
+===== PAGE 264 =====
+  
+ 
+ 
+ 
+264  
+
+
+===== PAGE 265 =====
+  
+ 
+ 
+ 
+Benefits:  
+●  Validation  in  one  place.  ●  The  meaning  of  each  field  is  clear  from  its  type.  ●  If  rules  change  (new  email  format),  you  change  only  in  Email  class.  
+❖
+ 
+Code
+ 
+Smell:
+ 
+Mutable
+ 
+Objects
+ Mutable:  state  can  change  
+265  
+
+
+===== PAGE 266 =====
+  
+ 
+ Immutable:  an  object  whose  state  does  not  change  after  creation   
+  
+Are  Strings  in  Java  immutable  or  not?      Are  Strings  in  C++  immutable  or  not?   Whenever  possible:  ●  Create  immutable  objects  ●  Especially,  for  simple  objects  (ZIP,  Date,  Time,  etc)           Example:   
+266  
+
+
+===== PAGE 267 =====
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+267  
+
+
+===== PAGE 268 =====
+  
+ 
+ 
+Why  are  objects  of  this  class  mutable?  
+●  The  class  Price  has  a  private  field  value.  
+ ●  The  method  increment(double  amount) directly  modifies this.value inside  the  
+object.
+ 
+ 
+  
+268  
+
+
+===== PAGE 269 =====
+  
+ 
+ 
+  
+A  record  is  a  class  where:  
+●  All  fields  are  final  and  set  at  construction  time.  
+ ●  It  automatically  generates:  
+ ○  A  constructor  with  all  fields.  
+ ○  Getters  
+ ○  equals() ,  hashCode() ,  and  toString() .  
+ 
+This  makes  it  ideal  for  data  carriers  (like  Data  Transfer  Objects  (DTOs))  and  Config  objects.  
+ 
+269  
+
+
+===== PAGE 270 =====
+  
+ 
+ 
+ 
+  
+270  
+
+
+===== PAGE 271 =====
+  
+ 
+ 
+❖
+ 
+Code
+ 
+Smell:
+ 
+Comments
+ 
+ 
+ 
+   
+ 
+ 
+271  
+
+
+===== PAGE 272 =====
+  
+ 
+ 
+ 
+ 
+ 272  
+
+
+===== PAGE 273 =====
+  
+ 
+  
+  
+273  
+
+
+===== PAGE 274 =====
+  
+ 
+ 
+ 
+ 
+274  
+
+
+===== PAGE 275 =====
+  
+ 
+ 
+Technical  Debt  (1992)  Designates  non-optimal  design  solutions  that  make  maintenance  and  evolution  difficult  
+               
+275  
+
+
+===== PAGE 276 =====
+  
+ 
+ 
+Chapter  6: DevOps  (  Development  
++
+ 
+Operation)
+ 
+ 
+Now  we  should  complete  the  "last  mile":  To  deploy  the  system,  
+i.e.,
+ 
+put
+ 
+it
+ 
+into
+ production.   
+276  
+
+
+===== PAGE 277 =====
+  
+ 
+ 
+ 
+ 
+277  
+
+
+===== PAGE 278 =====
+  
+ 
+ 
+ 
+  
+ 
+278  
+
+
+===== PAGE 279 =====
+  
+ 
+ 
+   
+279  
+
+
+===== PAGE 280 =====
+  
+ 
+ 
+❖   DevOPS:  Version  Control  System  ●  Essential  for  collaborative  development  ●  They  serve  as  the  Source  of  Truth;  maintaining  the  latest  version  ●  Enables  teams  to  recover  previous  versions   
+ Advantages  of  DVCS  (Distributed  VCS)  ●  Commits  are  faster;  enabling  devs  to  commit  more  often  ●  Each  dev  has  a  local  repository,  allowing  offline  work    
+  
+280  
+
+
+===== PAGE 281 =====
+  
+ 
+ 
+Eclipse  +  Version  Control  System(Git)  +  Maven  
+project
+ 
+Manager
+  Stack  Overflow  Developer  Survey  2025    Responses:  30,065(61.3%)  
+ 
+https://survey.stackoverflow.co/2025/technology#2-code-documentation-and-collaboration-tools  
+   
+281  
+
+
+===== PAGE 282 =====
+  
+ 
+  
+ 
+    
+ 
+282  
+
+
+===== PAGE 283 =====
+  
+ 
+ 
+Merge  Conflicts  (between  Bob  and  Alice)   
+  
+ 
+283  
+
+
+===== PAGE 284 =====
+  
+ 
+ 
+ 
+   
+ 
+284  
+
+
+===== PAGE 285 =====
+  
+ 
+ 
+Integrate  Eclipse  with  Github   
+Go  to  github   https://github.com and  signup.   Create  a  new  repository  on  github  as  follows.  Add  the  collaborators  (team)(2-3  Max).    
+  
+285  
+
+
+===== PAGE 286 =====
+  
+ 
+ 
+  
+286  
+
+
+===== PAGE 287 =====
+  
+ 
+ 
+    Right  click  on  the  project  and  choose  Team  ⇒  share  project  
+287  
+
+
+===== PAGE 288 =====
+  
+ 
+ 
+ 
+   
+288  
+
+
+===== PAGE 289 =====
+  
+ 
+     Convert  the  perspective  of  Eclipse  to  Git.  Follow  next  figure  
+  Choose  Git.  Make  sure  that  Eclipse  has  the  Git  Plugin  else  you  need  to  plugin.  
+ 
+289  
+
+
+===== PAGE 290 =====
+  
+ 
+ You  should  see  the  following  perspective.   
+  
+ 
+290  
+
+
+===== PAGE 291 =====
+  
+ 
+ 
+  May  asked  you  for  your  credential  of  github:  username  and  TOKEN.  
+ 
+291  
+
+
+===== PAGE 292 =====
+  
+ 
+ To  generate  TOKEN  ⇒  Go  to  settings  on  your  github  account→  developer  setting→  Personal  access  
+tokens→Generate
+ 
+new
+ 
+token.
+ 
+  
+292  
+
+
+===== PAGE 293 =====
+  
+ 
+ 
+ 
+293  
+
+
+===== PAGE 294 =====
+  
+ 
+ 
+ Press  finish  then  for  the  last  dialog  press  OK.              
+294  
+
+
+===== PAGE 295 =====
+  
+ 
+ 
+Check  github  to  see  the  project.  
+  When  you  make  any  change  on  project  you  should  repeat  the  same  steps:   right  click  on  project ⇒  commit  then  follow  the  same  process  and  write  commit  message  
+  
+295  
+
+
+===== PAGE 296 =====
+  
+ 
+ 
+ 
+Cloning  any  github  project  from  eclipse  
+ Eclipse→  File→  import  →  Git—>  projects  from  Git→  Clone  URL  
+  
+296  
+
+
+===== PAGE 297 =====
+  
+ 
+ 
+ Then  Next→  choose  branch→  next  …   Then  press  finish  and  OK.       
+        
+297  
+
+
+===== PAGE 298 =====
+  
+ 
+ 
+ 
+Creating  Maven  Project   
+What  is  Maven?  
+●  Apache  Maven  is  a  build  automation  and  project  management  tool  for  Java  (and  other  JVM  
+languages).
+ 
+ ●  It  helps  you  compile,  package,  test,  and  deploy  your  applications  in  a  standardized  way.  
+ ●  It  also  manages  your  project’s  dependencies  (third-party  libraries).  
+ 
+Key  Features  
+Feature  What  it  Does  
+Build  Automation  Compiles  code,  runs  tests,  packages  JARs/WARs  automatically.  
+Dependency  Management  
+Downloads  libraries  from  a  central  repository  so  you  don’t  manage  JARs  manually.  
+Project  Structure  Encourages  a  standard  directory  layout  (src/main/java ,  src/test/java).  
+Plugins  Extend  Maven  to  run  code  analysis,  generate  reports,  deploy  artifacts.  
+Convention  over  Configuration  
+You  follow  conventions,  and  Maven  does  most  of  the  work  automatically.  
+   
+298  
+
+===== PAGE 299 =====
+  
+ 
+ 
+How  It  Works  
+●  A  Maven  project  is  defined  by  a  POM  file  (pom.xml)  at  the  root.  
+ ●  In  pom.xml you  specify:  
+ ○  Project  metadata  (name,  version,  packaging)  
+ ○  Dependencies  (like  JUnit,  Spring)  
+ ○  Plugins  to  run  during  the  build  
+ 
+Maven  then  downloads  the  dependencies  from  the  Maven  Central  Repository  (or  other  repos)  and  
+builds
+ 
+your
+ 
+project
+ 
+accordingly.
+ 
+Example:  pom.xml  <project>    <modelVersion>4.0.0</modelVersion>    <groupId>com.example</groupId>    <artifactId>my-app</artifactId>    <version>1.0-SNAPSHOT</version>       <dependencies>      <dependency>        <groupId>org.junit.jupiter</groupId>        <artifactId>junit-jupiter</artifactId>        <version>5.10.0</version>        <scope>test</scope>      </dependency>    </dependencies>  </project>   
+ 
+ 
+299  
+
+===== PAGE 300 =====
+  
+ 
+ 
+Typical  Commands  mvn  compile          #  Compile  the  source  code  mvn  test             #  Run  tests  mvn  package          #  Package  into  JAR/WAR  mvn  install          #  Install  artifact  into  local  repository  mvn  clean            #  Clean  target  directory    
+Why  It’s  Important  
+●  No  need  to  manually  download  or  manage  JAR  files.  
+ ●  Ensures  builds  are  repeatable  across  machines.  
+ ●  Integrates  easily  with  CI/CD  pipelines  and  IDEs  like  IntelliJ  or  Eclipse.  
+ 
+                     
+300  
+
+===== PAGE 301 =====
+  
+ 
+    
+ 
+ 
+301  
+
+
+===== PAGE 302 =====
+  
+ 
+ 
+ 
+   ●  Add  all  needed  dependencies  from  MAVEN  repository  https://mvnrepository.com/  to  the  pom.xml    
+302  
+
+
+===== PAGE 303 =====
+  
+ 
+ 
+❖  DevOPS:  Continuous  Integration  (CI)   
+Result  after  40  days:  merge  hell   If  a  task  causes  pain,  it's  best  not  to  let  it  accumulate;  instead,  tackle  
+it
+ 
+daily.
+ 
+303  
+
+
+===== PAGE 304 =====
+  
+ 
+ 
+304  
+
+
+===== PAGE 305 =====
+  
+ 
+ 
+  
+ ❖  DevOps:  Branching  Strategies  How  to  organize  and  manage  branches  in  a  VCS  Best  practices  for  creating,  merging,  and  deleting  branches  Common  strategies:  ●  Git-flow  (Classical,  Large  projects  with  Long-release  Cycle)  ●  GitHubFlow  (New)  ●  Trunk-based  Development   
+305  
+
+
+===== PAGE 306 =====
+  
+ 
+ 
+ https://www.geeksforgeeks.org/introduction-semantic-versioning/
+   
+➔  Git-Flow   
+ 
+ 
+306  
+
+
+===== PAGE 307 =====
+  
+ 
+ 
+  
+307  
+
+
+===== PAGE 308 =====
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+308 
+Keeps feature branches visible in the git history
+Makes it easy to track which commits belong to a specific feature
+
+===== PAGE 309 =====
+  
+ 
+ 
+ 
+309  
+
+
+===== PAGE 310 =====
+  
+ 
+ 
+  
+310  
+
+
+===== PAGE 311 =====
+  
+ 
+ 
+ 
+311  
+
+
+===== PAGE 312 =====
+  
+ 
+ 
+  
+    
+312  
+
+
+===== PAGE 313 =====
+  
+ 
+ 
+➔  Github  Flow    
+ 
+  
+313  
+
+
+===== PAGE 314 =====
+  
+ 
+ 
+ 
+ 
+314  
+
+
+===== PAGE 315 =====
+  
+ 
+ 
+ 
+➔  Trunk-based  Development  (TBD)   
+   
+315  
+
+
+===== PAGE 316 =====
+  
+ 
+ 
+❖  DevOps:  Continuous  Deployment
+ 
+  How  to  keep  partial  implementations  from  reaching  
+customers?
+  
+ 
+316  
+
+
+===== PAGE 317 =====
+  
+ 
+ 
+   
+ 
+317  
+
+
+===== PAGE 318 =====
+  
+ 
+ 
+ 
+          
+318  
+
+
+===== PAGE 319 =====
+  
+ 
+ 
+ 
+  
+319  
+
+
+===== PAGE 320 =====
+  
+ 
+ 
+ 
+ 
+320  
+
+
+===== PAGE 321 =====
+  
+ 
+ 
+  
+  
+321  
