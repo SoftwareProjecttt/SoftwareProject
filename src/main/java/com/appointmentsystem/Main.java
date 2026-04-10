@@ -8,10 +8,12 @@ import com.appointmentsystem.persistence.inmemory.InMemoryAppointmentRepository;
 import com.appointmentsystem.persistence.inmemory.InMemoryTimeSlotRepository;
 import com.appointmentsystem.presentation.ConsoleApp;
 import com.appointmentsystem.security.SessionManager;
+import com.appointmentsystem.strategy.AppointmentTypeRuleStrategy;
 import com.appointmentsystem.strategy.BookingRuleStrategy;
 import com.appointmentsystem.strategy.DurationRuleStrategy;
 import com.appointmentsystem.strategy.ParticipantLimitRuleStrategy;
 
+import java.time.Clock;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,15 +21,10 @@ import java.util.List;
  * Application entry point.
  *
  * @author Mohammad
- * @version 3.0
+ * @version 4.0
  */
 public class Main {
 
-    /**
-     * Starts the appointment scheduling system.
-     *
-     * @param args command line arguments
-     */
     public static void main(String[] args) {
         AdminRepository adminRepository = new InMemoryAdminRepository();
         AppointmentRepository appointmentRepository = new InMemoryAppointmentRepository();
@@ -39,7 +36,8 @@ public class Main {
 
         List<BookingRuleStrategy> bookingRules = Arrays.asList(
                 new DurationRuleStrategy(120),
-                new ParticipantLimitRuleStrategy()
+                new ParticipantLimitRuleStrategy(),
+                new AppointmentTypeRuleStrategy()
         );
 
         BookingService bookingService = new BookingService(
@@ -53,11 +51,10 @@ public class Main {
                         appointmentRepository,
                         timeSlotRepository,
                         bookingRules,
-                        authService
+                        authService,
+                        Clock.systemDefaultZone()
                 );
 
-        // --- Observer pattern wiring ---
-        // One shared NotificationService instance observes both services.
         NotificationService notificationService = new NotificationService();
         bookingService.registerObserver(notificationService);
         reservationManagementService.registerObserver(notificationService);

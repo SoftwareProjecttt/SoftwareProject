@@ -2,22 +2,29 @@ package com.appointmentsystem.strategy;
 
 import com.appointmentsystem.domain.Appointment;
 import com.appointmentsystem.domain.AppointmentStatus;
+import com.appointmentsystem.domain.AppointmentType;
 import com.appointmentsystem.domain.TimeSlot;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * Unit tests for ParticipantLimitRuleStrategy.
+ *
+ * @author Mohammad
+ * @version 2.0
+ */
 class ParticipantLimitRuleStrategyTest {
 
     @Test
-    void shouldAccept_whenWithinCapacity() {
-
-        TimeSlot slot = new TimeSlot(
-                "1",
-                LocalDate.now(),
+    void isValid_returnsTrueWhenParticipantCountWithinCapacity() {
+        TimeSlot timeSlot = new TimeSlot(
+                "TS1",
+                LocalDate.now().plusDays(1),
                 LocalTime.of(10, 0),
                 LocalTime.of(11, 0),
                 5,
@@ -26,48 +33,48 @@ class ParticipantLimitRuleStrategyTest {
 
         Appointment appointment = new Appointment(
                 "A1",
-                "Karam",
-                slot,
+                "Ahmad",
+                timeSlot,
                 2,
-                AppointmentStatus.CONFIRMED
+                AppointmentStatus.CONFIRMED,
+                AppointmentType.GROUP
         );
 
-        ParticipantLimitRuleStrategy rule = new ParticipantLimitRuleStrategy();
+        ParticipantLimitRuleStrategy strategy = new ParticipantLimitRuleStrategy();
 
-        assertTrue(rule.isValid(appointment));
+        assertTrue(strategy.isValid(appointment));
     }
 
     @Test
-    void shouldReject_whenExceedsCapacity() {
-
-        TimeSlot slot = new TimeSlot(
-                "1",
-                LocalDate.now(),
+    void isValid_returnsFalseWhenParticipantCountExceedsCapacity() {
+        TimeSlot timeSlot = new TimeSlot(
+                "TS2",
+                LocalDate.now().plusDays(1),
                 LocalTime.of(10, 0),
                 LocalTime.of(11, 0),
-                2,
-                1
+                5,
+                4
         );
 
         Appointment appointment = new Appointment(
-                "A1",
-                "Karam",
-                slot,
-                3,
-                AppointmentStatus.CONFIRMED
+                "A2",
+                "Sara",
+                timeSlot,
+                2,
+                AppointmentStatus.CONFIRMED,
+                AppointmentType.GROUP
         );
 
-        ParticipantLimitRuleStrategy rule = new ParticipantLimitRuleStrategy();
+        ParticipantLimitRuleStrategy strategy = new ParticipantLimitRuleStrategy();
 
-        assertFalse(rule.isValid(appointment));
+        assertFalse(strategy.isValid(appointment));
     }
 
     @Test
-    void shouldReject_whenZeroParticipants() {
-
-        TimeSlot slot = new TimeSlot(
-                "1",
-                LocalDate.now(),
+    void isValid_returnsFalseWhenParticipantCountIsZero() {
+        TimeSlot timeSlot = new TimeSlot(
+                "TS3",
+                LocalDate.now().plusDays(1),
                 LocalTime.of(10, 0),
                 LocalTime.of(11, 0),
                 5,
@@ -75,15 +82,16 @@ class ParticipantLimitRuleStrategyTest {
         );
 
         Appointment appointment = new Appointment(
-                "A1",
-                "Karam",
-                slot,
+                "A3",
+                "Omar",
+                timeSlot,
                 0,
-                AppointmentStatus.CONFIRMED
+                AppointmentStatus.CONFIRMED,
+                AppointmentType.INDIVIDUAL
         );
 
-        ParticipantLimitRuleStrategy rule = new ParticipantLimitRuleStrategy();
+        ParticipantLimitRuleStrategy strategy = new ParticipantLimitRuleStrategy();
 
-        assertFalse(rule.isValid(appointment));
+        assertFalse(strategy.isValid(appointment));
     }
 }

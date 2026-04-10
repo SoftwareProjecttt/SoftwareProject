@@ -2,63 +2,71 @@ package com.appointmentsystem.strategy;
 
 import com.appointmentsystem.domain.Appointment;
 import com.appointmentsystem.domain.AppointmentStatus;
+import com.appointmentsystem.domain.AppointmentType;
 import com.appointmentsystem.domain.TimeSlot;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * Unit tests for DurationRuleStrategy.
+ *
+ * @author Mohammad
+ * @version 2.0
+ */
 class DurationRuleStrategyTest {
 
     @Test
-    void shouldAccept_whenDurationEqualsMax() {
-
-        TimeSlot slot = new TimeSlot(
-                "1",
-                LocalDate.now(),
+    void isValid_returnsTrueWhenDurationWithinLimit() {
+        TimeSlot timeSlot = new TimeSlot(
+                "TS1",
+                LocalDate.now().plusDays(1),
                 LocalTime.of(10, 0),
-                LocalTime.of(12, 0), // 120 min
+                LocalTime.of(11, 0),
                 5,
                 0
         );
 
         Appointment appointment = new Appointment(
                 "A1",
-                "Karam",
-                slot,
+                "Ahmad",
+                timeSlot,
                 1,
-                AppointmentStatus.CONFIRMED
+                AppointmentStatus.CONFIRMED,
+                AppointmentType.INDIVIDUAL
         );
 
-        DurationRuleStrategy rule = new DurationRuleStrategy(120);
+        DurationRuleStrategy strategy = new DurationRuleStrategy(120);
 
-        assertTrue(rule.isValid(appointment));
+        assertTrue(strategy.isValid(appointment));
     }
 
     @Test
-    void shouldReject_whenDurationExceedsMax() {
-
-        TimeSlot slot = new TimeSlot(
-                "1",
-                LocalDate.now(),
+    void isValid_returnsFalseWhenDurationExceedsLimit() {
+        TimeSlot timeSlot = new TimeSlot(
+                "TS2",
+                LocalDate.now().plusDays(1),
                 LocalTime.of(10, 0),
-                LocalTime.of(12, 1), // 121 min
+                LocalTime.of(13, 0),
                 5,
                 0
         );
 
         Appointment appointment = new Appointment(
-                "A1",
-                "Karam",
-                slot,
+                "A2",
+                "Sara",
+                timeSlot,
                 1,
-                AppointmentStatus.CONFIRMED
+                AppointmentStatus.CONFIRMED,
+                AppointmentType.INDIVIDUAL
         );
 
-        DurationRuleStrategy rule = new DurationRuleStrategy(120);
+        DurationRuleStrategy strategy = new DurationRuleStrategy(120);
 
-        assertFalse(rule.isValid(appointment));
+        assertFalse(strategy.isValid(appointment));
     }
 }

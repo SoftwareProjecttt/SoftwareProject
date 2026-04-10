@@ -2,7 +2,11 @@ package com.appointmentsystem.service;
 
 import com.appointmentsystem.AuthService;
 import com.appointmentsystem.ReservationManagementService;
-import com.appointmentsystem.domain.*;
+import com.appointmentsystem.domain.Administrator;
+import com.appointmentsystem.domain.Appointment;
+import com.appointmentsystem.domain.AppointmentStatus;
+import com.appointmentsystem.domain.AppointmentType;
+import com.appointmentsystem.domain.TimeSlot;
 import com.appointmentsystem.exception.AuthorizationException;
 import com.appointmentsystem.exception.BookingException;
 import com.appointmentsystem.observer.AppointmentEventType;
@@ -15,6 +19,7 @@ import com.appointmentsystem.strategy.BookingRuleStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.Clock;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -23,20 +28,21 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+/**
+ * Unit tests for ReservationManagementService.
+ *
+ * @author Mohammad
+ * @version 2.0
+ */
 class ReservationManagementServiceTest {
 
     private AppointmentRepository appointmentRepository;
     private TimeSlotRepository timeSlotRepository;
     private BookingRuleStrategy rule;
-
-    // ✅ real objects بدل mocks
     private SessionManager sessionManager;
     private AuthService authService;
-
     private ReservationManagementService service;
-
     private AppointmentObserver observer;
-
     private TimeSlot oldSlot;
     private TimeSlot newSlot;
     private Appointment appointment;
@@ -47,17 +53,16 @@ class ReservationManagementServiceTest {
         timeSlotRepository = mock(TimeSlotRepository.class);
         rule = mock(BookingRuleStrategy.class);
 
-        // ✅ real AuthService
         sessionManager = new SessionManager();
         AdminRepository adminRepository = mock(AdminRepository.class);
-
         authService = new AuthService(adminRepository, sessionManager);
 
         service = new ReservationManagementService(
                 appointmentRepository,
                 timeSlotRepository,
                 List.of(rule),
-                authService
+                authService,
+                Clock.systemDefaultZone()
         );
 
         observer = mock(AppointmentObserver.class);
@@ -86,17 +91,14 @@ class ReservationManagementServiceTest {
                 "Ahmad",
                 oldSlot,
                 2,
-                AppointmentStatus.CONFIRMED
+                AppointmentStatus.CONFIRMED,
+                AppointmentType.GROUP
         );
 
         when(appointmentRepository.findById("A1")).thenReturn(Optional.of(appointment));
         when(timeSlotRepository.findById("S2")).thenReturn(Optional.of(newSlot));
         when(rule.isValid(any())).thenReturn(true);
     }
-
-    // -----------------------------
-    // ✅ MODIFY (USER)
-    // -----------------------------
 
     @Test
     void modifyAppointmentByUser_success() {
@@ -114,10 +116,6 @@ class ReservationManagementServiceTest {
         assertThrows(BookingException.class,
                 () -> service.modifyAppointmentByUser("A1", "Wrong", "S2"));
     }
-
-    // -----------------------------
-    // ❌ MODIFY FAIL CASES
-    // -----------------------------
 
     @Test
     void modifyAppointment_slotNotFound() {
@@ -137,10 +135,6 @@ class ReservationManagementServiceTest {
         verify(observer, never()).update(any(), any());
     }
 
-    // -----------------------------
-    // ✅ CANCEL (USER)
-    // -----------------------------
-
     @Test
     void cancelAppointmentByUser_success() {
         service.cancelAppointmentByUser("A1", "Ahmad");
@@ -157,30 +151,24 @@ class ReservationManagementServiceTest {
                 () -> service.cancelAppointmentByUser("A1", "Wrong"));
     }
 
-    // -----------------------------
-    // 👑 ADMIN ACTIONS
-    // -----------------------------
-
     @Test
     void cancelReservationByAdmin_success() {
-        // ✅ نعمل login حقيقي
         Administrator admin = new Administrator("admin", "1234");
 
         AdminRepository adminRepository = mock(AdminRepository.class);
-        when(adminRepository.findByUsername("admin"))
-                .thenReturn(Optional.of(admin));
+        when(adminRepository.findByUsername("admin")).thenReturn(Optional.of(admin));
 
         authService = new AuthService(adminRepository, sessionManager);
         service = new ReservationManagementService(
                 appointmentRepository,
                 timeSlotRepository,
                 List.of(rule),
-                authService
+                authService,
+                Clock.systemDefaultZone()
         );
         service.registerObserver(observer);
 
         authService.login("admin", "1234");
-
         service.cancelReservationByAdmin("A1");
 
         assertEquals(AppointmentStatus.CANCELLED, appointment.getStatus());
@@ -198,19 +186,18 @@ class ReservationManagementServiceTest {
         Administrator admin = new Administrator("admin", "1234");
 
         AdminRepository adminRepository = mock(AdminRepository.class);
-        when(adminRepository.findByUsername("admin"))
-                .thenReturn(Optional.of(admin));
+        when(adminRepository.findByUsername("admin")).thenReturn(Optional.of(admin));
 
         authService = new AuthService(adminRepository, sessionManager);
         service = new ReservationManagementService(
                 appointmentRepository,
                 timeSlotRepository,
                 List.of(rule),
-                authService
+                authService,
+                Clock.systemDefaultZone()
         );
 
         authService.login("admin", "1234");
-
         when(appointmentRepository.findAll()).thenReturn(List.of(appointment));
 
         List<Appointment> result = service.getAllReservationsByAdmin();
@@ -223,10 +210,6 @@ class ReservationManagementServiceTest {
         assertThrows(AuthorizationException.class,
                 () -> service.getAllReservationsByAdmin());
     }
-
-    // -----------------------------
-    // ⏳ FUTURE / STATUS GUARDS
-    // -----------------------------
 
     @Test
     void modifyAppointment_pastAppointment() {
@@ -244,11 +227,11 @@ class ReservationManagementServiceTest {
                 "Ahmad",
                 pastSlot,
                 2,
-                AppointmentStatus.CONFIRMED
+                AppointmentStatus.CONFIRMED,
+                AppointmentType.GROUP
         );
 
-        when(appointmentRepository.findById("A2"))
-                .thenReturn(Optional.of(pastAppointment));
+        when(appointmentRepository.findById("A2")).thenReturn(Optional.of(pastAppointment));
 
         assertThrows(BookingException.class,
                 () -> service.modifyAppointmentByUser("A2", "Ahmad", "S2"));

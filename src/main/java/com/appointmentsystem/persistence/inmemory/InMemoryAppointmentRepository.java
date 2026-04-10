@@ -8,46 +8,36 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * In-memory implementation of appointment repository.
+ * In-memory implementation of the appointment repository.
  *
  * @author Mohammad
  * @version 2.0
  */
 public class InMemoryAppointmentRepository implements AppointmentRepository {
 
-    /** In-memory list of appointments. */
     private final List<Appointment> appointments = new ArrayList<>();
 
-    /**
-     * Returns all stored appointments.
-     *
-     * @return list of appointments
-     */
     @Override
-    public List<Appointment> findAll() {
-        return new ArrayList<>(appointments);
+    public void save(Appointment appointment) {
+        for (int i = 0; i < appointments.size(); i++) {
+            if (appointments.get(i).getId().equalsIgnoreCase(appointment.getId())) {
+                appointments.set(i, appointment);
+                return;
+            }
+        }
+
+        appointments.add(appointment);
     }
 
-    /**
-     * Finds an appointment by id.
-     *
-     * @param appointmentId appointment id
-     * @return optional appointment
-     */
     @Override
-    public Optional<Appointment> findById(String appointmentId) {
+    public Optional<Appointment> findById(String id) {
         return appointments.stream()
-                .filter(appointment -> appointment.getId().equalsIgnoreCase(appointmentId))
+                .filter(appointment -> appointment.getId().equalsIgnoreCase(id))
                 .findFirst();
     }
 
-    /**
-     * Saves an appointment in memory.
-     *
-     * @param appointment appointment to save
-     */
     @Override
-    public void save(Appointment appointment) {
-        appointments.add(appointment);
+    public List<Appointment> findAll() {
+        return new ArrayList<>(appointments);
     }
 }

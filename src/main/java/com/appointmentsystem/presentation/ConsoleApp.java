@@ -1,14 +1,15 @@
 package com.appointmentsystem.presentation;
 
-import com.appointmentsystem.domain.Appointment;
-import com.appointmentsystem.domain.TimeSlot;
-import com.appointmentsystem.exception.AuthenticationException;
-import com.appointmentsystem.exception.AuthorizationException;
-import com.appointmentsystem.exception.BookingException;
 import com.appointmentsystem.AuthService;
 import com.appointmentsystem.BookingService;
 import com.appointmentsystem.ReservationManagementService;
 import com.appointmentsystem.ScheduleService;
+import com.appointmentsystem.domain.Appointment;
+import com.appointmentsystem.domain.AppointmentType;
+import com.appointmentsystem.domain.TimeSlot;
+import com.appointmentsystem.exception.AuthenticationException;
+import com.appointmentsystem.exception.AuthorizationException;
+import com.appointmentsystem.exception.BookingException;
 
 import java.util.List;
 import java.util.Scanner;
@@ -17,7 +18,7 @@ import java.util.Scanner;
  * Console-based user interface for the appointment scheduling system.
  *
  * @author Mohammad
- * @version 3.1
+ * @version 4.0
  */
 public class ConsoleApp {
 
@@ -25,29 +26,15 @@ public class ConsoleApp {
     private final ScheduleService scheduleService;
     private final BookingService bookingService;
     private final ReservationManagementService reservationManagementService;
-
-    /** 🔥 تم تعديلها: لم نعد ننشئ Scanner داخليًا */
     private final Scanner scanner;
 
-    /**
-     * ✅ Constructor للتطبيق الحقيقي
-     */
     public ConsoleApp(AuthService authService,
                       ScheduleService scheduleService,
                       BookingService bookingService,
                       ReservationManagementService reservationManagementService) {
-        this(
-                authService,
-                scheduleService,
-                bookingService,
-                reservationManagementService,
-                new Scanner(System.in) // يستخدم في التشغيل العادي
-        );
+        this(authService, scheduleService, bookingService, reservationManagementService, new Scanner(System.in));
     }
 
-    /**
-     * ✅ Constructor للتست (نمرر Scanner)
-     */
     public ConsoleApp(AuthService authService,
                       ScheduleService scheduleService,
                       BookingService bookingService,
@@ -60,16 +47,15 @@ public class ConsoleApp {
         this.scanner = scanner;
     }
 
-    /**
-     * Starts the application loop.
-     */
     public void start() {
         boolean running = true;
 
         while (running) {
             printMainMenu();
 
-            if (!scanner.hasNextLine()) break; // 🔥 مهم للتست
+            if (!scanner.hasNextLine()) {
+                break;
+            }
 
             String choice = scanner.nextLine();
 
@@ -106,7 +92,9 @@ public class ConsoleApp {
         while (inUserMenu) {
             printUserMenu();
 
-            if (!scanner.hasNextLine()) break;
+            if (!scanner.hasNextLine()) {
+                break;
+            }
 
             String choice = scanner.nextLine();
 
@@ -146,7 +134,9 @@ public class ConsoleApp {
         while (inManageMenu) {
             printManageMyAppointmentMenu();
 
-            if (!scanner.hasNextLine()) break;
+            if (!scanner.hasNextLine()) {
+                break;
+            }
 
             String choice = scanner.nextLine();
 
@@ -184,11 +174,15 @@ public class ConsoleApp {
         }
 
         System.out.print("Enter administrator username: ");
-        if (!scanner.hasNextLine()) return;
+        if (!scanner.hasNextLine()) {
+            return;
+        }
         String username = scanner.nextLine();
 
         System.out.print("Enter administrator password: ");
-        if (!scanner.hasNextLine()) return;
+        if (!scanner.hasNextLine()) {
+            return;
+        }
         String password = scanner.nextLine();
 
         try {
@@ -207,7 +201,9 @@ public class ConsoleApp {
         while (inAdminMenu && authService.isAuthenticated()) {
             printAdminMenu();
 
-            if (!scanner.hasNextLine()) break;
+            if (!scanner.hasNextLine()) {
+                break;
+            }
 
             String choice = scanner.nextLine();
 
@@ -279,31 +275,53 @@ public class ConsoleApp {
         handleViewAvailableSlots();
 
         System.out.print("Enter your name: ");
-        if (!scanner.hasNextLine()) return;
+        if (!scanner.hasNextLine()) {
+            return;
+        }
         String customerName = scanner.nextLine();
 
         System.out.print("Enter slot ID: ");
-        if (!scanner.hasNextLine()) return;
+        if (!scanner.hasNextLine()) {
+            return;
+        }
         String slotId = scanner.nextLine();
 
         System.out.print("Enter number of participants: ");
-        if (!scanner.hasNextLine()) return;
+        if (!scanner.hasNextLine()) {
+            return;
+        }
         String participantInput = scanner.nextLine();
+
+        System.out.println("Choose appointment type:");
+        for (AppointmentType type : AppointmentType.values()) {
+            System.out.println("- " + type.name());
+        }
+
+        System.out.print("Enter appointment type: ");
+        if (!scanner.hasNextLine()) {
+            return;
+        }
+        String typeInput = scanner.nextLine();
 
         try {
             int participantCount = Integer.parseInt(participantInput);
+            AppointmentType appointmentType = AppointmentType.valueOf(typeInput.trim().toUpperCase());
 
             Appointment appointment = bookingService.bookAppointment(
                     customerName,
                     slotId,
-                    participantCount
+                    participantCount,
+                    appointmentType
             );
 
             System.out.println("Appointment booked successfully.");
             System.out.println("Appointment ID: " + appointment.getId());
             System.out.println("Status: " + appointment.getStatus());
+            System.out.println("Type: " + appointment.getAppointmentType());
         } catch (NumberFormatException e) {
             System.out.println("Booking rejected: participant count must be a number.");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Booking rejected: invalid appointment type.");
         } catch (BookingException e) {
             System.out.println(e.getMessage());
         }
@@ -311,16 +329,22 @@ public class ConsoleApp {
 
     private void handleModifyMyAppointment() {
         System.out.print("Enter your appointment ID: ");
-        if (!scanner.hasNextLine()) return;
+        if (!scanner.hasNextLine()) {
+            return;
+        }
         String appointmentId = scanner.nextLine();
 
         System.out.print("Enter your name: ");
-        if (!scanner.hasNextLine()) return;
+        if (!scanner.hasNextLine()) {
+            return;
+        }
         String customerName = scanner.nextLine();
 
         handleViewAvailableSlots();
         System.out.print("Enter new slot ID: ");
-        if (!scanner.hasNextLine()) return;
+        if (!scanner.hasNextLine()) {
+            return;
+        }
         String newSlotId = scanner.nextLine();
 
         try {
@@ -339,11 +363,15 @@ public class ConsoleApp {
 
     private void handleCancelMyAppointment() {
         System.out.print("Enter your appointment ID: ");
-        if (!scanner.hasNextLine()) return;
+        if (!scanner.hasNextLine()) {
+            return;
+        }
         String appointmentId = scanner.nextLine();
 
         System.out.print("Enter your name: ");
-        if (!scanner.hasNextLine()) return;
+        if (!scanner.hasNextLine()) {
+            return;
+        }
         String customerName = scanner.nextLine();
 
         try {
@@ -379,12 +407,16 @@ public class ConsoleApp {
 
     private void handleModifyReservationByAdmin() {
         System.out.print("Enter appointment ID to modify: ");
-        if (!scanner.hasNextLine()) return;
+        if (!scanner.hasNextLine()) {
+            return;
+        }
         String appointmentId = scanner.nextLine();
 
         handleViewAvailableSlots();
         System.out.print("Enter new slot ID: ");
-        if (!scanner.hasNextLine()) return;
+        if (!scanner.hasNextLine()) {
+            return;
+        }
         String newSlotId = scanner.nextLine();
 
         try {
@@ -402,7 +434,9 @@ public class ConsoleApp {
 
     private void handleCancelReservationByAdmin() {
         System.out.print("Enter appointment ID to cancel: ");
-        if (!scanner.hasNextLine()) return;
+        if (!scanner.hasNextLine()) {
+            return;
+        }
         String appointmentId = scanner.nextLine();
 
         try {
