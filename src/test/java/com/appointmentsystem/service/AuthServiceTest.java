@@ -1,12 +1,12 @@
- package com.appointmentsystem.service;
+package com.appointmentsystem.service;
 
+import com.appointmentsystem.AuthService;
 import com.appointmentsystem.domain.Administrator;
 import com.appointmentsystem.exception.AuthenticationException;
 import com.appointmentsystem.persistence.AdminRepository;
 import com.appointmentsystem.security.SessionManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 
 import java.util.Optional;
 
@@ -22,7 +22,10 @@ class AuthServiceTest {
     @BeforeEach
     void setUp() {
         adminRepository = mock(AdminRepository.class);
-        sessionManager = mock(SessionManager.class);
+
+        // ✅ استخدم real object بدل mock
+        sessionManager = new SessionManager();
+
         authService = new AuthService(adminRepository, sessionManager);
     }
 
@@ -35,7 +38,9 @@ class AuthServiceTest {
 
         authService.login("admin", "1234");
 
-        verify(sessionManager).login(admin);
+        // ✅ تحقق من behavior الحقيقي
+        assertTrue(sessionManager.isAuthenticated());
+        assertEquals("admin", sessionManager.getLoggedInAdmin().getUsername());
     }
 
     @Test
@@ -60,22 +65,32 @@ class AuthServiceTest {
 
     @Test
     void logout_callsSessionManager() {
+        Administrator admin = new Administrator("admin", "1234");
+
+        when(adminRepository.findByUsername("admin"))
+                .thenReturn(Optional.of(admin));
+
+        authService.login("admin", "1234");
         authService.logout();
 
-        verify(sessionManager).logout();
+        // ✅ تحقق من الحالة
+        assertFalse(sessionManager.isAuthenticated());
     }
 
     @Test
     void isAuthenticated_true() {
-        when(sessionManager.isAuthenticated()).thenReturn(true);
+        Administrator admin = new Administrator("admin", "1234");
+
+        when(adminRepository.findByUsername("admin"))
+                .thenReturn(Optional.of(admin));
+
+        authService.login("admin", "1234");
 
         assertTrue(authService.isAuthenticated());
     }
 
     @Test
     void isAuthenticated_false() {
-        when(sessionManager.isAuthenticated()).thenReturn(false);
-
         assertFalse(authService.isAuthenticated());
     }
 
@@ -83,8 +98,10 @@ class AuthServiceTest {
     void getLoggedInUsername_whenAuthenticated() {
         Administrator admin = new Administrator("admin", "1234");
 
-        when(sessionManager.isAuthenticated()).thenReturn(true);
-        when(sessionManager.getLoggedInAdmin()).thenReturn(admin);
+        when(adminRepository.findByUsername("admin"))
+                .thenReturn(Optional.of(admin));
+
+        authService.login("admin", "1234");
 
         String username = authService.getLoggedInUsername();
 
@@ -93,11 +110,8 @@ class AuthServiceTest {
 
     @Test
     void getLoggedInUsername_whenNotAuthenticated() {
-        when(sessionManager.isAuthenticated()).thenReturn(false);
-
         String username = authService.getLoggedInUsername();
 
         assertNull(username);
     }
 }
-
