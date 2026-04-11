@@ -70,7 +70,8 @@ class ConsoleAppTest {
                 Clock.systemDefaultZone()
         );
 
-        NotificationService notificationService = new NotificationService();
+        com.appointmentsystem.NotificationGateway mockGateway = org.mockito.Mockito.mock(com.appointmentsystem.NotificationGateway.class);
+        com.appointmentsystem.NotificationService notificationService = new com.appointmentsystem.NotificationService(mockGateway);
         bookingService.registerObserver(notificationService);
         reservationManagementService.registerObserver(notificationService);
     }
