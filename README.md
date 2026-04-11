@@ -22,6 +22,27 @@ The project was built using Java, Maven, JUnit 5, JaCoCo, and Mockito while foll
 - Cancel appointment
 - Administrator reservation management
 
+### CLI Interface
+- Interactive command-line interface (CLI)
+- Menu-driven navigation for all system operations
+- Input validation and error handling
+- Admin-only protected actions
+
+### Email Notifications
+- Email notification simulation on:
+    - Booking
+    - Modification
+    - Cancellation
+- Implemented using NotificationGateway abstraction
+- Designed for easy replacement with real email services
+- Mocked in tests using Mockito
+
+### Testing & Coverage
+- Unit testing using JUnit 5
+- Mocking using Mockito
+- Code coverage using JaCoCo
+- Achieved over 80% overall test coverage
+
 ### Business Rules
 - Appointment duration validation
 - Participant capacity validation
@@ -50,6 +71,7 @@ The project was built using Java, Maven, JUnit 5, JaCoCo, and Mockito while foll
 - JaCoCo
 
 ## Design Patterns
+
 ### Strategy Pattern
 Used for booking rule validation:
 - `DurationRuleStrategy`
@@ -73,8 +95,11 @@ Used for appointment event notifications:
 - `exception` : custom exceptions
 
 ## How to Run the Project
-Open the project in IntelliJ IDEA or any Java IDE, then run:
 
-```bash
-mvn compile
-mvn exec:java -Dexec.mainClass="com.appointmentsystem.Main"
+1. Compile the project:
+   mvn compile
+
+2. Run the application:
+   mvn exec:java -Dexec.mainClass="com.appointmentsystem.Main"
+
+3. Follow the CLI menu to interact with the system.
