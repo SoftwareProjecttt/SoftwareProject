@@ -16,9 +16,7 @@ import java.util.Scanner;
 
 /**
  * Console-based user interface for the appointment scheduling system.
- *
- * @author Mohammad
- * @version 4.0
+ * Main CLI Controller.
  */
 public class ConsoleApp {
 
@@ -32,419 +30,228 @@ public class ConsoleApp {
                       ScheduleService scheduleService,
                       BookingService bookingService,
                       ReservationManagementService reservationManagementService) {
-        this(authService, scheduleService, bookingService, reservationManagementService, new Scanner(System.in));
-    }
-
-    public ConsoleApp(AuthService authService,
-                      ScheduleService scheduleService,
-                      BookingService bookingService,
-                      ReservationManagementService reservationManagementService,
-                      Scanner scanner) {
         this.authService = authService;
         this.scheduleService = scheduleService;
         this.bookingService = bookingService;
         this.reservationManagementService = reservationManagementService;
-        this.scanner = scanner;
+        this.scanner = new Scanner(System.in);
+    }
+    
+    private String safeReadLine() {
+        if (!scanner.hasNextLine()) {
+            return null;
+        }
+        return scanner.nextLine().trim();
     }
 
     public void start() {
-        boolean running = true;
-
-        while (running) {
-            printMainMenu();
-
-            if (!scanner.hasNextLine()) {
+        boolean exit = false;
+        while (!exit) {
+            printMenu();
+            
+            String choice = safeReadLine();
+            if (choice == null) {
                 break;
             }
 
-            String choice = scanner.nextLine();
-
             switch (choice) {
                 case "1":
-                    openUserMenu();
+                    handleLogin();
                     break;
                 case "2":
-                    handleAdminLogin();
-                    break;
-                case "3":
-                    running = false;
-                    System.out.println("Exiting system...");
-                    break;
-                default:
-                    System.out.println("Invalid choice. Please try again.");
-            }
-
-            System.out.println();
-        }
-    }
-
-    private void printMainMenu() {
-        System.out.println("===== Appointment Scheduling System =====");
-        System.out.println("1. User Menu");
-        System.out.println("2. Administrator Login");
-        System.out.println("3. Exit");
-        System.out.print("Choose an option: ");
-    }
-
-    private void openUserMenu() {
-        boolean inUserMenu = true;
-
-        while (inUserMenu) {
-            printUserMenu();
-
-            if (!scanner.hasNextLine()) {
-                break;
-            }
-
-            String choice = scanner.nextLine();
-
-            switch (choice) {
-                case "1":
                     handleViewAvailableSlots();
                     break;
-                case "2":
+                case "3":
                     handleBookAppointment();
                     break;
-                case "3":
-                    openManageMyAppointmentMenu();
-                    break;
                 case "4":
-                    inUserMenu = false;
+                    handleModifyAppointment();
+                    break;
+                case "5":
+                    handleCancelAppointment();
+                    break;
+                case "6":
+                    handleViewAllAppointments();
+                    break;
+                case "7":
+                    System.out.println("\nExiting system... Goodbye!");
+                    exit = true;
                     break;
                 default:
-                    System.out.println("Invalid choice. Please try again.");
+                    System.out.println("\n[ERROR] Invalid choice. Please try again.");
             }
-
-            System.out.println();
         }
     }
 
-    private void printUserMenu() {
-        System.out.println("===== User Menu =====");
-        System.out.println("1. View Available Appointment Slots");
-        System.out.println("2. Book Appointment");
-        System.out.println("3. Manage My Appointment");
-        System.out.println("4. Back");
-        System.out.print("Choose an option: ");
+    private void printMenu() {
+        System.out.println("\n==================================================");
+        System.out.println("## WELCOME TO APPOINTMENT SYSTEM");
+        System.out.println("==================================================");
+        System.out.println("\nChoose an option:\n");
+        System.out.println("1. Login");
+        System.out.println("2. View Available Slots");
+        System.out.println("3. Book Appointment");
+        System.out.println("4. Modify Appointment");
+        System.out.println("5. Cancel Appointment");
+        System.out.println("6. View All Appointments");
+        System.out.println("7. Exit");
+        System.out.println("\n==================================================");
+        System.out.print("Enter choice: ");
     }
 
-    private void openManageMyAppointmentMenu() {
-        boolean inManageMenu = true;
-
-        while (inManageMenu) {
-            printManageMyAppointmentMenu();
-
-            if (!scanner.hasNextLine()) {
-                break;
-            }
-
-            String choice = scanner.nextLine();
-
-            switch (choice) {
-                case "1":
-                    handleModifyMyAppointment();
-                    break;
-                case "2":
-                    handleCancelMyAppointment();
-                    break;
-                case "3":
-                    inManageMenu = false;
-                    break;
-                default:
-                    System.out.println("Invalid choice. Please try again.");
-            }
-
-            System.out.println();
-        }
-    }
-
-    private void printManageMyAppointmentMenu() {
-        System.out.println("===== Manage My Appointment =====");
-        System.out.println("1. Modify My Appointment");
-        System.out.println("2. Cancel My Appointment");
-        System.out.println("3. Back");
-        System.out.print("Choose an option: ");
-    }
-
-    private void handleAdminLogin() {
+    private void handleLogin() {
         if (authService.isAuthenticated()) {
-            System.out.println("Administrator already logged in: " + authService.getLoggedInUsername());
-            openAdminMenu();
+            System.out.println("\n[INFO] You are currently logged in as: " + authService.getLoggedInUsername());
+            System.out.print("Do you want to logout? (y/n): ");
+            String ans = safeReadLine();
+            if (ans == null) return;
+            
+            if (ans.equalsIgnoreCase("y")) {
+                authService.logout();
+                System.out.println("[SUCCESS] Logged out successfully.");
+            }
             return;
         }
 
-        System.out.print("Enter administrator username: ");
-        if (!scanner.hasNextLine()) {
-            return;
-        }
-        String username = scanner.nextLine();
-
-        System.out.print("Enter administrator password: ");
-        if (!scanner.hasNextLine()) {
-            return;
-        }
-        String password = scanner.nextLine();
+        System.out.println("\n--- Admin Login ---");
+        System.out.print("Enter username: ");
+        String username = safeReadLine();
+        if (username == null) return;
+        
+        System.out.print("Enter password: ");
+        String password = safeReadLine();
+        if (password == null) return;
 
         try {
             authService.login(username, password);
-            System.out.println("Administrator login successful.");
-            System.out.println();
-            openAdminMenu();
+            System.out.println("\n[SUCCESS] Login successful! Welcome, " + username + ".");
         } catch (AuthenticationException e) {
-            System.out.println("Login failed: " + e.getMessage());
+            System.out.println("\n[ERROR] Login failed - " + e.getMessage());
         }
-    }
-
-    private void openAdminMenu() {
-        boolean inAdminMenu = true;
-
-        while (inAdminMenu && authService.isAuthenticated()) {
-            printAdminMenu();
-
-            if (!scanner.hasNextLine()) {
-                break;
-            }
-
-            String choice = scanner.nextLine();
-
-            switch (choice) {
-                case "1":
-                    handleViewAvailableSlots();
-                    break;
-                case "2":
-                    handleViewAllReservations();
-                    break;
-                case "3":
-                    handleModifyReservationByAdmin();
-                    break;
-                case "4":
-                    handleCancelReservationByAdmin();
-                    break;
-                case "5":
-                    handleAdminLogout();
-                    inAdminMenu = false;
-                    break;
-                case "6":
-                    inAdminMenu = false;
-                    break;
-                default:
-                    System.out.println("Invalid choice. Please try again.");
-            }
-
-            System.out.println();
-        }
-    }
-
-    private void printAdminMenu() {
-        System.out.println("===== Administrator Menu =====");
-        System.out.println("Logged in as: " + authService.getLoggedInUsername());
-        System.out.println("1. View Available Appointment Slots");
-        System.out.println("2. View All Reservations");
-        System.out.println("3. Modify Reservation");
-        System.out.println("4. Cancel Reservation");
-        System.out.println("5. Logout");
-        System.out.println("6. Back");
-        System.out.print("Choose an option: ");
-    }
-
-    private void handleAdminLogout() {
-        if (!authService.isAuthenticated()) {
-            System.out.println("No administrator is currently logged in.");
-            return;
-        }
-
-        authService.logout();
-        System.out.println("Administrator logout successful.");
     }
 
     private void handleViewAvailableSlots() {
-        List<TimeSlot> availableSlots = scheduleService.getAvailableSlots();
-
-        if (availableSlots.isEmpty()) {
-            System.out.println("No available appointment slots found.");
+        List<TimeSlot> slots = scheduleService.getAvailableSlots();
+        if (slots.isEmpty()) {
+            System.out.println("\n[INFO] No available slots at the moment.");
             return;
         }
-
-        System.out.println("Available Appointment Slots:");
-        for (TimeSlot slot : availableSlots) {
+        System.out.println("\n--- Available Slots ---");
+        for (TimeSlot slot : slots) {
             System.out.println(slot);
         }
+        System.out.println("-----------------------");
     }
 
     private void handleBookAppointment() {
+        if (!authService.isAuthenticated()) {
+            System.out.println("\n[ERROR] You must be logged in as admin to perform this action.");
+            return;
+        }
+        System.out.println("\n--- Book Appointment ---");
         handleViewAvailableSlots();
+        
+        System.out.print("\nEnter Customer Name: ");
+        String name = safeReadLine();
+        if (name == null) return;
+        
+        System.out.print("Enter Slot ID: ");
+        String slotId = safeReadLine();
+        if (slotId == null) return;
+        
+        System.out.print("Enter Participant Count: ");
+        String countStr = safeReadLine();
+        if (countStr == null) return;
 
-        System.out.print("Enter your name: ");
-        if (!scanner.hasNextLine()) {
-            return;
-        }
-        String customerName = scanner.nextLine();
-
-        System.out.print("Enter slot ID: ");
-        if (!scanner.hasNextLine()) {
-            return;
-        }
-        String slotId = scanner.nextLine();
-
-        System.out.print("Enter number of participants: ");
-        if (!scanner.hasNextLine()) {
-            return;
-        }
-        String participantInput = scanner.nextLine();
-
-        System.out.println("Choose appointment type:");
+        System.out.println("\nAvailable Appointment Types:");
         for (AppointmentType type : AppointmentType.values()) {
             System.out.println("- " + type.name());
         }
-
-        System.out.print("Enter appointment type: ");
-        if (!scanner.hasNextLine()) {
-            return;
-        }
-        String typeInput = scanner.nextLine();
+        System.out.print("Enter Appointment Type: ");
+        String typeStr = safeReadLine();
+        if (typeStr == null) return;
 
         try {
-            int participantCount = Integer.parseInt(participantInput);
-            AppointmentType appointmentType = AppointmentType.valueOf(typeInput.trim().toUpperCase());
-
-            Appointment appointment = bookingService.bookAppointment(
-                    customerName,
-                    slotId,
-                    participantCount,
-                    appointmentType
-            );
-
-            System.out.println("Appointment booked successfully.");
-            System.out.println("Appointment ID: " + appointment.getId());
-            System.out.println("Status: " + appointment.getStatus());
-            System.out.println("Type: " + appointment.getAppointmentType());
+            int count = Integer.parseInt(countStr);
+            AppointmentType type = AppointmentType.valueOf(typeStr.toUpperCase());
+            
+            Appointment appt = bookingService.bookAppointment(name, slotId, count, type);
+            
+            System.out.println("\n[SUCCESS] Appointment booked successfully!");
+            System.out.println(appt);
         } catch (NumberFormatException e) {
-            System.out.println("Booking rejected: participant count must be a number.");
+            System.out.println("\n[ERROR] Participant count must be a valid number.");
         } catch (IllegalArgumentException e) {
-            System.out.println("Booking rejected: invalid appointment type.");
+            System.out.println("\n[ERROR] Invalid appointment type.");
         } catch (BookingException e) {
-            System.out.println(e.getMessage());
+            System.out.println("\n[ERROR] " + e.getMessage());
         }
     }
 
-    private void handleModifyMyAppointment() {
-        System.out.print("Enter your appointment ID: ");
-        if (!scanner.hasNextLine()) {
+    private void handleModifyAppointment() {
+        if (!authService.isAuthenticated()) {
+            System.out.println("\n[ERROR] You must be logged in as admin to perform this action.");
             return;
         }
-        String appointmentId = scanner.nextLine();
-
-        System.out.print("Enter your name: ");
-        if (!scanner.hasNextLine()) {
-            return;
-        }
-        String customerName = scanner.nextLine();
-
+        System.out.println("\n--- Modify Appointment ---");
+        System.out.print("Enter Appointment ID to modify: ");
+        String apptId = safeReadLine();
+        if (apptId == null) return;
+        
+        System.out.println("\nFinding available slots...");
         handleViewAvailableSlots();
-        System.out.print("Enter new slot ID: ");
-        if (!scanner.hasNextLine()) {
-            return;
-        }
-        String newSlotId = scanner.nextLine();
-
+        
+        System.out.print("\nEnter New Slot ID: ");
+        String newSlotId = safeReadLine();
+        if (newSlotId == null) return;
+        
         try {
-            Appointment appointment = reservationManagementService.modifyAppointmentByUser(
-                    appointmentId,
-                    customerName,
-                    newSlotId
-            );
-
-            System.out.println("Appointment modified successfully.");
-            System.out.println(appointment);
-        } catch (BookingException e) {
-            System.out.println(e.getMessage());
+            Appointment appt = reservationManagementService.modifyReservationByAdmin(apptId, newSlotId);
+            System.out.println("\n[SUCCESS] Appointment modified successfully!");
+            System.out.println(appt);
+        } catch (AuthorizationException | BookingException e) {
+            System.out.println("\n[ERROR] " + e.getMessage());
         }
     }
 
-    private void handleCancelMyAppointment() {
-        System.out.print("Enter your appointment ID: ");
-        if (!scanner.hasNextLine()) {
+    private void handleCancelAppointment() {
+        if (!authService.isAuthenticated()) {
+            System.out.println("\n[ERROR] You must be logged in as admin to perform this action.");
             return;
         }
-        String appointmentId = scanner.nextLine();
-
-        System.out.print("Enter your name: ");
-        if (!scanner.hasNextLine()) {
-            return;
-        }
-        String customerName = scanner.nextLine();
-
+        System.out.println("\n--- Cancel Appointment ---");
+        System.out.print("Enter Appointment ID to cancel: ");
+        String apptId = safeReadLine();
+        if (apptId == null) return;
+        
         try {
-            Appointment appointment = reservationManagementService.cancelAppointmentByUser(
-                    appointmentId,
-                    customerName
-            );
-
-            System.out.println("Appointment cancelled successfully.");
-            System.out.println(appointment);
-        } catch (BookingException e) {
-            System.out.println(e.getMessage());
+            Appointment appt = reservationManagementService.cancelReservationByAdmin(apptId);
+            System.out.println("\n[SUCCESS] Appointment cancelled successfully!");
+            System.out.println(appt);
+        } catch (AuthorizationException | BookingException e) {
+            System.out.println("\n[ERROR] " + e.getMessage());
         }
     }
 
-    private void handleViewAllReservations() {
+    private void handleViewAllAppointments() {
+        if (!authService.isAuthenticated()) {
+            System.out.println("\n[ERROR] You must be logged in as admin to perform this action.");
+            return;
+        }
+        System.out.println("\n--- All Appointments ---");
         try {
-            List<Appointment> appointments = reservationManagementService.getAllReservationsByAdmin();
-
-            if (appointments.isEmpty()) {
-                System.out.println("No reservations found.");
+            List<Appointment> apps = reservationManagementService.getAllReservationsByAdmin();
+            if (apps.isEmpty()) {
+                System.out.println("[INFO] No appointments found.");
                 return;
             }
-
-            System.out.println("All Reservations:");
-            for (Appointment appointment : appointments) {
-                System.out.println(appointment);
+            for (Appointment appt : apps) {
+                System.out.println(appt);
             }
+            System.out.println("------------------------");
         } catch (AuthorizationException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    private void handleModifyReservationByAdmin() {
-        System.out.print("Enter appointment ID to modify: ");
-        if (!scanner.hasNextLine()) {
-            return;
-        }
-        String appointmentId = scanner.nextLine();
-
-        handleViewAvailableSlots();
-        System.out.print("Enter new slot ID: ");
-        if (!scanner.hasNextLine()) {
-            return;
-        }
-        String newSlotId = scanner.nextLine();
-
-        try {
-            Appointment appointment = reservationManagementService.modifyReservationByAdmin(
-                    appointmentId,
-                    newSlotId
-            );
-
-            System.out.println("Reservation modified successfully.");
-            System.out.println(appointment);
-        } catch (AuthorizationException | BookingException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    private void handleCancelReservationByAdmin() {
-        System.out.print("Enter appointment ID to cancel: ");
-        if (!scanner.hasNextLine()) {
-            return;
-        }
-        String appointmentId = scanner.nextLine();
-
-        try {
-            Appointment appointment = reservationManagementService.cancelReservationByAdmin(appointmentId);
-            System.out.println("Reservation cancelled successfully.");
-            System.out.println(appointment);
-        } catch (AuthorizationException | BookingException e) {
-            System.out.println(e.getMessage());
+             System.out.println("\n[ERROR] " + e.getMessage());
+             System.out.println("Hint: You must be logged in as an admin to view all reservations.");
         }
     }
 }

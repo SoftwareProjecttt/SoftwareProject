@@ -421,17 +421,21 @@ class ConsoleAppTest {
     }
 
     private void runApp(String input) {
-        Scanner scanner = new Scanner(new ByteArrayInputStream(input.getBytes()));
-
-        ConsoleApp app = new ConsoleApp(
-                authService,
-                scheduleService,
-                bookingService,
-                reservationManagementService,
-                scanner
-        );
-
-        app.start();
+        java.io.InputStream originalIn = System.in;
+        try {
+            System.setIn(new ByteArrayInputStream(input.getBytes()));
+            
+            ConsoleApp app = new ConsoleApp(
+                    authService,
+                    scheduleService,
+                    bookingService,
+                    reservationManagementService
+            );
+            
+            app.start();
+        } finally {
+            System.setIn(originalIn);
+        }
     }
 
 
