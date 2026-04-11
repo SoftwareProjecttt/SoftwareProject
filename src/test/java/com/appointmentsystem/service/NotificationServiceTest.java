@@ -1,55 +1,60 @@
 package com.appointmentsystem.service;
 
+import com.appointmentsystem.NotificationGateway;
 import com.appointmentsystem.NotificationService;
 import com.appointmentsystem.domain.Appointment;
 import com.appointmentsystem.domain.AppointmentStatus;
 import com.appointmentsystem.domain.AppointmentType;
 import com.appointmentsystem.domain.TimeSlot;
 import com.appointmentsystem.observer.AppointmentEventType;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.contains;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 /**
  * Unit tests for NotificationService.
- *
- * @author Mohammad
- * @version 1.0
  */
 class NotificationServiceTest {
 
+    private NotificationGateway mockGateway;
+    private NotificationService service;
+
+    @BeforeEach
+    void setup() {
+        mockGateway = mock(NotificationGateway.class);
+        service = new NotificationService(mockGateway);
+    }
+
     @Test
     void update_handlesBookedEvent() {
-        NotificationService service = new NotificationService();
         Appointment appointment = createAppointment();
-
-        assertDoesNotThrow(() -> service.update(appointment, AppointmentEventType.BOOKED));
+        service.update(appointment, AppointmentEventType.BOOKED);
+        
+        verify(mockGateway).send(eq("Sara@example.com"), contains("Appointment booked for Sara"));
     }
 
     @Test
     void update_handlesCancelledEvent() {
-        NotificationService service = new NotificationService();
         Appointment appointment = createAppointment();
-
-        assertDoesNotThrow(() -> service.update(appointment, AppointmentEventType.CANCELLED));
+        service.update(appointment, AppointmentEventType.CANCELLED);
+        
+        verify(mockGateway).send(eq("Sara@example.com"), contains("Appointment cancelled for Sara"));
     }
 
     @Test
     void update_handlesModifiedEvent() {
-        NotificationService service = new NotificationService();
         Appointment appointment = createAppointment();
-
-        assertDoesNotThrow(() -> service.update(appointment, AppointmentEventType.MODIFIED));
-    }
-
-    @Test
-    void send_handlesReminderMessage() {
-        NotificationService service = new NotificationService();
-
-        assertDoesNotThrow(() -> service.send("Sara", "Reminder message"));
+        service.update(appointment, AppointmentEventType.MODIFIED);
+        
+        verify(mockGateway).send(eq("Sara@example.com"), contains("Appointment modified for Sara"));
     }
 
     private Appointment createAppointment() {

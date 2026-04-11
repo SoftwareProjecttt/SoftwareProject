@@ -5,44 +5,48 @@ import com.appointmentsystem.observer.AppointmentEventType;
 import com.appointmentsystem.observer.AppointmentObserver;
 
 /**
- * Notification service that reacts to appointment lifecycle events.
- *
- * @author Mohammad
- * @version 2.0
+ * Notification service that reacts to appointment lifecycle events
+ * and dispatches them via a NotificationGateway.
  */
-public class NotificationService implements AppointmentObserver, NotificationGateway {
+public class NotificationService implements AppointmentObserver {
 
-    @Override
-    public void update(Appointment appointment, AppointmentEventType eventType) {
-        switch (eventType) {
-            case BOOKED:
-                System.out.println("[Notification] Appointment booked for "
-                        + appointment.getCustomerName()
-                        + " on " + appointment.getTimeSlot().getDate()
-                        + " at " + appointment.getTimeSlot().getStartTime()
-                        + " (ID: " + appointment.getId() + ")");
-                break;
+    private final NotificationGateway notificationGateway;
 
-            case CANCELLED:
-                System.out.println("[Notification] Appointment cancelled for "
-                        + appointment.getCustomerName()
-                        + " on " + appointment.getTimeSlot().getDate()
-                        + " at " + appointment.getTimeSlot().getStartTime()
-                        + " (ID: " + appointment.getId() + ")");
-                break;
-
-            case MODIFIED:
-                System.out.println("[Notification] Appointment modified for "
-                        + appointment.getCustomerName()
-                        + " new slot on " + appointment.getTimeSlot().getDate()
-                        + " at " + appointment.getTimeSlot().getStartTime()
-                        + " (ID: " + appointment.getId() + ")");
-                break;
-        }
+    public NotificationService(NotificationGateway notificationGateway) {
+        this.notificationGateway = notificationGateway;
     }
 
     @Override
-    public void send(String recipient, String message) {
-        System.out.println("[Reminder] To: " + recipient + " | " + message);
+    public void update(Appointment appointment, AppointmentEventType eventType) {
+        String recipient = appointment.getCustomerName() + "@example.com";
+        String message = "";
+        
+        switch (eventType) {
+            case BOOKED:
+                message = "Appointment booked for "
+                        + appointment.getCustomerName()
+                        + " on " + appointment.getTimeSlot().getDate()
+                        + " at " + appointment.getTimeSlot().getStartTime()
+                        + " (ID: " + appointment.getId() + ")";
+                break;
+
+            case CANCELLED:
+                message = "Appointment cancelled for "
+                        + appointment.getCustomerName()
+                        + " on " + appointment.getTimeSlot().getDate()
+                        + " at " + appointment.getTimeSlot().getStartTime()
+                        + " (ID: " + appointment.getId() + ")";
+                break;
+
+            case MODIFIED:
+                message = "Appointment modified for "
+                        + appointment.getCustomerName()
+                        + " new slot on " + appointment.getTimeSlot().getDate()
+                        + " at " + appointment.getTimeSlot().getStartTime()
+                        + " (ID: " + appointment.getId() + ")";
+                break;
+        }
+
+        notificationGateway.send(recipient, message);
     }
 }

@@ -55,7 +55,8 @@ public class Main {
                         Clock.systemDefaultZone()
                 );
 
-        NotificationService notificationService = new NotificationService();
+        NotificationGateway emailGateway = new com.appointmentsystem.observer.EmailNotificationGateway();
+        NotificationService notificationService = new NotificationService(emailGateway);
         bookingService.registerObserver(notificationService);
         reservationManagementService.registerObserver(notificationService);
 
