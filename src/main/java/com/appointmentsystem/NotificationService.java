@@ -10,6 +10,8 @@ import com.appointmentsystem.observer.AppointmentObserver;
  */
 public class NotificationService implements AppointmentObserver {
 
+    private static final String APPOINTMENT_ID_PREFIX = " (ID: ";
+
     private final NotificationGateway notificationGateway;
 
     public NotificationService(NotificationGateway notificationGateway) {
@@ -20,14 +22,14 @@ public class NotificationService implements AppointmentObserver {
     public void update(Appointment appointment, AppointmentEventType eventType) {
         String recipient = appointment.getCustomerName() + "@example.com";
         String message = "";
-        
+
         switch (eventType) {
             case BOOKED:
                 message = "Appointment booked for "
                         + appointment.getCustomerName()
                         + " on " + appointment.getTimeSlot().getDate()
                         + " at " + appointment.getTimeSlot().getStartTime()
-                        + " (ID: " + appointment.getId() + ")";
+                        + APPOINTMENT_ID_PREFIX + appointment.getId() + ")";
                 break;
 
             case CANCELLED:
@@ -35,7 +37,7 @@ public class NotificationService implements AppointmentObserver {
                         + appointment.getCustomerName()
                         + " on " + appointment.getTimeSlot().getDate()
                         + " at " + appointment.getTimeSlot().getStartTime()
-                        + " (ID: " + appointment.getId() + ")";
+                        + APPOINTMENT_ID_PREFIX + appointment.getId() + ")";
                 break;
 
             case MODIFIED:
@@ -43,7 +45,7 @@ public class NotificationService implements AppointmentObserver {
                         + appointment.getCustomerName()
                         + " new slot on " + appointment.getTimeSlot().getDate()
                         + " at " + appointment.getTimeSlot().getStartTime()
-                        + " (ID: " + appointment.getId() + ")";
+                        + APPOINTMENT_ID_PREFIX + appointment.getId() + ")";
                 break;
         }
 
