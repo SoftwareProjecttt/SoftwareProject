@@ -424,18 +424,18 @@ class ConsoleAppTest {
         assertTrue(true);
     }
 
-    private void runApp(String input) {
+       private void runApp(String input) {
         java.io.InputStream originalIn = System.in;
-        try {
-            System.setIn(new ByteArrayInputStream(input.getBytes()));
-            
+        try (ByteArrayInputStream testIn = new ByteArrayInputStream(input.getBytes())) {
+            System.setIn(testIn);
+
             ConsoleApp app = new ConsoleApp(
                     authService,
                     scheduleService,
                     bookingService,
                     reservationManagementService
             );
-            
+
             app.start();
         } finally {
             System.setIn(originalIn);
