@@ -424,9 +424,11 @@ class ConsoleAppTest {
         assertTrue(true);
     }
 
-       private void runApp(String input) {
+          private void runApp(String input) {
         java.io.InputStream originalIn = System.in;
-        try (ByteArrayInputStream testIn = new ByteArrayInputStream(input.getBytes())) {
+        ByteArrayInputStream testIn = new ByteArrayInputStream(input.getBytes());
+
+        try {
             System.setIn(testIn);
 
             ConsoleApp app = new ConsoleApp(
@@ -439,8 +441,14 @@ class ConsoleAppTest {
             app.start();
         } finally {
             System.setIn(originalIn);
+            try {
+                testIn.close();
+            } catch (java.io.IOException e) {
+                throw new IllegalStateException("Failed to close test input stream", e);
+            }
         }
     }
+
 
 
     @Test
