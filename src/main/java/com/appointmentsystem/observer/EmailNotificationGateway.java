@@ -10,7 +10,7 @@ public class EmailNotificationGateway implements NotificationGateway {
     @Override
     public void send(String email, String message) {
         LOGGER.info("[EMAIL SENT]");
-        LOGGER.info("To: " + email);
-        LOGGER.info("Message: " + message);
+        LOGGER.info(() -> "To: " + email);
+        LOGGER.info(() -> "Message: " + message);
     }
 }
