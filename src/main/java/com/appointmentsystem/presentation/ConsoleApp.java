@@ -54,32 +54,36 @@ public class ConsoleApp {
                 break;
             }
 
-            switch (choice) {
-                case "1":
-                    handleLogin();
-                    break;
-                case "2":
-                    handleViewAvailableSlots();
-                    break;
-                case "3":
-                    handleBookAppointment();
-                    break;
-                case "4":
-                    handleModifyAppointment();
-                    break;
-                case "5":
-                    handleCancelAppointment();
-                    break;
-                case "6":
-                    handleViewAllAppointments();
-                    break;
-                case "7":
-                    System.out.println("\nExiting system... Goodbye!");
-                    exit = true;
-                    break;
-                default:
-                    System.out.println("\n[ERROR] Invalid choice. Please try again.");
-            }
+            exit = handleMenuChoice(choice);
+        }
+    }
+
+    private boolean handleMenuChoice(String choice) {
+        switch (choice) {
+            case "1":
+                handleLogin();
+                return false;
+            case "2":
+                handleViewAvailableSlots();
+                return false;
+            case "3":
+                handleBookAppointment();
+                return false;
+            case "4":
+                handleModifyAppointment();
+                return false;
+            case "5":
+                handleCancelAppointment();
+                return false;
+            case "6":
+                handleViewAllAppointments();
+                return false;
+            case "7":
+                System.out.println("\nExiting system... Goodbye!");
+                return true;
+            default:
+                System.out.println("\n[ERROR] Invalid choice. Please try again.");
+                return false;
         }
     }
 
@@ -144,31 +148,23 @@ public class ConsoleApp {
     }
 
     private void handleBookAppointment() {
-        if (!authService.isAuthenticated()) {
-            System.out.println("\n[ERROR] You must be logged in as admin to perform this action.");
+        if (!ensureAdminAuthenticated()) {
             return;
         }
         System.out.println("\n--- Book Appointment ---");
         handleViewAvailableSlots();
         
-        System.out.print("\nEnter Customer Name: ");
-        String name = safeReadLine();
+        String name = prompt("\nEnter Customer Name: ");
         if (name == null) return;
         
-        System.out.print("Enter Slot ID: ");
-        String slotId = safeReadLine();
+        String slotId = prompt("Enter Slot ID: ");
         if (slotId == null) return;
         
-        System.out.print("Enter Participant Count: ");
-        String countStr = safeReadLine();
+        String countStr = prompt("Enter Participant Count: ");
         if (countStr == null) return;
 
-        System.out.println("\nAvailable Appointment Types:");
-        for (AppointmentType type : AppointmentType.values()) {
-            System.out.println("- " + type.name());
-        }
-        System.out.print("Enter Appointment Type: ");
-        String typeStr = safeReadLine();
+        printAppointmentTypes();
+        String typeStr = prompt("Enter Appointment Type: ");
         if (typeStr == null) return;
 
         try {
@@ -189,20 +185,17 @@ public class ConsoleApp {
     }
 
     private void handleModifyAppointment() {
-        if (!authService.isAuthenticated()) {
-            System.out.println("\n[ERROR] You must be logged in as admin to perform this action.");
+        if (!ensureAdminAuthenticated()) {
             return;
         }
         System.out.println("\n--- Modify Appointment ---");
-        System.out.print("Enter Appointment ID to modify: ");
-        String apptId = safeReadLine();
+        String apptId = prompt("Enter Appointment ID to modify: ");
         if (apptId == null) return;
         
         System.out.println("\nFinding available slots...");
         handleViewAvailableSlots();
         
-        System.out.print("\nEnter New Slot ID: ");
-        String newSlotId = safeReadLine();
+        String newSlotId = prompt("\nEnter New Slot ID: ");
         if (newSlotId == null) return;
         
         try {
@@ -215,13 +208,11 @@ public class ConsoleApp {
     }
 
     private void handleCancelAppointment() {
-        if (!authService.isAuthenticated()) {
-            System.out.println("\n[ERROR] You must be logged in as admin to perform this action.");
+        if (!ensureAdminAuthenticated()) {
             return;
         }
         System.out.println("\n--- Cancel Appointment ---");
-        System.out.print("Enter Appointment ID to cancel: ");
-        String apptId = safeReadLine();
+        String apptId = prompt("Enter Appointment ID to cancel: ");
         if (apptId == null) return;
         
         try {
@@ -234,8 +225,7 @@ public class ConsoleApp {
     }
 
     private void handleViewAllAppointments() {
-        if (!authService.isAuthenticated()) {
-            System.out.println("\n[ERROR] You must be logged in as admin to perform this action.");
+        if (!ensureAdminAuthenticated()) {
             return;
         }
         System.out.println("\n--- All Appointments ---");
@@ -252,6 +242,26 @@ public class ConsoleApp {
         } catch (AuthorizationException e) {
              System.out.println("\n[ERROR] " + e.getMessage());
              System.out.println("Hint: You must be logged in as an admin to view all reservations.");
+         }
+    }
+
+    private boolean ensureAdminAuthenticated() {
+        if (!authService.isAuthenticated()) {
+            System.out.println("\n[ERROR] You must be logged in as admin to perform this action.");
+            return false;
+        }
+        return true;
+    }
+
+    private String prompt(String message) {
+        System.out.print(message);
+        return safeReadLine();
+    }
+
+    private void printAppointmentTypes() {
+        System.out.println("\nAvailable Appointment Types:");
+        for (AppointmentType type : AppointmentType.values()) {
+            System.out.println("- " + type.name());
         }
     }
 }

@@ -13,7 +13,6 @@ import com.appointmentsystem.domain.TimeSlot;
 
 import java.time.Clock;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,10 +25,9 @@ public class ReservationManagementService {
 
     private final AppointmentRepository appointmentRepository;
     private final TimeSlotRepository timeSlotRepository;
-    private final List<BookingRuleStrategy> bookingRules;
     private final AuthService authService;
     private final Clock clock;
-    private final List<AppointmentObserver> observers = new ArrayList<>();
+    private final AppointmentWorkflowSupport workflowSupport;
 
     public ReservationManagementService(AppointmentRepository appointmentRepository,
                                         TimeSlotRepository timeSlotRepository,
@@ -38,25 +36,17 @@ public class ReservationManagementService {
                                         Clock clock) {
         this.appointmentRepository = appointmentRepository;
         this.timeSlotRepository = timeSlotRepository;
-        this.bookingRules = bookingRules;
         this.authService = authService;
         this.clock = clock;
+        this.workflowSupport = new AppointmentWorkflowSupport(bookingRules);
     }
 
     public void registerObserver(AppointmentObserver observer) {
-        if (observer != null && !observers.contains(observer)) {
-            observers.add(observer);
-        }
+        workflowSupport.registerObserver(observer);
     }
 
     public void removeObserver(AppointmentObserver observer) {
-        observers.remove(observer);
-    }
-
-    private void notifyObservers(Appointment appointment, AppointmentEventType eventType) {
-        for (AppointmentObserver observer : observers) {
-            observer.update(appointment, eventType);
-        }
+        workflowSupport.removeObserver(observer);
     }
 
     public List<Appointment> getAllReservationsByAdmin() {
@@ -122,13 +112,14 @@ public class ReservationManagementService {
                 appointment.getAppointmentType()
         );
 
-        validateRules(simulatedAppointment);
+        workflowSupport.validateRules(simulatedAppointment);
 
         currentSlot.releaseParticipants(appointment.getParticipantCount());
         newSlot.bookParticipants(appointment.getParticipantCount());
         appointment.setTimeSlot(newSlot);
+        appointmentRepository.save(appointment);
 
-        notifyObservers(appointment, AppointmentEventType.MODIFIED);
+        workflowSupport.notifyObservers(appointment, AppointmentEventType.MODIFIED);
 
         return appointment;
     }
@@ -138,8 +129,9 @@ public class ReservationManagementService {
 
         appointment.getTimeSlot().releaseParticipants(appointment.getParticipantCount());
         appointment.cancel();
+        appointmentRepository.save(appointment);
 
-        notifyObservers(appointment, AppointmentEventType.CANCELLED);
+        workflowSupport.notifyObservers(appointment, AppointmentEventType.CANCELLED);
 
         return appointment;
     }
@@ -156,14 +148,6 @@ public class ReservationManagementService {
 
         if (!appointment.isFuture(clock)) {
             throw new BookingException("Action rejected: only future appointments can be modified or cancelled.");
-        }
-    }
-
-    private void validateRules(Appointment appointment) {
-        for (BookingRuleStrategy rule : bookingRules) {
-            if (!rule.isValid(appointment)) {
-                throw new BookingException(rule.getErrorMessage());
-            }
         }
     }
 

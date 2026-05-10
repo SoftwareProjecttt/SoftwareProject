@@ -11,7 +11,6 @@ import com.appointmentsystem.persistence.AppointmentRepository;
 import com.appointmentsystem.persistence.TimeSlotRepository;
 import com.appointmentsystem.strategy.BookingRuleStrategy;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,31 +24,22 @@ public class BookingService {
 
     private final TimeSlotRepository timeSlotRepository;
     private final AppointmentRepository appointmentRepository;
-    private final List<BookingRuleStrategy> bookingRules;
-    private final List<AppointmentObserver> observers = new ArrayList<>();
+    private final AppointmentWorkflowSupport workflowSupport;
 
     public BookingService(TimeSlotRepository timeSlotRepository,
                           AppointmentRepository appointmentRepository,
                           List<BookingRuleStrategy> bookingRules) {
         this.timeSlotRepository = timeSlotRepository;
         this.appointmentRepository = appointmentRepository;
-        this.bookingRules = bookingRules;
+        this.workflowSupport = new AppointmentWorkflowSupport(bookingRules);
     }
 
     public void registerObserver(AppointmentObserver observer) {
-        if (observer != null && !observers.contains(observer)) {
-            observers.add(observer);
-        }
+        workflowSupport.registerObserver(observer);
     }
 
     public void removeObserver(AppointmentObserver observer) {
-        observers.remove(observer);
-    }
-
-    private void notifyObservers(Appointment appointment, AppointmentEventType eventType) {
-        for (AppointmentObserver observer : observers) {
-            observer.update(appointment, eventType);
-        }
+        workflowSupport.removeObserver(observer);
     }
 
     public Appointment bookAppointment(String customerName,
@@ -76,21 +66,13 @@ public class BookingService {
                 appointmentType
         );
 
-        validateRules(appointment);
+        workflowSupport.validateRules(appointment);
 
         timeSlot.bookParticipants(participantCount);
         appointmentRepository.save(appointment);
 
-        notifyObservers(appointment, AppointmentEventType.BOOKED);
+        workflowSupport.notifyObservers(appointment, AppointmentEventType.BOOKED);
 
         return appointment;
-    }
-
-    private void validateRules(Appointment appointment) {
-        for (BookingRuleStrategy rule : bookingRules) {
-            if (!rule.isValid(appointment)) {
-                throw new BookingException(rule.getErrorMessage());
-            }
-        }
     }
 }
