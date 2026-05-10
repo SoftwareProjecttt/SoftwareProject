@@ -12,6 +12,8 @@ import java.util.List;
 /**
  * Shared support for appointment workflows:
  * booking-rule validation and observer notifications.
+ *
+ * <p>This helper is intended for single-threaded application flows and is not thread-safe.</p>
  */
 public class AppointmentWorkflowSupport {
 
