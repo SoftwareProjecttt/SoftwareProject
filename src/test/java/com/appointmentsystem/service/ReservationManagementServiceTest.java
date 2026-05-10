@@ -108,6 +108,7 @@ class ReservationManagementServiceTest {
         assertEquals(0, oldSlot.getBookedCount());
         assertEquals(2, newSlot.getBookedCount());
 
+        verify(appointmentRepository).save(appointment);
         verify(observer).update(eq(appointment), eq(AppointmentEventType.MODIFIED));
     }
 
@@ -132,6 +133,7 @@ class ReservationManagementServiceTest {
         service.modifyAppointmentByUser("A1", "Ahmad", "S1");
 
         assertEquals(oldSlot, appointment.getTimeSlot());
+        verify(appointmentRepository, never()).save(any());
         verify(observer, never()).update(any(), any());
     }
 
@@ -142,6 +144,7 @@ class ReservationManagementServiceTest {
         assertEquals(AppointmentStatus.CANCELLED, appointment.getStatus());
         assertEquals(0, oldSlot.getBookedCount());
 
+        verify(appointmentRepository).save(appointment);
         verify(observer).update(eq(appointment), eq(AppointmentEventType.CANCELLED));
     }
 
@@ -172,6 +175,7 @@ class ReservationManagementServiceTest {
         service.cancelReservationByAdmin("A1");
 
         assertEquals(AppointmentStatus.CANCELLED, appointment.getStatus());
+        verify(appointmentRepository).save(appointment);
         verify(observer).update(eq(appointment), eq(AppointmentEventType.CANCELLED));
     }
 

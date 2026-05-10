@@ -2,738 +2,252 @@ package com.appointmentsystem.presentation;
 
 import com.appointmentsystem.AuthService;
 import com.appointmentsystem.BookingService;
-import com.appointmentsystem.NotificationService;
 import com.appointmentsystem.ReservationManagementService;
 import com.appointmentsystem.ScheduleService;
-import com.appointmentsystem.persistence.AdminRepository;
-import com.appointmentsystem.persistence.AppointmentRepository;
-import com.appointmentsystem.persistence.TimeSlotRepository;
-import com.appointmentsystem.persistence.inmemory.InMemoryAdminRepository;
-import com.appointmentsystem.persistence.inmemory.InMemoryAppointmentRepository;
-import com.appointmentsystem.persistence.inmemory.InMemoryTimeSlotRepository;
-import com.appointmentsystem.security.SessionManager;
-import com.appointmentsystem.strategy.AppointmentTypeRuleStrategy;
-import com.appointmentsystem.strategy.BookingRuleStrategy;
+import com.appointmentsystem.domain.Appointment;
+import com.appointmentsystem.domain.AppointmentStatus;
 import com.appointmentsystem.domain.AppointmentType;
-import org.mockito.Mockito;
-import org.mockito.ArgumentMatchers;
-import com.appointmentsystem.strategy.DurationRuleStrategy;
-import com.appointmentsystem.strategy.ParticipantLimitRuleStrategy;
-import org.junit.jupiter.api.BeforeEach;
+import com.appointmentsystem.domain.TimeSlot;
+import com.appointmentsystem.exception.AuthenticationException;
+import com.appointmentsystem.exception.AuthorizationException;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
-import java.time.Clock;
-import java.util.Arrays;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.PrintStream;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
-import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.*;
 
-/**
- * Unit tests for ConsoleApp.
- *
- * @author Mohammad
- * @version 4.0
- */
 class ConsoleAppTest {
 
-    private AuthService authService;
-    private ScheduleService scheduleService;
-    private BookingService bookingService;
-    private ReservationManagementService reservationManagementService;
+    @Test
+    void exitOption_printsGoodbyeMessage() {
+        String output = runAppWithMocks("7\n", false, null, null, null, null);
+        assertTrue(output.contains("Exiting system... Goodbye!"));
+    }
 
-    @BeforeEach
-    void setup() {
-        AdminRepository adminRepository = new InMemoryAdminRepository();
-        AppointmentRepository appointmentRepository = new InMemoryAppointmentRepository();
-        TimeSlotRepository timeSlotRepository = new InMemoryTimeSlotRepository();
+    @Test
+    void invalidChoice_printsError() {
+        String output = runAppWithMocks("9\n7\n", false, null, null, null, null);
+        assertTrue(output.contains("[ERROR] Invalid choice. Please try again."));
+    }
 
-        SessionManager sessionManager = new SessionManager();
-        authService = new AuthService(adminRepository, sessionManager);
-        scheduleService = new ScheduleService(timeSlotRepository);
+    @Test
+    void loginSuccess_callsAuthServiceAndPrintsMessage() {
+        AuthService authService = mock(AuthService.class);
+        when(authService.isAuthenticated()).thenReturn(false);
 
-        List<BookingRuleStrategy> bookingRules = Arrays.asList(
-                new DurationRuleStrategy(120),
-                new ParticipantLimitRuleStrategy(),
-                new AppointmentTypeRuleStrategy()
+        String output = runAppWithMocks("1\nadmin\n1234\n7\n", false, authService, null, null, null);
+
+        verify(authService).login("admin", "1234");
+        assertTrue(output.contains("[SUCCESS] Login successful! Welcome, admin."));
+    }
+
+    @Test
+    void loginFailure_printsAuthenticationError() {
+        AuthService authService = mock(AuthService.class);
+        when(authService.isAuthenticated()).thenReturn(false);
+        doThrow(new AuthenticationException("Invalid password."))
+                .when(authService).login("admin", "wrong");
+
+        String output = runAppWithMocks("1\nadmin\nwrong\n7\n", false, authService, null, null, null);
+
+        verify(authService).login("admin", "wrong");
+        assertTrue(output.contains("[ERROR] Login failed - Invalid password."));
+    }
+
+    @Test
+    void bookingWithoutAuthentication_blocksAction() {
+        BookingService bookingService = mock(BookingService.class);
+
+        String output = runAppWithMocks("3\n7\n", false, null, null, bookingService, null);
+
+        verify(bookingService, never()).bookAppointment(anyString(), anyString(), anyInt(), any());
+        assertTrue(output.contains("You must be logged in as admin to perform this action."));
+    }
+
+    @Test
+    void bookingWithAuthentication_callsServiceAndPrintsSuccess() {
+        BookingService bookingService = mock(BookingService.class);
+        ScheduleService scheduleService = mock(ScheduleService.class);
+        when(scheduleService.getAvailableSlots()).thenReturn(List.of(createTimeSlot("TS1")));
+        when(bookingService.bookAppointment("Sara", "TS1", 1, AppointmentType.INDIVIDUAL))
+                .thenReturn(createAppointment("A1", "Sara", "TS1"));
+
+        String output = runAppWithMocks(
+                "3\nSara\nTS1\n1\nINDIVIDUAL\n7\n",
+                true,
+                null,
+                scheduleService,
+                bookingService,
+                null
         );
 
-        bookingService = new BookingService(
-                timeSlotRepository,
-                appointmentRepository,
-                bookingRules
+        verify(bookingService).bookAppointment("Sara", "TS1", 1, AppointmentType.INDIVIDUAL);
+        assertTrue(output.contains("[SUCCESS] Appointment booked successfully!"));
+        assertTrue(output.contains("Appointment ID: A1"));
+    }
+
+    @Test
+    void bookingInvalidParticipantCount_showsValidationAndSkipsServiceCall() {
+        BookingService bookingService = mock(BookingService.class);
+        ScheduleService scheduleService = mock(ScheduleService.class);
+        when(scheduleService.getAvailableSlots()).thenReturn(List.of(createTimeSlot("TS1")));
+
+        String output = runAppWithMocks(
+                "3\nSara\nTS1\nabc\nINDIVIDUAL\n7\n",
+                true,
+                null,
+                scheduleService,
+                bookingService,
+                null
         );
 
-        reservationManagementService = new ReservationManagementService(
-                appointmentRepository,
-                timeSlotRepository,
-                bookingRules,
-                authService,
-                Clock.systemDefaultZone()
+        verify(bookingService, never()).bookAppointment(anyString(), anyString(), anyInt(), any());
+        assertTrue(output.contains("Participant count must be a valid number."));
+    }
+
+    @Test
+    void modifyWithAuthentication_callsReservationService() {
+        ReservationManagementService reservationService = mock(ReservationManagementService.class);
+        ScheduleService scheduleService = mock(ScheduleService.class);
+        when(scheduleService.getAvailableSlots()).thenReturn(List.of(createTimeSlot("TS2")));
+        when(reservationService.modifyReservationByAdmin("A1", "TS2"))
+                .thenReturn(createAppointment("A1", "Sara", "TS2"));
+
+        String output = runAppWithMocks(
+                "4\nA1\nTS2\n7\n",
+                true,
+                null,
+                scheduleService,
+                null,
+                reservationService
         );
 
-        com.appointmentsystem.NotificationGateway mockGateway = org.mockito.Mockito.mock(com.appointmentsystem.NotificationGateway.class);
-        com.appointmentsystem.NotificationService notificationService = new com.appointmentsystem.NotificationService(mockGateway);
-        bookingService.registerObserver(notificationService);
-        reservationManagementService.registerObserver(notificationService);
+        verify(reservationService).modifyReservationByAdmin("A1", "TS2");
+        assertTrue(output.contains("[SUCCESS] Appointment modified successfully!"));
     }
 
     @Test
-    void testExitImmediately() {
-        runApp("3\n");
-        assertTrue(true);
+    void cancelWithAuthentication_callsReservationService() {
+        ReservationManagementService reservationService = mock(ReservationManagementService.class);
+        Appointment cancelled = createAppointment("A1", "Sara", "TS1");
+        cancelled.cancel();
+        when(reservationService.cancelReservationByAdmin("A1")).thenReturn(cancelled);
+
+        String output = runAppWithMocks(
+                "5\nA1\n7\n",
+                true,
+                null,
+                null,
+                null,
+                reservationService
+        );
+
+        verify(reservationService).cancelReservationByAdmin("A1");
+        assertTrue(output.contains("[SUCCESS] Appointment cancelled successfully!"));
     }
 
     @Test
-    void testAdminLoginAndLogout() {
-        runApp("""
-                2
-                admin
-                admin123
-                5
-                3
-                """);
-        assertTrue(true);
+    void viewAllAppointmentsEmpty_showsInfoMessage() {
+        ReservationManagementService reservationService = mock(ReservationManagementService.class);
+        when(reservationService.getAllReservationsByAdmin()).thenReturn(List.of());
+
+        String output = runAppWithMocks("6\n7\n", true, null, null, null, reservationService);
+
+        verify(reservationService).getAllReservationsByAdmin();
+        assertTrue(output.contains("[INFO] No appointments found."));
     }
 
     @Test
-    void testAdminLoginFailWrongPassword() {
-        runApp("""
-                2
-                admin
-                wrongpassword
-                3
-                """);
-        assertTrue(true);
+    void viewAllAppointmentsAuthorizationError_showsHint() {
+        ReservationManagementService reservationService = mock(ReservationManagementService.class);
+        when(reservationService.getAllReservationsByAdmin())
+                .thenThrow(new AuthorizationException("Access denied."));
+
+        String output = runAppWithMocks("6\n7\n", true, null, null, null, reservationService);
+
+        assertTrue(output.contains("[ERROR] Access denied."));
+        assertTrue(output.contains("Hint: You must be logged in as an admin to view all reservations."));
     }
 
-    @Test
-    void testUserViewSlots() {
-        runApp("""
-                1
-                1
-                4
-                3
-                """);
-        assertTrue(true);
-    }
+    private String runAppWithMocks(String input,
+                                   boolean authenticated,
+                                   AuthService authServiceOverride,
+                                   ScheduleService scheduleServiceOverride,
+                                   BookingService bookingServiceOverride,
+                                   ReservationManagementService reservationServiceOverride) {
+        InputStream originalIn = System.in;
+        PrintStream originalOut = System.out;
 
-    @Test
-    void testBookingFlow() {
-        runApp("""
-                1
-                2
-                John
-                TS1
-                1
-                INDIVIDUAL
-                4
-                3
-                """);
-        assertTrue(true);
-    }
+        ByteArrayOutputStream outputBuffer = new ByteArrayOutputStream();
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(input.getBytes());
 
-    @Test
-    void testBookingWithInvalidAppointmentType() {
-        runApp("""
-                1
-                2
-                John
-                TS1
-                1
-                WRONG_TYPE
-                4
-                3
-                """);
-        assertTrue(true);
-    }
+        AuthService authService = authServiceOverride != null ? authServiceOverride : mock(AuthService.class);
+        when(authService.isAuthenticated()).thenReturn(authenticated);
+        if (authenticated) {
+            when(authService.getLoggedInUsername()).thenReturn("admin");
+        }
 
-    @Test
-    void testBookingWithInvalidParticipantCount() {
-        runApp("""
-                1
-                2
-                John
-                TS1
-                abc
-                INDIVIDUAL
-                4
-                3
-                """);
-        assertTrue(true);
-    }
+        ScheduleService scheduleService = scheduleServiceOverride != null
+                ? scheduleServiceOverride
+                : mock(ScheduleService.class);
+        when(scheduleService.getAvailableSlots()).thenReturn(List.of());
 
-    @Test
-    void testBookingWithUnknownSlot() {
-        runApp("""
-                1
-                2
-                John
-                UNKNOWN
-                1
-                INDIVIDUAL
-                4
-                3
-                """);
-        assertTrue(true);
-    }
+        BookingService bookingService = bookingServiceOverride != null
+                ? bookingServiceOverride
+                : mock(BookingService.class);
 
-    @Test
-    void testBookingWithGroupRuleViolation() {
-        runApp("""
-                1
-                2
-                John
-                TS1
-                1
-                GROUP
-                4
-                3
-                """);
-        assertTrue(true);
-    }
-
-    @Test
-    void testBookingWithUrgentRuleViolation() {
-        runApp("""
-                1
-                2
-                John
-                TS1
-                1
-                URGENT
-                4
-                3
-                """);
-        assertTrue(true);
-    }
-
-    @Test
-    void testUserMenuInvalidChoice() {
-        runApp("""
-                1
-                9
-                4
-                3
-                """);
-        assertTrue(true);
-    }
-
-    @Test
-    void testManageMenuInvalidChoice() {
-        runApp("""
-                1
-                3
-                9
-                3
-                4
-                3
-                """);
-        assertTrue(true);
-    }
-
-    @Test
-    void testUserCancelAppointmentWithInvalidId() {
-        runApp("""
-                1
-                3
-                2
-                A999
-                John
-                3
-                4
-                3
-                """);
-        assertTrue(true);
-    }
-
-    @Test
-    void testUserModifyAppointmentWithInvalidId() {
-        runApp("""
-                1
-                3
-                1
-                A999
-                John
-                TS1
-                3
-                4
-                3
-                """);
-        assertTrue(true);
-    }
-
-    @Test
-    void testUserCancelAppointmentSuccess() {
-        runApp("""
-                1
-                2
-                John
-                TS1
-                1
-                INDIVIDUAL
-                3
-                2
-                1
-                John
-                3
-                4
-                3
-                """);
-        assertTrue(true);
-    }
-
-    @Test
-    void testUserModifyAppointmentSuccess() {
-        runApp("""
-                1
-                2
-                John
-                TS1
-                1
-                INDIVIDUAL
-                3
-                1
-                A1
-                John
-                TS3
-                3
-                4
-                3
-                """);
-        assertTrue(true);
-    }
-
-    @Test
-    void testAdminViewReservations() {
-        runApp("""
-                2
-                admin
-                admin123
-                2
-                5
-                3
-                """);
-        assertTrue(true);
-    }
-
-    @Test
-    void testAdminMenuBackOption() {
-        runApp("""
-                2
-                admin
-                admin123
-                6
-                3
-                """);
-        assertTrue(true);
-    }
-
-    @Test
-    void testAdminCancelReservationInvalidId() {
-        runApp("""
-                2
-                admin
-                admin123
-                4
-                A999
-                5
-                3
-                """);
-        assertTrue(true);
-    }
-
-    @Test
-    void testAdminModifyReservationInvalidId() {
-        runApp("""
-                2
-                admin
-                admin123
-                3
-                A999
-                TS1
-                5
-                3
-                """);
-        assertTrue(true);
-    }
-
-    @Test
-    void testAdminCancelReservationSuccess() {
-        runApp("""
-                1
-                2
-                John
-                TS1
-                1
-                INDIVIDUAL
-                4
-                2
-                admin
-                admin123
-                4
-                A1
-                5
-                3
-                """);
-        assertTrue(true);
-    }
-
-    @Test
-    void testAdminModifyReservationSuccess() {
-        runApp("""
-                1
-                2
-                John
-                TS1
-                1
-                INDIVIDUAL
-                4
-                2
-                admin
-                admin123
-                3
-                A1
-                TS3
-                5
-                3
-                """);
-        assertTrue(true);
-    }
-
-    @Test
-    void testAdminMenuInvalidChoice() {
-        runApp("""
-                2
-                admin
-                admin123
-                9
-                5
-                3
-                """);
-        assertTrue(true);
-    }
-
-    @Test
-    void testInvalidInput() {
-        runApp("""
-                9
-                3
-                """);
-        assertTrue(true);
-    }
-
-         private void runApp(String input) {
-        java.io.InputStream originalIn = System.in;
-        ByteArrayInputStream testIn = new ByteArrayInputStream(input.getBytes());
+        ReservationManagementService reservationService = reservationServiceOverride != null
+                ? reservationServiceOverride
+                : mock(ReservationManagementService.class);
+        if (reservationServiceOverride == null) {
+            when(reservationService.getAllReservationsByAdmin()).thenReturn(List.of());
+        }
 
         try {
-            System.setIn(testIn);
+            System.setIn(inputStream);
+            System.setOut(new PrintStream(outputBuffer));
 
             ConsoleApp app = new ConsoleApp(
                     authService,
                     scheduleService,
                     bookingService,
-                    reservationManagementService
+                    reservationService
             );
-
             app.start();
         } finally {
             System.setIn(originalIn);
+            System.setOut(originalOut);
         }
-    }
- 
 
-
-    @Test
-    void testAdminAlreadyLoggedIn() {
-        runApp("""
-            2
-            admin
-            admin123
-            6
-            2
-            6
-            3
-            """);
-        assertTrue(true);
+        return outputBuffer.toString();
     }
 
-    @Test
-    void testAdminLogoutWhenNotAuthenticatedPathCoveredIndirectly() {
-        authService.logout();
-        assertTrue(true);
-    }
-
-    @Test
-    void testUserBackFromManageMenu() {
-        runApp("""
-            1
-            3
-            3
-            4
-            3
-            """);
-        assertTrue(true);
-    }
-
-    @Test
-    void testAdminBackFromMenu() {
-        runApp("""
-            2
-            admin
-            admin123
-            6
-            3
-            """);
-        assertTrue(true);
-    }
-
-    @Test
-    void testBookingWithBlankCustomerName() {
-        runApp("""
-            1
-            2
-            
-            TS1
-            1
-            INDIVIDUAL
-            4
-            3
-            """);
-        assertTrue(true);
-    }
-
-    @Test
-    void testBookingWithParticipantLimitExceeded() {
-        runApp("""
-            1
-            2
-            John
-            TS1
-            5
-            GROUP
-            4
-            3
-            """);
-        assertTrue(true);
-    }
-
-    @Test
-    void testBookThenAdminViewReservationsNotEmpty() {
-        runApp("""
-            1
-            2
-            John
-            TS1
-            1
-            INDIVIDUAL
-            4
-            2
-            admin
-            admin123
-            2
-            5
-            3
-            """);
-        assertTrue(true);
-    }
-
-    @Test
-    void testBookThenModifyBySameSlot() {
-        runApp("""
-            1
-            2
-            John
-            TS1
-            1
-            INDIVIDUAL
-            3
-            1
-            A1
-            John
-            TS1
-            3
-            4
-            3
-            """);
-        assertTrue(true);
-    }
-
-    @Test
-    void testBookThenCancelThenTryModifyCancelledAppointment() {
-        runApp("""
-            1
-            2
-            John
-            TS1
-            1
-            INDIVIDUAL
-            3
-            2
-            A1
-            John
-            1
-            A1
-            John
-            TS3
-            3
-            4
-            3
-            """);
-        assertTrue(true);
-    }
-
-    @Test
-    void testAdminCancelThenTryCancelAgain() {
-        runApp("""
-            1
-            2
-            John
-            TS1
-            1
-            INDIVIDUAL
-            4
-            2
-            admin
-            admin123
-            4
-            A1
-            4
-            A1
-            5
-            3
-            """);
-        assertTrue(true);
-    }
-
-    @Test
-    void testEndOfInputInsideMainMenu() {
-        runApp("""
-            1
-            """);
-        assertTrue(true);
-    }
-
-    @Test
-    void testEndOfInputInsideUserMenu() {
-        runApp("""
-            1
-            1
-            """);
-        assertTrue(true);
-    }
-    @Test
-    void testAuthGuardBlocksProtectedActions() {
-        runApp("3\n4\n5\n6\n7\n");
-        assertTrue(true);
-    }
-
-    @Test
-    void testInvalidInputHandling() {
-        runApp("99\nabc\n1\nadmin\n1234\n3\nTest\nTS1\nabc\n7\n");
-        assertTrue(true);
-    }
-
-    @Test
-    void testBookingFlowHappyPathWithMock() throws Exception {
-        BookingService mockBookingService = Mockito.mock(BookingService.class);
-        AuthService mockAuthService = Mockito.mock(AuthService.class);
-        ReservationManagementService mockRes = Mockito.mock(ReservationManagementService.class);
-        ScheduleService mockSchedule = Mockito.mock(ScheduleService.class);
-        
-        Mockito.when(mockAuthService.isAuthenticated()).thenReturn(true); 
-
-        ConsoleApp customizedApp = new ConsoleApp(
-            mockAuthService, mockSchedule, mockBookingService, mockRes
+    private TimeSlot createTimeSlot(String id) {
+        return new TimeSlot(
+                id,
+                LocalDate.now().plusDays(1),
+                LocalTime.of(10, 0),
+                LocalTime.of(11, 0),
+                5,
+                0
         );
-        
-        String input = "1\nadmin\n1234\n" +
-                       "3\nTestCustomer\nTS1\n1\nINDIVIDUAL\n" +
-                       "7\n";
-        java.io.InputStream originalIn = System.in;
-        try {
-            System.setIn(new java.io.ByteArrayInputStream(input.getBytes()));
-            customizedApp.start();
-        } finally {
-            System.setIn(originalIn);
-        }
-
-        assertTrue(true);
     }
 
-    @Test
-    void testEarlyInputTerminationWithoutCrash() {
-        String input = "1\nadmin\n";
-        java.io.InputStream originalIn = System.in;
-        try {
-            System.setIn(new java.io.ByteArrayInputStream(input.getBytes()));
-            ConsoleApp app = new ConsoleApp(authService, scheduleService, bookingService, reservationManagementService);
-            app.start();
-        } finally {
-            System.setIn(originalIn);
-        }
-        assertTrue(true);
-    }
-
-    // --- NEW SEAMLESS COVERAGE TESTS ---
-
-    @Test
-    void testFullMenuNavigationCoverage() {
-        String input = "1\nadmin\n1234\n" +   // 1 -> login
-                       "2\n" +                // 2 -> view slots
-                       "3\nTest\nTS1\n1\nINDIVIDUAL\n" + // 3 -> book (valid input)
-                       "4\nA1\nTS2\n" +       // 4 -> modify (valid input)
-                       "5\nA1\n" +            // 5 -> cancel (valid input)
-                       "6\n" +                // 6 -> view all
-                       "7\n";                 // 7 -> exit
-        runApp(input);
-        assertTrue(true);
-    }
-
-    @Test
-    void testInvalidMenuInputCoverage() {
-        String input = "\n" +       // empty input
-                       "abc\n" +    // letters
-                       "999\n" +    // large out-of-bounds number
-                       "7\n";       // exit safely
-        runApp(input);
-        assertTrue(true);
-    }
-
-    @Test
-    void testBookingEdgeCasesCoverage() {
-        String input = "1\nadmin\n1234\n" +
-                       "3\nTest\nINVALID_SLOT\n" +  // invalid slot ID
-                       "3\nTest\nTS1\nabc\n" +      // invalid participant count 
-                       "3\nTest\nTS1\n1\nBADTYPE\n" + // invalid appointment type
-                       "7\n";                       // exit
-        runApp(input);
-        assertTrue(true);
-    }
-
-    @Test
-    void testModifyWithoutLoginCoverage() {
-        runApp("4\n7\n");
-        assertTrue(true);
-    }
-
-    @Test
-    void testCancelWithoutLoginCoverage() {
-        runApp("5\n7\n");
-        assertTrue(true);
-    }
-
-    @Test
-    void testViewAllWithoutLoginCoverage() {
-        runApp("6\n7\n");
-        assertTrue(true);
-    }
-
-    @Test
-    void testRapidInputSequenceCoverage() {
-        runApp("abc\n999\n1\nadmin\n1234\n7\n");
-        assertTrue(true);
+    private Appointment createAppointment(String id, String customerName, String slotId) {
+        return new Appointment(
+                id,
+                customerName,
+                createTimeSlot(slotId),
+                1,
+                AppointmentStatus.CONFIRMED,
+                AppointmentType.INDIVIDUAL
+        );
     }
 }
