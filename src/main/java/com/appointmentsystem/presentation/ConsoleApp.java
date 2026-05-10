@@ -253,6 +253,7 @@ public class ConsoleApp {
         return true;
     }
 
+    @SuppressWarnings("java:S106") // CLI prompt output is intentional user interaction.
     private String prompt(String message) {
         System.out.print(message);
         return safeReadLine();
